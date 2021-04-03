@@ -1,5 +1,5 @@
 
-# BleachHack
+# BleachHack VpEdition
 ![](https://img.shields.io/github/downloads/bleachdrinker420/bleachhack-1.14/total?style=flat-square)
 ![](https://img.shields.io/tokei/lines/github/BleachDrinker420/bleachhack-1.14?style=flat-square)
 ![](https://img.shields.io/github/languages/code-size/bleachdrinker420/bleachhack-1.14?style=flat-square)
@@ -7,10 +7,12 @@
 ![](https://img.shields.io/badge/daily%20commit-yes-blue?style=flat-square)
 ![](https://img.shields.io/discord/620600892718055434?style=flat-square)
 
-Very cool client.
+My own skid of BleachHack
 
-Works on fabric 1.16 & 1.17 Snapshots (1.14-1.15 is discontinued).
+Works on fabric 1.16 
 
+
+## Real BleachHack
 > Website: https://bleachhack.github.io/  
 > Discord: https://discord.gg/b5Wc4nQ
 
