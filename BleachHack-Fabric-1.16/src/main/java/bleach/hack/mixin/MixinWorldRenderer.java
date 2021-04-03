@@ -49,12 +49,12 @@ public class MixinWorldRenderer implements IMixinWorldRenderer {
 	@Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V"))
 	private void render_swap(Profiler profiler, String string) {
 		if (string.equals("entities")) {
-			BleachHack.eventBus.post(new EventEntityRender.PreAll());
+			BleachHack.eventBus.post(new EventEntityRender());
 		} else if (string.equals("blockentities")) {
-			BleachHack.eventBus.post(new EventEntityRender.PostAll());
+			BleachHack.eventBus.post(new EventEntityRender());
 			BleachHack.eventBus.post(new EventBlockEntityRender.PreAll());
 		} else if (string.equals("blockentities")) {
-			BleachHack.eventBus.post(new EventEntityRender.PostAll());
+			BleachHack.eventBus.post(new EventEntityRender());
 			BleachHack.eventBus.post(new EventBlockEntityRender.PreAll());
 		} else if (string.equals("destroyProgress")) {
 			BleachHack.eventBus.post(new EventBlockEntityRender.PostAll());

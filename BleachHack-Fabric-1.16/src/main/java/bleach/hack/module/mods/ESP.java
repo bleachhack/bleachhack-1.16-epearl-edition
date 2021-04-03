@@ -101,7 +101,7 @@ public class ESP extends Module {
 	}
 
 	@Subscribe
-	public void onEntityRenderPre(EventEntityRender.PreAll event) {
+	public void onEntityRenderPre(EventEntityRender event) {
 		if (getSetting(0).asMode().mode <= 1) {
 			if (mc.getWindow().getFramebufferWidth() != lastWidth || mc.getWindow().getFramebufferHeight() != lastHeight
 					|| lastShaderWidth != getSetting(1).asSlider().getValue() || lastShaderMode != getSetting(0).asMode().mode) {

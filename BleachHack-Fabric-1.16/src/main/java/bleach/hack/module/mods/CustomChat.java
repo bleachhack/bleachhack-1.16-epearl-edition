@@ -116,9 +116,9 @@ public class CustomChat extends Module {
 					if (mc.player.distanceTo(e) < 12 && msg.contains(e.getName().getString())
 							&& !msg.contains("<" + e.getName().getString() + ">") && !msg.contains("<" + mc.player.getName().getString() + ">")) {
 						if (getSetting(4).asMode().mode == 1) {
-							mc.player.sendChatMessage(e.getName().getString() + " Just got EZed using the power of BleachHack " + BleachHack.VERSION);
+							mc.player.sendChatMessage(e.getName().getString() + " Just got EZed using the power of BleachHack-VpEdition " + BleachHack.VERSION);
 						} else {
-							mc.player.sendChatMessage("GG, " + e.getName().getString() + ", but BleachHack " + BleachHack.VERSION + " is ontop!");
+							mc.player.sendChatMessage("GG, " + e.getName().getString() + ", but BleachHack-VpEdition " + BleachHack.VERSION + " is ontop!");
 						}
 					}
 				}

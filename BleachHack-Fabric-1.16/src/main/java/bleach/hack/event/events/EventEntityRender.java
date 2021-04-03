@@ -22,9 +22,10 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 
+
 public class EventEntityRender extends Event {
 
-	public static class Single extends EventEntityRender {
+    public static class Single extends EventEntityRender {
 		protected Entity entity;
 		protected MatrixStack matrix;
 		protected VertexConsumerProvider vertex;
@@ -85,10 +86,5 @@ public class EventEntityRender extends Event {
 			}
 		}
 	}
-	
-	public static class PreAll extends EventEntityRender {
-	}
-	
-	public static class PostAll extends EventEntityRender {
-	}
+
 }
