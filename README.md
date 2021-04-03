@@ -12,14 +12,12 @@ Credits to BleachDrinker420!
 ## Real BleachHack
 > Website: https://bleachhack.github.io/  
 > Discord: https://discord.gg/b5Wc4nQ
-
+[Real BleachHack releses](https://github.com/BleachDrinker420/BleachHack/releases).
 ## Installation
 ### For normal people
 
 Download [fabric for minecraft 1.16/1.17](https://fabricmc.net/use/).
-Download the latest version of the Real BleachHack for your Minecraft version [from the releases section](https://github.com/BleachDrinker420/BleachHack/releases).
-
-Or Download my skid version [from the releases section](https://github.com/HerraVp/BleachHack-VpEdition/releses).
+Download my skid version [from the releases section](https://github.com/HerraVp/BleachHack-VpEdition/releses).
 
 
 On Windows: Type %appdata% into the Windows search bar; open the folder that comes up and then open '.minecraft'.
