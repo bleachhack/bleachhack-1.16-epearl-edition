@@ -82,6 +82,7 @@ public class ModuleManager {
 			new Ghosthand(),
 			new HandProgress(),
 			new HoleESP(),
+			new HoleTP(),
 			new Jesus(),
 			new Killaura(),
 			new Lol(),

@@ -82,7 +82,7 @@ public class ClickGuiScreen extends WindowScreen {
 				startX + len * 2 + 10, 35, len, "Combat", new ItemStack(Items.TOTEM_OF_UNDYING)));
 
 		addWindow(new ModuleWindow(ModuleManager.getModulesInCat(Category.MOVEMENT),
-				startX + len * 3 + 15, 35, len, "Movement", new ItemStack(Items.POTION)));
+				startX + len * 3 + 15, 35, len, "Movement", new ItemStack(Items.DIAMOND_BOOTS)));
 
 		addWindow(new ModuleWindow(ModuleManager.getModulesInCat(Category.EXPLOITS),
 				startX + len * 4 + 20, 35, len, "Exploits", new ItemStack(Items.REPEATING_COMMAND_BLOCK)));
@@ -126,18 +126,18 @@ public class ClickGuiScreen extends WindowScreen {
 		if (ModuleManager.getModule(ClickGui.class).getSetting(1).asToggle().state) {
 			searchField.setSuggestion(searchField.getText().isEmpty() ? "Search here" : "");
 
-			Set<Module> seachMods = new HashSet<>();
+			Set<Module> searchMods = new HashSet<>();
 			if (!searchField.getText().isEmpty()) {
 				for (Module m : ModuleManager.getModules()) {
 					if (m.getName().toLowerCase(Locale.ENGLISH).contains(searchField.getText().toLowerCase(Locale.ENGLISH).replace(" ", ""))) {
-						seachMods.add(m);
+						searchMods.add(m);
 					}
 				}
 			}
 
 			for (Window w : getWindows()) {
 				if (w instanceof ModuleWindow) {
-					((ModuleWindow) w).setSearchedModule(seachMods);
+					((ModuleWindow) w).setSearchedModule(searchMods);
 				}
 			}
 		}

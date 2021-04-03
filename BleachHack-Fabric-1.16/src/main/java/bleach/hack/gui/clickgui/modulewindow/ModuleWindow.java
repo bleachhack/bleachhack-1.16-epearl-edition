@@ -93,7 +93,7 @@ public class ModuleWindow extends ClickGuiWindow {
 
 			// If they match: Module gets marked red
 			if (searchedModules != null && searchedModules.contains(m.getKey()) && ModuleManager.getModule(ClickGui.class).getSetting(1).asToggle().state) {
-				DrawableHelper.fill(matrix, x, y + curY, x + len, y + 12 + curY, 0x50ff0000);
+				DrawableHelper.fill(matrix, x, y + curY, x + len, y + 12 + curY,  0x90606090 );
 			}
 
 			// Set which module settings show on
