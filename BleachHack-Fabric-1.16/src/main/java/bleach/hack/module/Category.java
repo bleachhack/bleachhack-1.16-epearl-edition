@@ -24,5 +24,7 @@ public enum Category {
 	MOVEMENT,
 	EXPLOITS,
 	MISC,
-	WORLD
+	CHAT,
+	WORLD,
+	FUN
 }

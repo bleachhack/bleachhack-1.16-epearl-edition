@@ -43,6 +43,7 @@ public class ModuleManager {
 			new AutoParkour(),
 			new AutoReconnect(),
 			new AutoRespawn(),
+			new AutoAlign(),
 			new AutoSign(),
 			new AutoSteal(),
 			new AutoThrow(),
@@ -75,6 +76,7 @@ public class ModuleManager {
 			new HoleESP(),
 			new Jesus(),
 			new Killaura(),
+			new Lol(),
 			new MountBypass(),
 			new MouseFriend(),
 			new Nametags(),
@@ -107,8 +109,10 @@ public class ModuleManager {
 			new Trail(),
 			new Trajectories(),
 			new UI(),
+			new Welcomer(),
 			new Xray(),
 			new Zoom());
+
 
 	public static List<Module> getModules() {
 		return mods;

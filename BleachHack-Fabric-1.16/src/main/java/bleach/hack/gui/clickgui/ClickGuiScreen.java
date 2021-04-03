@@ -92,6 +92,12 @@ public class ClickGuiScreen extends WindowScreen {
 
 		addWindow(new ModuleWindow(ModuleManager.getModulesInCat(Category.WORLD),
 				startX + len * 6 + 30, 35, len, "World", new ItemStack(Items.GRASS_BLOCK)));
+
+		addWindow(new ModuleWindow(ModuleManager.getModulesInCat(Category.CHAT),
+				startX + len * 6 + 30, 35, len, "Chat", new ItemStack(Items.PLAYER_HEAD)));
+
+		addWindow(new ModuleWindow(ModuleManager.getModulesInCat(Category.FUN),
+				startX + len * 7 + 30, 35, len, "Fun", new ItemStack(Items.TNT)));
 	}
 
 	public boolean isPauseScreen() {
