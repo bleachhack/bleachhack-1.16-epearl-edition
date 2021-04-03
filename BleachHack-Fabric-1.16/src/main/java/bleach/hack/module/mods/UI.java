@@ -102,7 +102,7 @@ public class UI extends Module {
 			List<String> lines = new ArrayList<>();
 
 			if (getSetting(0).asToggle().getChild(3).asToggle().state) {
-				lines.add(0, "\u00a7a> BleachHack " + BleachHack.VERSION);
+				lines.add(0, "\u00a7a> BleachHack-VpEdition " + BleachHack.VERSION);
 			}
 
 			if (getSetting(0).asToggle().state) {

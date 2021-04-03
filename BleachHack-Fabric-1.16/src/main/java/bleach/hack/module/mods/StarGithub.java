@@ -24,12 +24,18 @@ import net.minecraft.util.Util;
 public class StarGithub extends Module {
 
 	public StarGithub() {
-		super("StarGithub", KEY_UNBOUND, Category.MISC, "i need to feed my 420 children pls star github");
+		super("StarGithub", KEY_UNBOUND, Category.MISC, "Give a star to Me(Vp) and Bleach on github!");
 	}
 
 	public void onEnable() {
 		try {
 			Util.getOperatingSystem().open("https://github.com/BleachDrinker420/bleachhack-1.14");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		try {
+			Util.getOperatingSystem().open("https://github.com/HerraVp/BleachHack-VpEdition");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

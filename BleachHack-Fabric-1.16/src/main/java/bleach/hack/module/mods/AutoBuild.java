@@ -55,6 +55,7 @@ public class AutoBuild extends Module {
 					new PlaceOperationBlueprint(2, -2, 0, Items.TNT),
 					new PlaceOperationBlueprint(3, -1, 0, Items.SANDSTONE_WALL)));
 
+
 	private OperationList current = null;
 	private BlockHitResult ray = null;
 	private boolean active = false;

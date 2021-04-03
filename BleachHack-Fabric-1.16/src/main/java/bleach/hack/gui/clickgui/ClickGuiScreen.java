@@ -109,8 +109,8 @@ public class ClickGuiScreen extends WindowScreen {
 		searchField.visible = ModuleManager.getModule(ClickGui.class).getSetting(1).asToggle().state;
 
 		this.renderBackground(matrix);
-		textRenderer.draw(matrix, "BleachHack-1.16-" + BleachHack.VERSION, 3, 3, 0x305090);
-		textRenderer.draw(matrix, "BleachHack-1.16-" + BleachHack.VERSION, 2, 2, 0x6090d0);
+		textRenderer.draw(matrix, "BleachHack-VpEdition-1.16-" + BleachHack.VERSION, 3, 3, 0x305090);
+		textRenderer.draw(matrix, "BleachHack-VpEdition-1.16-" + BleachHack.VERSION, 2, 2, 0x6090d0);
 
 		if (ModuleManager.getModule(ClickGui.class).getSetting(2).asToggle().state) {
 			textRenderer.drawWithShadow(matrix, "Current prefix is: \"" + Command.PREFIX + "\" (" + Command.PREFIX + "help)", 2, height - 20, 0x99ff99);
