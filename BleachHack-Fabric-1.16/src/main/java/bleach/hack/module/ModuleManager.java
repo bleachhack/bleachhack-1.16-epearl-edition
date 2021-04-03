@@ -50,6 +50,7 @@ public class ModuleManager {
 			new AutoThrow(),
 			new AutoTool(),
 			new AutoTotem(),
+			new AutoTrap(),
 			new AutoWalk(),
 			new BetterPortal(),
 			new BetterTablist(),
