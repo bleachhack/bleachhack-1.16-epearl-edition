@@ -31,29 +31,6 @@ On Linux: in a terminal window, type 'xdg-open ~/.minecraft'... or if you like w
 Then inside that folder, you should see a folder named 'mods'. (If you don't see one, make sure you've installed Fabric already and started Minecraft again once).
 That's where you'll put any mods you want to install.
 
-### For (200 IQ) developers
-
-Download the project.
-Start A Command Prompt/Terminal in the BleachHack-Fabric-(*Version*) folder.
-Generate the needed files for your preferred IDE.
-
-***Eclipse***
-
-  On Windows:
-  > gradlew genSources eclipse
-  
-  On Linux:
-  > chmod +x ./gradlew  
-  >./gradlew genSources eclipse
-
-  Start a new workspace in eclipse.
-  Click File > Import... > Gradle > Gradle Project.
-  Select the BleachHack-Fabric-(*Version*) folder.
-
-***Other IDE's***
-
-  Use [this link](https://fabricmc.net/wiki/tutorial:setup) for more information.
-  It should be pretty similar to the eclipse setup.
 
 ## Recommended Mods
 
