@@ -25,7 +25,7 @@ public class Welcomer extends Module {
 
 
     public Welcomer() {
-        super("Greeter", KEY_UNBOUND, Category.CHAT, "auto welcomer bruh (edit in greeter.txt)",
+        super("Welcomer", KEY_UNBOUND, Category.CHAT, "Welcomes players (edit in greeter.txt)",
                 new SettingMode("Read", "Order", "Random"),
                 new SettingSlider("Delay", 1, 20, 3, 0).withDesc("Second delay between messages to avoid spam kicks")
         );
