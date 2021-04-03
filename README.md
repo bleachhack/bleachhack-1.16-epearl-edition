@@ -1,6 +1,6 @@
 
 # BleachHack VpEdition (Not ready yet)
-![](https://img.shields.io/tokei/lines/github/BleachDrinker420/bleachhack-1.14?style=flat-square)
+![](https://img.shields.io/tokei/lines/github/HerraVp/bleachhack-VpEdition?style=flat-square)
 ![](https://img.shields.io/github/last-commit/HerraVp/bleachhack-VpEdition?style=flat-square)
 
 My own skid of BleachHack.
