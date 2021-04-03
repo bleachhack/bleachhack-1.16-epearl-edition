@@ -12,7 +12,8 @@ Credits to BleachDrinker420!
 ## Real BleachHack
 > Website: https://bleachhack.github.io/  
 > Discord: https://discord.gg/b5Wc4nQ
-[Real BleachHack releses](https://github.com/BleachDrinker420/BleachHack/releases).
+> 
+> [Real BleachHack releses](https://github.com/BleachDrinker420/BleachHack/releases).
 ## Installation
 ### For normal people
 
