@@ -31,6 +31,9 @@ On Linux: in a terminal window, type 'xdg-open ~/.minecraft'... or if you like w
 Then inside that folder, you should see a folder named 'mods'. (If you don't see one, make sure you've installed Fabric already and started Minecraft again once).
 That's where you'll put any mods you want to install.
 
+## Images
+![Gui](https://cdn.discordapp.com/attachments/817858188753240104/827993234709545000/BleachHackVp.png)
+![Gui2](https://cdn.discordapp.com/attachments/817858188753240104/827993994277027880/BleachHackVp2.png)
 
 ## Recommended Mods
 
