@@ -120,6 +120,7 @@ public class ModuleManager {
 			new Trail(),
 			new Trajectories(),
 			new UI(),
+			new VoidESP(),
 			new Welcomer(),
 			new Xray(),
 			new Zoom());
