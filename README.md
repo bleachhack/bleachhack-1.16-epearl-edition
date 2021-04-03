@@ -1,11 +1,8 @@
 
 # BleachHack VpEdition
-![](https://img.shields.io/github/downloads/bleachdrinker420/bleachhack-1.14/total?style=flat-square)
 ![](https://img.shields.io/tokei/lines/github/BleachDrinker420/bleachhack-1.14?style=flat-square)
 ![](https://img.shields.io/github/languages/code-size/bleachdrinker420/bleachhack-1.14?style=flat-square)
 ![](https://img.shields.io/github/last-commit/bleachdrinker420/bleachhack-1.14?style=flat-square)
-![](https://img.shields.io/badge/daily%20commit-yes-blue?style=flat-square)
-![](https://img.shields.io/discord/620600892718055434?style=flat-square)
 
 My own skid of BleachHack
 
