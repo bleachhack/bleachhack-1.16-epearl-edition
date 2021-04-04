@@ -31,9 +31,6 @@ Put the jar file in the mods folder located in .minecraft folder.
 
 Here are some nice to have mods that are compatible with BleachHack, none of these require Fabric API.
 
-### [Multiconnect](https://github.com/Earthcomputer/multiconnect)
-Multiconnect allows you to connect to any 1.9-1.16 server from a 1.16 client.
-
 ### [Baritone](https://github.com/cabaletta/baritone)
 Baritone allows you to automate tasks such as walking, mining or building.
 
