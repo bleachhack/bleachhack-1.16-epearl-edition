@@ -1,0 +1,39 @@
+package bleach.hack.command.commands;
+
+import bleach.hack.command.Command;
+import bleach.hack.util.BleachLogger;
+import net.minecraft.client.MinecraftClient;
+
+
+import java.awt.*;
+import java.io.File;
+import java.nio.file.Paths;
+
+public class CmdOpenFolder extends Command {
+
+    @Override
+    public String getAlias() {
+        return "openfolder";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Opens BleachHack folder";
+    }
+
+    @Override
+    public String getSyntax() {
+        return "openfolder";
+    }
+
+    @Override
+    public void onCommand(String command, String[] args) throws Exception {
+        BleachLogger.infoMessage("Opening bleach folder");
+        if(!GraphicsEnvironment.isHeadless()) {
+            System.setProperty("java.awt.headless", "false");
+        }
+        Desktop.getDesktop().open(new File(String.valueOf(Paths.get(MinecraftClient.getInstance().runDirectory.getPath(), "bleach/"))));
+    }
+
+}
+

@@ -41,6 +41,7 @@ public class ModuleManager {
 			new AutoBedBomb(),
 			new AutoBuild(),
 			new AutoDonkeyDupe(),
+			//new AutoEZ(),
 			new AutoFish(),
 			new AutoParkour(),
 			new AutoReconnect(),

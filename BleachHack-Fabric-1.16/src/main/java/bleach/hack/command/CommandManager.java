@@ -48,6 +48,7 @@ public class CommandManager {
 			new CmdInvPeek(),
 			new CmdNBT(),
 			new CmdNotebot(),
+			new CmdOpenFolder(),
 			new CmdPeek(),
 			new CmdPrefix(),
 			new CmdRbook(),
