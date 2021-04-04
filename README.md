@@ -34,6 +34,7 @@ That's where you'll put any mods you want to install.
 ## Images
 ![Gui](https://cdn.discordapp.com/attachments/817858188753240104/827993234709545000/BleachHackVp.png)
 ![Gui2](https://cdn.discordapp.com/attachments/817858188753240104/827993994277027880/BleachHackVp2.png)
+![Video](https://youtu.be/yu9yVbSqEHU)
 
 ## Recommended Mods
 
