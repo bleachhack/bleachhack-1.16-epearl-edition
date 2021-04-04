@@ -1,10 +1,5 @@
 package bleach.hack.module.mods;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import com.google.common.eventbus.Subscribe;
-
 import bleach.hack.event.events.EventTick;
 import bleach.hack.event.events.EventWorldRender;
 import bleach.hack.module.Category;
@@ -14,10 +9,14 @@ import bleach.hack.setting.base.SettingMode;
 import bleach.hack.setting.base.SettingSlider;
 import bleach.hack.setting.base.SettingToggle;
 import bleach.hack.util.RenderUtils;
+import com.google.common.eventbus.Subscribe;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author <a href="https://github.com/lasnikprogram">Lasnik</a>

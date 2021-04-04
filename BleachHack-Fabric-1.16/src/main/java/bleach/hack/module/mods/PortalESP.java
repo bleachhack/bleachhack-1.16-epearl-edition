@@ -10,11 +10,13 @@ import bleach.hack.util.RenderUtils;
 import com.google.common.eventbus.Subscribe;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.client.render.debug.ChunkLoadingDebugRenderer;
 import net.minecraft.network.Packet;
 import net.minecraft.network.packet.c2s.play.PlayerInteractBlockC2SPacket;
 import net.minecraft.network.packet.s2c.play.BlockUpdateS2CPacket;
 import net.minecraft.network.packet.s2c.play.ChunkDataS2CPacket;
 import net.minecraft.network.packet.s2c.play.ChunkDeltaUpdateS2CPacket;
+import net.minecraft.network.packet.s2c.play.ChunkLoadDistanceS2CPacket;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.ChunkPos;
@@ -27,7 +29,6 @@ import net.minecraft.world.chunk.WorldChunk;
 import net.minecraft.world.dimension.DimensionType;
 import org.lwjgl.opengl.GL11;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,8 +36,8 @@ import java.util.Stack;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.SynchronousQueue;
 
-// Kinda shit -Vp
-public class PortalESP extends Module {
+public class PortalESP extends Module
+{
     private final HashMap<DimensionType, ArrayBlockingQueue<BlockPos>> portals = new HashMap<DimensionType, ArrayBlockingQueue<BlockPos>>();
     // Man, race condition is killing me wtf
     public Vec3d prevPos;
@@ -44,8 +45,9 @@ public class PortalESP extends Module {
     private final Stack<WorldChunk> chunkStack = new Stack<>(); // Lol stacks is so cool
     private boolean running;
 
-    public PortalESP() {
-        super("PortalESP", KEY_UNBOUND, Category.RENDER, "ESP for portals (laggy with high range)",
+    public PortalESP()
+    {
+        super("PortalESP", KEY_UNBOUND, Category.RENDER, "ESP for portals (Kinda shit rn -Vp)",
                 new SettingSlider("Range", 0, 125, 75, 0),
                 new SettingSlider("R: ", 0.0D, 255.0D, 115.0D, 0),
                 new SettingSlider("G: ", 0.0D, 255.0D, 0.0D, 0),
@@ -62,7 +64,7 @@ public class PortalESP extends Module {
             portals.put(d, new ArrayBlockingQueue<BlockPos>(65455));
             return shown(pos, d);
         }
-        for (BlockPos p : portals.get(d)) {
+        for(BlockPos p : portals.get(d)) {
             if (p.equals(pos))
                 return true;
         }
@@ -95,7 +97,7 @@ public class PortalESP extends Module {
     public void onPacket(EventReadPacket e) {
         if (!isEnabled()) return;
         if (e.getPacket() instanceof ChunkDeltaUpdateS2CPacket) {
-            ChunkDeltaUpdateS2CPacket p = (ChunkDeltaUpdateS2CPacket) e.getPacket();
+            ChunkDeltaUpdateS2CPacket p = (ChunkDeltaUpdateS2CPacket)e.getPacket();
             p.visitUpdates((bp, bs) -> {
                 if (mc.player == null)
                     return;
@@ -115,11 +117,11 @@ public class PortalESP extends Module {
         }
     }
 
-  //  @Subscribe
-  //  public void chunkLoaded(EventLoadChunk e) {
-   //     WorldChunk chunk = e.getChunk();
-   //     chunkStack.push(chunk);
-    //}
+   @Subscribe  //FINALLY FUCKING WORKS -Vp
+    public void chunkLoaded(EventLoadChunk e) {
+       WorldChunk chunk = e.getChunk();
+        chunkStack.push(chunk);
+    }
 
     @Subscribe
     public void onRender(EventWorldRender event) {
@@ -157,7 +159,8 @@ public class PortalESP extends Module {
         GL11.glPopMatrix();
     }
 
-    public void drawFilledBlockBox(BlockPos blockPos, float r, float g, float b, float a) {
+    public void drawFilledBlockBox(BlockPos blockPos, float r, float g, float b, float a)
+    {
         double x = blockPos.getX();
         double y = blockPos.getY();
         double z = blockPos.getZ();
@@ -166,9 +169,9 @@ public class PortalESP extends Module {
         float og = (float) (this.getSettings().get(2).asSlider().getValue() / 255.0D);
         float ob = (float) (this.getSettings().get(3).asSlider().getValue() / 255.0D);
         if (getSetting(5).asToggle().state) {
-            BleachLogger.infoMessage(this.mc.world.getBlockState(new BlockPos(x, y, z)).getEntries().toString());
+            BleachLogger.infoMessage(this.mc.world.getBlockState(new BlockPos(x,y,z)).getEntries().toString());
         }
-        if (this.mc.world.getBlockState(new BlockPos(x, y, z)).getEntries().toString().contains("values=[x, z]}=x")) {
+        if (this.mc.world.getBlockState(new BlockPos(x,y,z)).getEntries().toString().contains("values=[x, z]}=x")) {
             RenderUtils.drawFilledBox(new Box(x, y, z + 0.5D, x + 1.0D, y + 1.0D, z + 0.5D), or, og, ob, a);
             RenderUtils.drawFilledBox(new Box(x, y, z + 0.5D, x + 1.0D, y + 1.0D, z + 0.5D), or, og, ob, a * 1.5F);
         } else {
@@ -176,8 +179,7 @@ public class PortalESP extends Module {
             RenderUtils.drawFilledBox(new Box(x + 0.5D, y, z, x + 0.5D, y + 1.0D, z + 1.0D), or, og, ob, a * 1.5F);
         }
     }
-
-    public void onDisable() {
+    public void onDisable () {
         portals.clear();
     }
 }

@@ -1,6 +1,7 @@
 package bleach.hack.event.events;
 
 import bleach.hack.event.Event;
+import net.minecraft.world.chunk.WorldChunk;
 
 public class EventChunkCulling extends Event {
 
@@ -17,4 +18,5 @@ public class EventChunkCulling extends Event {
 	public void setCull(boolean shouldCull) {
 		this.shouldCull = shouldCull;
 	}
+
 }
