@@ -23,7 +23,7 @@ Video footage of me testing the client -> https://youtu.be/yu9yVbSqEHU
 ## Installation
 Download [fabric for minecraft 1.16/1.17](https://fabricmc.net/use/).
 
-Download my skid version [from the releases section](https://github.com/HerraVp/BleachHack-VpEdition/releses).
+Download my skid version [from the releases section](https://github.com/HerraVp/BleachHack-VpEdition/releases).
 
 Put the jar file in the mods folder located in .minecraft folder.
 
