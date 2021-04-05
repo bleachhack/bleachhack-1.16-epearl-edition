@@ -1,5 +1,5 @@
 
-# BleachHack VpEdition 1.0
+# BleachHack VpEdition 1.1
 ![](https://img.shields.io/tokei/lines/github/HerraVp/bleachhack-VpEdition?style=flat-square)
 ![](https://img.shields.io/github/last-commit/HerraVp/bleachhack-VpEdition?style=flat-square)
 
@@ -15,7 +15,7 @@ Credits to BleachDrinker420!
 > 
 > [Real BleachHack releses](https://github.com/BleachDrinker420/BleachHack/releases).
 
-## Images
+## Images  (Taken on version 1.0)
 Video footage of me testing the client -> https://youtu.be/yu9yVbSqEHU
 ![Gui](https://cdn.discordapp.com/attachments/817858188753240104/827993234709545000/BleachHackVp.png)
 ![Gui2](https://cdn.discordapp.com/attachments/817858188753240104/827993994277027880/BleachHackVp2.png)
@@ -23,7 +23,7 @@ Video footage of me testing the client -> https://youtu.be/yu9yVbSqEHU
 ## Installation
 Download [fabric for minecraft 1.16/1.17](https://fabricmc.net/use/).
 
-Download my skid version [from the releases section](https://github.com/HerraVp/BleachHack-VpEdition/releses).
+Download my skid version [from the releases section](https://github.com/HerraVp/BleachHack-VpEdition/releases).
 
 Put the jar file in the mods folder located in .minecraft folder.
 
