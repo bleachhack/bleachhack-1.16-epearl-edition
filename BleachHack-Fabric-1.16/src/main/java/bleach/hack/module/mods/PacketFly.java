@@ -67,7 +67,7 @@ public class PacketFly extends Module {
 		mc.player.setVelocity(Vec3d.ZERO);
 		event.setCancelled(true);
 	}
-	
+
 	@Subscribe
 	public void onMovement(EventClientMove event) {
 		event.setCancelled(true);
@@ -77,24 +77,24 @@ public class PacketFly extends Module {
 	public void onReadPacket(EventReadPacket event) {
 		if (event.getPacket() instanceof PlayerPositionLookS2CPacket) {
 			PlayerPositionLookS2CPacket p = (PlayerPositionLookS2CPacket) event.getPacket();
-		
+
 			FabricReflect.writeField(p, mc.player.yaw, "field_12391", "yaw");
 			FabricReflect.writeField(p, mc.player.pitch, "field_12393", "pitch");
-			
+
 			if (getSetting(4).asToggle().state) {
 				event.setCancelled(true);
 			}
 		}
-		
+
 	}
-	
+
 	@Subscribe
 	public void onSendPacket(EventSendPacket event) {
 		if (event.getPacket() instanceof PlayerMoveC2SPacket.LookOnly) {
 			event.setCancelled(true);
 			return;
 		}
-		
+
 		if (event.getPacket() instanceof PlayerMoveC2SPacket.Both) {
 			event.setCancelled(true);
 			PlayerMoveC2SPacket p = (PlayerMoveC2SPacket) event.getPacket();
@@ -151,7 +151,7 @@ public class PacketFly extends Module {
 
 		} else if (getSetting(0).asMode().mode == 1) {
 			Vec3d forward = new Vec3d(0, 0, hspeed).rotateY(-(float) Math.toRadians(mc.player.yaw));
-			
+
 			if (mc.player.input.jumping) {
 				forward = new Vec3d(0, vspeed, 0);
 			}
@@ -170,7 +170,7 @@ public class PacketFly extends Module {
 			else if (!mc.player.input.pressingForward) {
 				forward = Vec3d.ZERO;
 			}
-			
+
 			//forward = Vec3d.ZERO;
 			/*if (mc.player.headYaw != mc.player.yaw) {
 				mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.LookOnly(
@@ -190,7 +190,7 @@ public class PacketFly extends Module {
 
 			mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionOnly(
 					mc.player.getX() + forward.x, mc.player.getY() + forward.y, mc.player.getZ() + forward.z, false));
-	
+
 			mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionOnly(
 					mc.player.getX() + forward.x, mc.player.getY() - 420.69, mc.player.getZ() + forward.z, true));
 		}
