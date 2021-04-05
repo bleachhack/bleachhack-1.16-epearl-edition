@@ -1,14 +1,13 @@
 package bleach.hack.command.commands;
 
+
 import bleach.hack.command.Command;
 import bleach.hack.util.BleachLogger;
 import net.minecraft.client.MinecraftClient;
 
-
 import java.awt.*;
 import java.io.File;
 import java.nio.file.Paths;
-
 public class CmdOpenFolder extends Command {
 
     @Override
@@ -28,7 +27,7 @@ public class CmdOpenFolder extends Command {
 
     @Override
     public void onCommand(String command, String[] args) throws Exception {
-        BleachLogger.infoMessage("Opening bleach folder");
+        BleachLogger.infoMessage("Opening BleachHack folder");
         if(!GraphicsEnvironment.isHeadless()) {
             System.setProperty("java.awt.headless", "false");
         }
