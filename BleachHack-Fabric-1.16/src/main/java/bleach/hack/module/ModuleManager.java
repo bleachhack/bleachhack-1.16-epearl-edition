@@ -90,6 +90,7 @@ public class ModuleManager {
 			new MountBypass(),
 			new MouseFriend(),
 			new Nametags(),
+		//TODO 	new NewBedAura
 			new Nofall(),
 			new NoKeyBlock(),
 			new NoRender(),
@@ -103,7 +104,6 @@ public class ModuleManager {
 			new Peek(),
 			new PlayerCrash(),
 			new PopCounter(),
-			new PortalESP(),
 			new RotationSnap(),
 			new SafeWalk(),
 			new Scaffold(),
