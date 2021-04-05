@@ -72,7 +72,7 @@ public class UI extends Module {
 						new SettingToggle("Extra Line", true).withDesc("Adds an extra line to the front of the module list"), // 0-0
 						new SettingToggle("Outer Line", false).withDesc("Adds an outer line to the module list"), // 0-1
 						new SettingToggle("Fill", true).withDesc("Adds a black fill behind the module list"), // 0-2
-						new SettingToggle("Welcomer", true).withDesc("Welcomes u (Welcome $playername :^) )"), // 0-3
+						new SettingToggle("Welcomer", true).withDesc("Says ur name"), // 0-3
 						new SettingSlider("HueBright", 0, 1, 1, 2).withDesc("Rainbow Hue"), // 0-4
 						new SettingSlider("HueSat", 0, 1, 0.5, 2).withDesc("Rainbow Saturation"), // 0-5
 						new SettingSlider("HueSpeed", 0.1, 50, 25, 1).withDesc("Rainbow Speed")), // 0-6
