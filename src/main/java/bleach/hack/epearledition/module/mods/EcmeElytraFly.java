@@ -13,7 +13,7 @@ import bleach.hack.epearledition.module.Category;
 import bleach.hack.epearledition.module.Module;
 import bleach.hack.epearledition.setting.base.SettingMode;
 import bleach.hack.epearledition.setting.base.SettingSlider;
-import bleach.hack.epearledition.util.FabricReflect;
+import bleach.hack.epearledition.utils.FabricReflect;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket.Mode;
