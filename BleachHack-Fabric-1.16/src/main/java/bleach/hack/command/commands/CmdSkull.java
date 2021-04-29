@@ -26,7 +26,9 @@ import com.google.common.io.Resources;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import bleach.hack.BleachHack;
 import bleach.hack.command.Command;
+import bleach.hack.command.CommandCategory;
 import bleach.hack.util.BleachLogger;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -35,23 +37,12 @@ import net.minecraft.nbt.StringNbtReader;
 
 public class CmdSkull extends Command {
 
-	@Override
-	public String getAlias() {
-		return "skull";
+	public CmdSkull() {
+		super("skull", "Gives you a player skull.", "skull <player> | skull img <image url>", CommandCategory.CREATIVE);
 	}
 
 	@Override
-	public String getDescription() {
-		return "Gives you a player skull";
-	}
-
-	@Override
-	public String getSyntax() {
-		return "skull <Player> | skull img <Image url>";
-	}
-
-	@Override
-	public void onCommand(String command, String[] args) throws Exception {
+	public void onCommand(String alias, String[] args) throws Exception {
 		if (args.length == 0) {
 			printSyntaxError();
 			return;
@@ -83,7 +74,7 @@ public class CmdSkull extends Command {
 			CompoundTag tag = StringNbtReader.parse(
 					"{SkullOwner:{Id:" + id + ",Properties:{textures:[{Value:\"" + encodeUrl(args[1]) + "\"}]}}}");
 			item.setTag(tag);
-			System.out.println(tag);
+			BleachHack.logger.info(tag);
 		}
 
 		mc.player.inventory.addPickBlock(item);

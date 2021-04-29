@@ -36,16 +36,16 @@ public class MixinBlock {
 
 	@Inject(method = "shouldDrawSide", at = @At("HEAD"), cancellable = true)
 	private static void shouldDrawSide(BlockState state, BlockView world, BlockPos pos, Direction facing, CallbackInfoReturnable<Boolean> callback) {
-		Xray xray = ModuleManager.getModule(Xray.class);
+		Xray xray = (Xray) ModuleManager.getModule("Xray");
+
 		if (xray.isEnabled()) {
 			callback.setReturnValue(xray.isVisible(state.getBlock()));
-			callback.cancel();
 		}
 	}
 
 	@Inject(method = "isShapeFullCube", at = @At("HEAD"), cancellable = true)
 	private static void isShapeFullCube(VoxelShape shape, CallbackInfoReturnable<Boolean> callback) {
-		if (ModuleManager.getModule(Xray.class).isEnabled()) {
+		if (ModuleManager.getModule("Xray").isEnabled()) {
 			callback.setReturnValue(false);
 		}
 	}

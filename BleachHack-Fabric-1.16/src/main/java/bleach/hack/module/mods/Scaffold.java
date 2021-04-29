@@ -34,7 +34,8 @@ import bleach.hack.setting.base.SettingSlider;
 import bleach.hack.setting.base.SettingToggle;
 import bleach.hack.setting.other.SettingLists;
 import bleach.hack.setting.other.SettingRotate;
-import bleach.hack.util.RenderUtils;
+import bleach.hack.util.render.RenderUtils;
+import bleach.hack.util.render.color.QuadColor;
 import bleach.hack.util.world.WorldUtils;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.item.BlockItem;
@@ -112,11 +113,11 @@ public class Scaffold extends Module {
 		Vec3d placeVec = mc.player.getPos().add(0, -0.85, 0);
 		Set<BlockPos> blocks = mode == 0
 				? Sets.newHashSet(
-						new BlockPos(placeVec),
-						new BlockPos(placeVec.add(range, 0, 0)),
-						new BlockPos(placeVec.add(-range, 0, 0)),
-						new BlockPos(placeVec.add(0, 0, range)),
-						new BlockPos(placeVec.add(0, 0, -range)))
+				new BlockPos(placeVec),
+				new BlockPos(placeVec.add(range, 0, 0)),
+				new BlockPos(placeVec.add(-range, 0, 0)),
+				new BlockPos(placeVec.add(0, 0, range)),
+				new BlockPos(placeVec.add(0, 0, -range)))
 				: getSpiral(mode, new BlockPos(placeVec));
 
 		if (getSetting(6).asToggle().state
@@ -153,9 +154,9 @@ public class Scaffold extends Module {
 		int cap = 0;
 		for (BlockPos bp : blocks) {
 			boolean placed = WorldUtils.placeBlock(bp, slot, getSetting(3).asRotate(), getSetting(4).asToggle().state, !getSetting(9).asToggle().state);
-			
+
 			if (!placed && getSetting(7).asToggle().state) {
-				WorldUtils.airPlaceBlock(bp, slot, getSetting(3).asRotate(), getSetting(4).asToggle().state, !getSetting(9).asToggle().state);
+				placed = WorldUtils.airPlaceBlock(bp, slot, getSetting(3).asRotate(), getSetting(4).asToggle().state, !getSetting(9).asToggle().state);
 			}
 
 			if (placed) {
@@ -163,7 +164,7 @@ public class Scaffold extends Module {
 
 				cap++;
 
-				if (cap >= (int) getSetting(1).asSlider().getValue()) {
+				if (cap >= getSetting(1).asSlider().getValueInt()) {
 					return;
 				}
 			}
@@ -175,7 +176,7 @@ public class Scaffold extends Module {
 		if (getSetting(11).asToggle().state) {
 			float[] col = getSetting(11).asToggle().getChild(0).asColor().getRGBFloat();
 			for (BlockPos bp : renderBlocks) {
-				RenderUtils.drawFilledBox(bp, col[0], col[1], col[2], 0.7f);
+				RenderUtils.drawBoxBoth(bp, QuadColor.single(col[0], col[1], col[2], 0.5f), 2.5f);
 
 				col[0] = Math.max(0f, col[0] - 0.01f);
 				col[2] = Math.min(1f, col[2] + 0.01f);

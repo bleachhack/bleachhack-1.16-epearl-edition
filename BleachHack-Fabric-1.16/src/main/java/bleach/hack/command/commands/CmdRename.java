@@ -18,29 +18,19 @@
 package bleach.hack.command.commands;
 
 import bleach.hack.command.Command;
+import bleach.hack.command.CommandCategory;
 import bleach.hack.util.BleachLogger;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.LiteralText;
 
 public class CmdRename extends Command {
 
-	@Override
-	public String getAlias() {
-		return "rename";
+	public CmdRename() {
+		super("rename", "Renames an item, use \"&\" for color.", "rename <name>", CommandCategory.CREATIVE);
 	}
 
 	@Override
-	public String getDescription() {
-		return "Renames an item, use \"&\" for color";
-	}
-
-	@Override
-	public String getSyntax() {
-		return "rename <name>";
-	}
-
-	@Override
-	public void onCommand(String command, String[] args) throws Exception {
+	public void onCommand(String alias, String[] args) throws Exception {
 		if (!mc.player.abilities.creativeMode) {
 			BleachLogger.errorMessage("Not In Creative Mode!");
 			return;

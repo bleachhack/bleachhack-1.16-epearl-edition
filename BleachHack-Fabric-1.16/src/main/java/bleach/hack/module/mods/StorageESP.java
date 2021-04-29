@@ -37,7 +37,8 @@ import bleach.hack.module.Module;
 import bleach.hack.setting.base.SettingMode;
 import bleach.hack.setting.base.SettingSlider;
 import bleach.hack.setting.base.SettingToggle;
-import bleach.hack.util.RenderUtils;
+import bleach.hack.util.render.RenderUtils;
+import bleach.hack.util.render.color.QuadColor;
 import bleach.hack.util.shader.OutlineShaderManager;
 import bleach.hack.util.shader.StaticShaders;
 import bleach.hack.util.shader.StringShaderEffect;
@@ -76,16 +77,15 @@ public class StorageESP extends Module {
 	private Map<Entity, float[]> entities = new HashMap<>();
 
 	private Set<BlockPos> blacklist = new HashSet<>();
-	
+
 	private int lastWidth = -1;
 	private int lastHeight = -1;
 	private double lastShaderWidth;
-	private int lastShaderMode;
 	private boolean shaderUnloaded = true;
 
 	public StorageESP() {
 		super("StorageESP", KEY_UNBOUND, Category.RENDER, "Draws a box around storage containers.",
-				new SettingMode("Render", "Outline", "Shader", "Box+Fill", "Box", "Fill"),
+				new SettingMode("Render", "Shader", "Box+Fill", "Box", "Fill"),
 				new SettingSlider("Shader", 0, 3, 1.5, 1).withDesc("The thickness of the shader outline"),
 				new SettingSlider("Box", 0.1, 4, 2, 1).withDesc("The thickness of the box lines"),
 				new SettingSlider("Fill", 0, 1, 0.3, 2).withDesc("The opacity of the fill"),
@@ -140,7 +140,7 @@ public class StorageESP extends Module {
 
 	@Subscribe
 	public void onRender(EventWorldRender.Post event) {
-		if (getSetting(0).asMode().mode >= 2) {
+		if (getSetting(0).asMode().mode >= 1) {
 			for (Entry<BlockEntity, float[]> e: blockEntities.entrySet()) {
 				if (blacklist.contains(e.getKey().getPos())) {
 					continue;
@@ -162,12 +162,12 @@ public class StorageESP extends Module {
 					}
 				}
 
-				if (getSetting(0).asMode().mode == 2 || getSetting(0).asMode().mode == 4) {
-					RenderUtils.drawFill(box, e.getValue()[0], e.getValue()[1], e.getValue()[2], (float) getSetting(3).asSlider().getValue());
+				if (getSetting(0).asMode().mode == 1 || getSetting(0).asMode().mode == 3) {
+					RenderUtils.drawBoxFill(box, QuadColor.single(e.getValue()[0], e.getValue()[1], e.getValue()[2], getSetting(3).asSlider().getValueFloat()));
 				}
 
-				if (getSetting(0).asMode().mode == 2 || getSetting(0).asMode().mode == 3) {
-					RenderUtils.drawOutline(box, e.getValue()[0], e.getValue()[1], e.getValue()[2], 1f, (float) getSetting(2).asSlider().getValue());
+				if (getSetting(0).asMode().mode == 1 || getSetting(0).asMode().mode == 2) {
+					RenderUtils.drawBoxOutline(box, QuadColor.single(e.getValue()[0], e.getValue()[1], e.getValue()[2], 1f), getSetting(2).asSlider().getValueFloat());
 				}
 			}
 
@@ -181,12 +181,12 @@ public class StorageESP extends Module {
 					box = box.expand(axis == 0 ? 0 : 0.12, axis == 1 ? 0 : 0.12, axis == 2 ? 0 : 0.12);
 				}
 
-				if (getSetting(0).asMode().mode == 2 || getSetting(0).asMode().mode == 4) {
-					RenderUtils.drawFill(box, e.getValue()[0], e.getValue()[1], e.getValue()[2], (float) getSetting(3).asSlider().getValue());
+				if (getSetting(0).asMode().mode == 1 || getSetting(0).asMode().mode == 3) {
+					RenderUtils.drawBoxFill(box, QuadColor.single(e.getValue()[0], e.getValue()[1], e.getValue()[2], getSetting(3).asSlider().getValueFloat()));
 				}
 
-				if (getSetting(0).asMode().mode == 2 || getSetting(0).asMode().mode == 3) {
-					RenderUtils.drawOutline(box, e.getValue()[0], e.getValue()[1], e.getValue()[2], 1f, (float) getSetting(2).asSlider().getValue());
+				if (getSetting(0).asMode().mode == 1 || getSetting(0).asMode().mode == 2) {
+					RenderUtils.drawBoxOutline(box, QuadColor.single(e.getValue()[0], e.getValue()[1], e.getValue()[2], 1f), getSetting(2).asSlider().getValueFloat());
 				}
 			}
 		}
@@ -194,12 +194,12 @@ public class StorageESP extends Module {
 
 	@Subscribe
 	public void onBlockEntityRenderPre(EventBlockEntityRender.PreAll event) throws JsonSyntaxException, IOException {
-		if (getSetting(0).asMode().mode <= 1) {
+		if (getSetting(0).asMode().mode == 0) {
 			if (mc.getWindow().getFramebufferWidth() != lastWidth || mc.getWindow().getFramebufferHeight() != lastHeight
-					|| lastShaderWidth != getSetting(1).asSlider().getValue() || lastShaderMode != getSetting(0).asMode().mode) {
+					|| lastShaderWidth != getSetting(1).asSlider().getValue() || shaderUnloaded) {
 				try {
 					ShaderEffect shader = new StringShaderEffect(mc.getFramebuffer(), mc.getResourceManager(), mc.getTextureManager(),
-							getSetting(0).asMode().mode == 0 ? StaticShaders.OUTLINE_SHADER : StaticShaders.MC_SHADER_UNFOMATTED
+							StaticShaders.MC_SHADER_UNFOMATTED
 									.replace("%1", "" + getSetting(1).asSlider().getValue())
 									.replace("%2", "" + (getSetting(1).asSlider().getValue() / 2)));
 
@@ -207,9 +207,8 @@ public class StorageESP extends Module {
 					lastWidth = mc.getWindow().getFramebufferWidth();
 					lastHeight = mc.getWindow().getFramebufferHeight();
 					lastShaderWidth = getSetting(1).asSlider().getValue();
-					lastShaderMode = getSetting(0).asMode().mode;
 					shaderUnloaded = false;
-					
+
 					OutlineShaderManager.loadShader(shader);
 				} catch (JsonSyntaxException | IOException e) {
 					e.printStackTrace();
@@ -223,7 +222,7 @@ public class StorageESP extends Module {
 
 	@Subscribe
 	public void onBlockEntityRender(EventBlockEntityRender.Single.Pre event) {
-		if (getSetting(0).asMode().mode <= 1 && blockEntities.containsKey(event.getBlockEntity())) {
+		if (getSetting(0).asMode().mode == 0 && blockEntities.containsKey(event.getBlockEntity())) {
 			float[] color = blockEntities.get(event.getBlockEntity());
 			event.setVertexConsumers(getOutline(mc.getBufferBuilders(), color[0], color[1], color[2]));
 		}
@@ -231,7 +230,7 @@ public class StorageESP extends Module {
 
 	@Subscribe
 	public void onEntityRender(EventEntityRender.Single.Pre event) {
-		if (getSetting(0).asMode().mode <= 1 && entities.containsKey(event.getEntity())) {
+		if (getSetting(0).asMode().mode == 0 && entities.containsKey(event.getEntity())) {
 			float[] color = entities.get(event.getEntity());
 			event.setVertex(getOutline(mc.getBufferBuilders(), color[0], color[1], color[2]));
 			event.getEntity().setGlowing(true);

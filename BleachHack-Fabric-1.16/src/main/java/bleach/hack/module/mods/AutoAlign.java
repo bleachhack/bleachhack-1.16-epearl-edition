@@ -37,7 +37,7 @@ public class AutoAlign extends Module {
                 case 8: player.yaw = 180; break;
             }
         }
-        ModuleManager.getModule(AutoAlign.class).toggle();
+
     }
 
     public int determineHighway() {

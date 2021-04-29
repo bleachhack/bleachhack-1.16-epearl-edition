@@ -55,9 +55,9 @@ public class MixinTitleScreen extends Screen {
 							Triple.of(new BleachTitleScreen(), "BleachHack", new ItemStack(Items.MUSIC_DISC_CAT)),
 							Triple.of(new AccountManagerScreen(), "Account Mang", new ItemStack(Items.PAPER)),
 							Triple.of(ClickGui.clickGui, "ClickGui", new ItemStack(Items.TOTEM_OF_UNDYING))) {
-						
+
 						public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-							if (keyCode == ModuleManager.getModule(ClickGui.class).getKey()) {
+							if (keyCode == ModuleManager.getModule("ClickGui").getKey()) {
 								selectWindow(2);
 							}
 

@@ -24,6 +24,7 @@ import java.util.stream.IntStream;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import bleach.hack.command.Command;
+import bleach.hack.command.CommandCategory;
 import bleach.hack.util.BleachLogger;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -33,23 +34,13 @@ import net.minecraft.network.packet.c2s.play.BookUpdateC2SPacket;
 
 public class CmdRbook extends Command {
 
-	@Override
-	public String getAlias() {
-		return "rbook";
+	public CmdRbook() {
+		super("rbook", "Generates a random book.", "rbook <pages> <start char> <end char> <chrs/page>", CommandCategory.MISC,
+				"randombook", "book");
 	}
 
 	@Override
-	public String getDescription() {
-		return "Generates a random book";
-	}
-
-	@Override
-	public String getSyntax() {
-		return "rbook <pages> <start char> <end char> <chrs/page>";
-	}
-
-	@Override
-	public void onCommand(String command, String[] args) throws Exception {
+	public void onCommand(String alias, String[] args) throws Exception {
 		ItemStack item = mc.player.inventory.getMainHandStack();
 
 		if (item.getItem() != Items.WRITABLE_BOOK) {
@@ -72,6 +63,8 @@ public class CmdRbook extends Command {
 
 		item.getOrCreateTag().put("pages", textSplit);
 		mc.player.networkHandler.sendPacket(new BookUpdateC2SPacket(item, false, mc.player.inventory.selectedSlot));
+
+		BleachLogger.infoMessage("Written book (" + pages + " pages, " + pageChars + " chars/page)");
 	}
 
 }

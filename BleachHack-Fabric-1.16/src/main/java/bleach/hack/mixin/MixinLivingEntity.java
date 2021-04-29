@@ -42,17 +42,17 @@ public abstract class MixinLivingEntity extends Entity {
 	public void takeKnockback_setVelocity(LivingEntity entity, double x, double y, double z) {
 		EventDamage.Knockback event = new EventDamage.Knockback(x - getVelocity().getX(), y - getVelocity().getY(), z - getVelocity().getZ());
 		BleachHack.eventBus.post(event);
-		
+
 		if (!event.isCancelled()) {
 			setVelocity(event.getVelX() + getVelocity().getX(), event.getVelY() + getVelocity().getY(), event.getVelZ() + getVelocity().getZ());
 		}
 	}
-	
+
 	@Inject(method = "damage", at = @At("HEAD"), cancellable = true)
 	public void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
 		EventDamage.Normal event = new EventDamage.Normal(source, amount);
 		BleachHack.eventBus.post(event);
-		
+
 		if (event.isCancelled()) {
 			callbackInfo.setReturnValue(false);
 			callbackInfo.cancel();

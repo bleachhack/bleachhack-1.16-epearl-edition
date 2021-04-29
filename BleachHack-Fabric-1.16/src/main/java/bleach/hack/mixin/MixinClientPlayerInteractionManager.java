@@ -23,22 +23,20 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 import bleach.hack.module.ModuleManager;
-import bleach.hack.module.mods.Nuker;
-import bleach.hack.module.mods.SpeedMine;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
 
 @Mixin(ClientPlayerInteractionManager.class)
 public class MixinClientPlayerInteractionManager {
 
 	@Shadow private int blockBreakingCooldown;
-	
+
 	private int getCooldown() {
-		return (ModuleManager.getModule(Nuker.class).isEnabled()
-				? (int) ModuleManager.getModule(Nuker.class).getSetting(3).asSlider().getValue()
-						: ModuleManager.getModule(SpeedMine.class).isEnabled()
-						&& ModuleManager.getModule(SpeedMine.class).getSetting(0).asMode().mode == 1
-						? (int) ModuleManager.getModule(SpeedMine.class).getSetting(2).asSlider().getValue()
-								: 5);
+		return (ModuleManager.getModule("Nuker").isEnabled()
+				? (int) ModuleManager.getModule("Nuker").getSetting(3).asSlider().getValue()
+				: ModuleManager.getModule("SpeedMine").isEnabled()
+				&& ModuleManager.getModule("SpeedMine").getSetting(0).asMode().mode == 1
+				? (int) ModuleManager.getModule("SpeedMine").getSetting(2).asSlider().getValue()
+				: 5);
 	}
 
 	@Redirect(method = "updateBlockBreakingProgress", at = @At(value = "FIELD", target = "Lnet/minecraft/client/network/ClientPlayerInteractionManager;blockBreakingCooldown:I", ordinal = 3),

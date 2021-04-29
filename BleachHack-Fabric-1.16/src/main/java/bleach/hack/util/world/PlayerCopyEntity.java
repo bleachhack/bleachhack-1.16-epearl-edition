@@ -40,7 +40,7 @@ public class PlayerCopyEntity extends OtherClientPlayerEntity {
 		refreshPositionAfterTeleport(player.getX(), player.getY(), player.getZ());
 		pitch = player.pitch;
 		yaw = headYaw = bodyYaw = player.yaw;
-		
+
 		// Cache the player textures, then switch to a random uuid
 		// because the world doesn't allow duplicate uuids in 1.17+
 		getPlayerListEntry();

@@ -41,7 +41,7 @@ import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.StructureFeature;
 
 public class ClientChunkSerializer {
-	
+
 	public static CompoundTag serialize(ClientWorld world, Chunk chunk) {
 		ChunkPos chunkPos = chunk.getPos();
 		CompoundTag compoundTag = new CompoundTag();
@@ -183,7 +183,7 @@ public class ClientChunkSerializer {
 	}
 
 	private static CompoundTag writeStructures(ChunkPos pos, Map<StructureFeature<?>, StructureStart<?>> structureStarts,
-			Map<StructureFeature<?>, LongSet> structureReferences) {
+											   Map<StructureFeature<?>, LongSet> structureReferences) {
 		CompoundTag compoundTag = new CompoundTag();
 		CompoundTag compoundTag2 = new CompoundTag();
 		Iterator<Entry<StructureFeature<?>, StructureStart<?>>> var5 = structureStarts.entrySet().iterator();

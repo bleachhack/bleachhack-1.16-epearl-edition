@@ -27,7 +27,7 @@ public class SettingLists {
 	public static SettingList<Block> newBlockList(String text, String windowText, Predicate<Block> filter,  Block... blocks) {
 		List<Block> blockList = filter == null
 				? Registry.BLOCK.stream().collect(Collectors.toList())
-						: Registry.BLOCK.stream().filter(filter).collect(Collectors.toList());
+				: Registry.BLOCK.stream().filter(filter).collect(Collectors.toList());
 
 		return new SettingList<Block>(text, windowText, blockList, blocks) {
 
@@ -71,7 +71,7 @@ public class SettingLists {
 	public static SettingList<Item> newItemList(String text, String windowText, Predicate<Item> filter, Item... items) {
 		List<Item> itemList = filter == null
 				? Registry.ITEM.stream().collect(Collectors.toList())
-						: Registry.ITEM.stream().filter(filter).collect(Collectors.toList());
+				: Registry.ITEM.stream().filter(filter).collect(Collectors.toList());
 
 		return new SettingList<Item>(text, windowText, itemList, items) {
 

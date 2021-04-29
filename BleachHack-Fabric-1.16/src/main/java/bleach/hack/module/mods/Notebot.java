@@ -31,6 +31,7 @@ import java.util.stream.Stream;
 
 import com.google.common.eventbus.Subscribe;
 
+import bleach.hack.command.Command;
 import bleach.hack.event.events.EventTick;
 import bleach.hack.event.events.EventWorldRender;
 import bleach.hack.module.Category;
@@ -38,8 +39,9 @@ import bleach.hack.module.Module;
 import bleach.hack.setting.base.SettingMode;
 import bleach.hack.setting.base.SettingToggle;
 import bleach.hack.util.BleachLogger;
-import bleach.hack.util.RenderUtils;
 import bleach.hack.util.file.BleachFileMang;
+import bleach.hack.util.render.RenderUtils;
+import bleach.hack.util.render.color.QuadColor;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.NoteBlock;
 import net.minecraft.block.enums.Instrument;
@@ -81,7 +83,7 @@ public class Notebot extends Module {
 			setEnabled(false);
 			return;
 		} else if (filePath.isEmpty()) {
-			BleachLogger.errorMessage("No File Loaded!, Use .notebot load [File]");
+			BleachLogger.errorMessage("No Song Loaded!, Use " + Command.PREFIX + "notebot to select a song.");
 			setEnabled(false);
 			return;
 		} else {
@@ -127,9 +129,9 @@ public class Notebot extends Module {
 	public void onRender(EventWorldRender.Post event) {
 		for (Entry<BlockPos, Integer> e : blockTunes.entrySet()) {
 			if (getNote(e.getKey()) != e.getValue()) {
-				RenderUtils.drawFilledBox(e.getKey(), 1F, 0F, 0F, 0.8F);
+				RenderUtils.drawBoxBoth(e.getKey(), QuadColor.single(1F, 0F, 0F, 0.4F), 2.5f);
 			} else {
-				RenderUtils.drawFilledBox(e.getKey(), 0F, 1F, 0F, 0.4F);
+				RenderUtils.drawBoxBoth(e.getKey(), QuadColor.single(0F, 1F, 0F, 0.4F), 2.5f);
 			}
 		}
 	}
@@ -216,7 +218,7 @@ public class Notebot extends Module {
 			for (List<Integer> i : curNotes) {
 				if (isNoteblock(e.getKey()) && (i.get(1) == (getNote(e.getKey()))
 						&& (getSetting(2).asToggle().state
-								|| i.get(2) == (getInstrument(e.getKey()).ordinal()))))
+						|| i.get(2) == (getInstrument(e.getKey()).ordinal()))))
 					playBlock(e.getKey());
 			}
 		}

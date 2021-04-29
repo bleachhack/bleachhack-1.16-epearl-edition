@@ -27,6 +27,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.mojang.blaze3d.systems.RenderSystem;
 
+import bleach.hack.BleachHack;
 import bleach.hack.gui.clickgui.modulewindow.ModuleWindow;
 import bleach.hack.gui.widget.BleachScrollbar;
 import bleach.hack.gui.window.Window;
@@ -54,7 +55,7 @@ public abstract class SettingList<E> extends SettingBase {
 
 	protected Set<E> defaultItems = new LinkedHashSet<>();
 
-	@SafeVarargs // eclipse bruh hours
+	@SafeVarargs
 	public SettingList(String text, String windowText, Collection<E> itemPool, E... defaultItems) {
 		this.text = text;
 		this.windowText = windowText;
@@ -84,25 +85,25 @@ public abstract class SettingList<E> extends SettingBase {
 			MinecraftClient.getInstance().openScreen(new ListWidowScreen(MinecraftClient.getInstance().currentScreen));
 		}
 	}
-	
+
 	public boolean contains(E item) {
 		return items.contains(item);
 	}
-	
+
 	public Set<E> getItems() {
 		return items;
 	}
 
 	public void renderItem(MinecraftClient mc, MatrixStack matrix, E item, int x, int y, int w, int h) {
 		matrix.push();
-		
+
 		float scale = (h - 2) / 10f;
 		float offset = 1f / scale;
 
 		matrix.scale(scale, scale, 1f);
 
 		mc.textRenderer.drawWithShadow(matrix, "?", (x + 5) * offset, (y + 4) * offset, -1);
-		
+
 		matrix.pop();
 	}
 
@@ -121,6 +122,8 @@ public abstract class SettingList<E> extends SettingBase {
 	public void readSettings(JsonElement settings) {
 		JsonArray ja = (JsonArray) settings;
 
+		itemPool.addAll(items);
+		items.clear();
 		for (JsonElement je: ja) {
 			if (je.isJsonPrimitive()) {
 				E item = getItemFromString(je.getAsString());
@@ -128,7 +131,7 @@ public abstract class SettingList<E> extends SettingBase {
 					itemPool.remove(item);
 					items.add(item);
 				} else {
-					System.out.println("Error Importing item: " + je.toString());
+					BleachHack.logger.error("Error Importing item: " + je.toString());
 				}
 			}
 		}
@@ -173,7 +176,7 @@ public abstract class SettingList<E> extends SettingBase {
 			int y2 = height - height / 12;
 
 			addWindow(new Window(x1, y1, x2, y2, windowText, new ItemStack(Items.OAK_SIGN)));
-			
+
 			getWindow(0).buttons.add(new WindowButton((x2 - x1) - 50, y2 - y1 - 22, (x2 - x1) - 5, y2 - y1 - 5, "Reset", () -> {
 				itemPool.addAll(items);
 				items.clear();
@@ -237,16 +240,6 @@ public abstract class SettingList<E> extends SettingBase {
 				Window.horizontalGradient(matrix, x1 + 1, y2 - 25, x2 - 1, y2 - 1, 0x70606090, 0x00606090);
 				DrawableHelper.fill(matrix, x1 + 1, y2 - 27, x2 - 1, y2 - 25, 0xa0606090);
 
-				inputField.x = x1 + 5;
-				inputField.y = y2 - 22;
-				inputField.setWidth((x2 - x1) / 3);
-				inputField.render(matrix, mouseX, mouseY, client.getTickDelta());
-
-				scrollbar.x = x2 - 11;
-				scrollbar.y = y1 + 12;
-				scrollbar.setTotalHeight(entries * 21);
-				scrollbar.render(matrix, mouseX, mouseY, client.getTickDelta());
-
 				if (inputField.isFocused() && !inputField.getText().isEmpty()) {
 					Set<E> toDraw = new LinkedHashSet<>();
 
@@ -263,7 +256,7 @@ public abstract class SettingList<E> extends SettingBase {
 
 					RenderSystem.pushMatrix();
 					RenderSystem.translatef(0f, 0f, 150f);
-					
+
 					matrix.push();
 					matrix.translate(0f, 0f, 150f);
 
@@ -273,9 +266,24 @@ public abstract class SettingList<E> extends SettingBase {
 					}
 
 					matrix.pop();
-					
+
 					RenderSystem.popMatrix();
 				}
+
+				matrix.push();
+				matrix.translate(0f, 0f, 250f);
+
+				inputField.x = x1 + 5;
+				inputField.y = y2 - 22;
+				inputField.setWidth((x2 - x1) / 3);
+				inputField.render(matrix, mouseX, mouseY, client.getTickDelta());
+
+				scrollbar.x = x2 - 11;
+				scrollbar.y = y1 + 12;
+				scrollbar.setTotalHeight(entries * 21);
+				scrollbar.render(matrix, mouseX, mouseY, client.getTickDelta());
+
+				matrix.pop();
 			}
 		}
 
@@ -308,6 +316,11 @@ public abstract class SettingList<E> extends SettingBase {
 
 		public void onClose() {
 			this.client.openScreen(parent);
+		}
+
+		@Override
+		public boolean isPauseScreen() {
+			return false;
 		}
 
 		public boolean mouseClicked(double mouseX, double mouseY, int button) {

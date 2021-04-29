@@ -20,28 +20,18 @@ package bleach.hack.command.commands;
 import com.google.gson.JsonPrimitive;
 
 import bleach.hack.command.Command;
+import bleach.hack.command.CommandCategory;
 import bleach.hack.util.BleachLogger;
 import bleach.hack.util.file.BleachFileHelper;
 
 public class CmdPrefix extends Command {
 
-	@Override
-	public String getAlias() {
-		return "prefix";
+	public CmdPrefix() {
+		super("prefix", "Sets the BleachHack-VpEdition command prefix.", "prefix <char>", CommandCategory.MISC);
 	}
 
 	@Override
-	public String getDescription() {
-		return "Sets the command prefix";
-	}
-
-	@Override
-	public String getSyntax() {
-		return "prefix <char>";
-	}
-
-	@Override
-	public void onCommand(String command, String[] args) throws Exception {
+	public void onCommand(String alias, String[] args) throws Exception {
 		if (args[0].isEmpty()) {
 			printSyntaxError("Prefix Cannot Be Empty");
 			return;

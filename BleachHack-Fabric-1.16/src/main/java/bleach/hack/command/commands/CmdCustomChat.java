@@ -5,6 +5,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import com.google.gson.JsonPrimitive;
 
 import bleach.hack.command.Command;
+import bleach.hack.command.CommandCategory;
 import bleach.hack.module.ModuleManager;
 import bleach.hack.module.mods.CustomChat;
 import bleach.hack.util.BleachLogger;
@@ -12,29 +13,18 @@ import bleach.hack.util.file.BleachFileHelper;
 
 public class CmdCustomChat extends Command {
 
-	@Override
-	public String getAlias() {
-		return "customchat";
+	public CmdCustomChat() {
+		super("customchat", "Changes customchat prefix and suffix", "customchat current | customchat reset | customchat prefix <prefix> | customchat suffix <suffix>", CommandCategory.MODULES);
 	}
 
 	@Override
-	public String getDescription() {
-		return "Changes customchat prefix and suffix";
-	}
-
-	@Override
-	public String getSyntax() {
-		return "customchat current | customchat reset | customchat prefix <prefix> | customchat suffix <suffix>";
-	}
-
-	@Override
-	public void onCommand(String command, String[] args) throws Exception {
+	public void onCommand(String alias, String[] args) throws Exception {
 		if (args.length == 0) {
 			printSyntaxError();
 			return;
 		}
 
-		CustomChat chat = ModuleManager.getModule(CustomChat.class);
+		CustomChat chat = (CustomChat) ModuleManager.getModule("CustomChat");
 
 		if (args[0].equalsIgnoreCase("current")) {
 			BleachLogger.infoMessage("Current prefix: \"" + chat.prefix + "\", suffix: \"" + chat.suffix + "\"");

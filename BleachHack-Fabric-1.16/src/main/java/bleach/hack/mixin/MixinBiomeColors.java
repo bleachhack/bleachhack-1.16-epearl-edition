@@ -15,19 +15,19 @@ public class MixinBiomeColors {
 
 	@Overwrite
 	private static int getColor(BlockRenderView world, BlockPos pos, ColorResolver resolver) {
-		EventBiomeColor event = 
+		EventBiomeColor event =
 				resolver == BiomeColors.FOLIAGE_COLOR ? new EventBiomeColor.Foilage(world, pos) :
-					resolver == BiomeColors.GRASS_COLOR ? new EventBiomeColor.Grass(world, pos) :
-						resolver == BiomeColors.WATER_COLOR ? new EventBiomeColor.Water(world, pos) : null;
-		
+						resolver == BiomeColors.GRASS_COLOR ? new EventBiomeColor.Grass(world, pos) :
+								resolver == BiomeColors.WATER_COLOR ? new EventBiomeColor.Water(world, pos) : null;
+
 		if (event != null) {
 			BleachHack.eventBus.post(event);
-			
+
 			if (event.getColor() != null) {
 				return event.getColor();
 			}
 		}
-		
+
 		return world.getColor(pos, resolver);
 	}
 }

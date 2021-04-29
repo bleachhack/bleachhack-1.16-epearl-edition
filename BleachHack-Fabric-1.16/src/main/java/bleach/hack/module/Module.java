@@ -38,10 +38,10 @@ public class Module {
 	private String name;
 	private int key;
 	private int defaultKey;
-	
+
 	private boolean enabled = false;
 	private final boolean defaultEnabled;
-	
+
 	private Category category;
 	private String desc;
 	private List<SettingBase> settings = new ArrayList<>();
@@ -57,7 +57,7 @@ public class Module {
 		category = c;
 		desc = d;
 		settings = new ArrayList<>(Arrays.asList(s));
-		
+
 		defaultEnabled = enabled;
 		if (enabled) {
 			setEnabled(true);

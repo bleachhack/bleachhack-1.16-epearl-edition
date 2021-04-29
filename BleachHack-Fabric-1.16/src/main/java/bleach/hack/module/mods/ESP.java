@@ -30,7 +30,8 @@ import bleach.hack.setting.base.SettingColor;
 import bleach.hack.setting.base.SettingMode;
 import bleach.hack.setting.base.SettingSlider;
 import bleach.hack.setting.base.SettingToggle;
-import bleach.hack.util.RenderUtils;
+import bleach.hack.util.render.RenderUtils;
+import bleach.hack.util.render.color.QuadColor;
 import bleach.hack.util.shader.OutlineShaderManager;
 import bleach.hack.util.shader.StaticShaders;
 import bleach.hack.util.shader.StringShaderEffect;
@@ -53,12 +54,11 @@ public class ESP extends Module {
 	private int lastWidth = -1;
 	private int lastHeight = -1;
 	private double lastShaderWidth;
-	private int lastShaderMode;
 	private boolean shaderUnloaded = true;
 
 	public ESP() {
 		super("ESP", KEY_UNBOUND, Category.RENDER, "Allows you to see entities though walls.",
-				new SettingMode("Render", "Outline", "Shader", "Box+Fill", "Box", "Fill"),
+				new SettingMode("Render", "Shader", "Box+Fill", "Box", "Fill"),
 				new SettingSlider("Shader", 0, 3, 1.5, 1).withDesc("The thickness of the shader outline"),
 				new SettingSlider("Box", 0.1, 4, 2, 1).withDesc("The thickness of the box lines"),
 				new SettingSlider("Fill", 0, 1, 0.3, 2).withDesc("The opacity of the fill"),
@@ -101,13 +101,13 @@ public class ESP extends Module {
 	}
 
 	@Subscribe
-	public void onEntityRenderPre(EventEntityRender event) {
-		if (getSetting(0).asMode().mode <= 1) {
+	public void onEntityRenderPre(EventEntityRender.PreAll event) {
+		if (getSetting(0).asMode().mode == 0) {
 			if (mc.getWindow().getFramebufferWidth() != lastWidth || mc.getWindow().getFramebufferHeight() != lastHeight
-					|| lastShaderWidth != getSetting(1).asSlider().getValue() || lastShaderMode != getSetting(0).asMode().mode) {
+					|| lastShaderWidth != getSetting(1).asSlider().getValue() || shaderUnloaded) {
 				try {
 					ShaderEffect shader = new StringShaderEffect(mc.getFramebuffer(), mc.getResourceManager(), mc.getTextureManager(),
-							getSetting(0).asMode().mode == 0 ? StaticShaders.OUTLINE_SHADER : StaticShaders.MC_SHADER_UNFOMATTED
+							StaticShaders.MC_SHADER_UNFOMATTED
 									.replace("%1", "" + getSetting(1).asSlider().getValue())
 									.replace("%2", "" + (getSetting(1).asSlider().getValue() / 2)));
 
@@ -115,7 +115,6 @@ public class ESP extends Module {
 					lastWidth = mc.getWindow().getFramebufferWidth();
 					lastHeight = mc.getWindow().getFramebufferHeight();
 					lastShaderWidth = getSetting(1).asSlider().getValue();
-					lastShaderMode = getSetting(0).asMode().mode;
 					shaderUnloaded = false;
 
 					OutlineShaderManager.loadShader(shader);
@@ -139,12 +138,12 @@ public class ESP extends Module {
 
 				float[] color = getColorForEntity(e);
 				if (color != null) {
-					if (getSetting(0).asMode().mode == 2 || getSetting(0).asMode().mode == 4) {
-						RenderUtils.drawFill(e.getBoundingBox(), color[0], color[1], color[2], (float) getSetting(3).asSlider().getValue());
+					if (getSetting(0).asMode().mode == 1 || getSetting(0).asMode().mode == 3) {
+						RenderUtils.drawBoxFill(e.getBoundingBox(), QuadColor.single(color[0], color[1], color[2], getSetting(3).asSlider().getValueFloat()));
 					}
 
-					if (getSetting(0).asMode().mode == 2 || getSetting(0).asMode().mode == 3) {
-						RenderUtils.drawOutline(e.getBoundingBox(), color[0], color[1], color[2], 1f, (float) getSetting(2).asSlider().getValue());
+					if (getSetting(0).asMode().mode == 1 || getSetting(0).asMode().mode == 2) {
+						RenderUtils.drawBoxOutline(e.getBoundingBox(), QuadColor.single(color[0], color[1], color[2], 1f), getSetting(2).asSlider().getValueFloat());
 					}
 				}
 			}
@@ -157,16 +156,16 @@ public class ESP extends Module {
 
 		if (color != null) {
 			if (getSetting(4).asToggle().state) {
-				if (getSetting(0).asMode().mode == 2 || getSetting(0).asMode().mode == 3) {
-					RenderUtils.drawOutline(event.getEntity().getBoundingBox(), color[0], color[1], color[2], 1f, (float) getSetting(2).asSlider().getValue());
+				if (getSetting(0).asMode().mode == 1 || getSetting(0).asMode().mode == 2) {
+					RenderUtils.drawBoxOutline(event.getEntity().getBoundingBox(), QuadColor.single(color[0], color[1], color[2], 1f), getSetting(2).asSlider().getValueFloat());
 				}
 
-				if (getSetting(0).asMode().mode == 2 || getSetting(0).asMode().mode == 4) {
-					RenderUtils.drawFill(event.getEntity().getBoundingBox(), color[0], color[1], color[2], (float) getSetting(3).asSlider().getValue());
+				if (getSetting(0).asMode().mode == 1 || getSetting(0).asMode().mode == 3) {
+					RenderUtils.drawBoxFill(event.getEntity().getBoundingBox(), QuadColor.single(color[0], color[1], color[2], getSetting(3).asSlider().getValueFloat()));
 				}
 			}
 
-			if (getSetting(0).asMode().mode <= 1) {
+			if (getSetting(0).asMode().mode == 0) {
 				event.setVertex(getOutline(mc.getBufferBuilders(), color[0], color[1], color[2]));
 				event.getEntity().setGlowing(true);
 			} else {

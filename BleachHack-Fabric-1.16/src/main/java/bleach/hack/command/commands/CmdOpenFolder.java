@@ -2,6 +2,7 @@ package bleach.hack.command.commands;
 
 
 import bleach.hack.command.Command;
+import bleach.hack.command.CommandCategory;
 import bleach.hack.util.BleachLogger;
 import net.minecraft.client.MinecraftClient;
 
@@ -10,19 +11,8 @@ import java.io.File;
 import java.nio.file.Paths;
 public class CmdOpenFolder extends Command {
 
-    @Override
-    public String getAlias() {
-        return "openfolder";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Opens BleachHack folder";
-    }
-
-    @Override
-    public String getSyntax() {
-        return "openfolder";
+    public CmdOpenFolder() {
+        super("Open Folder", "Opens BleachHack folder", "lol", CommandCategory.MODULES);
     }
 
     @Override

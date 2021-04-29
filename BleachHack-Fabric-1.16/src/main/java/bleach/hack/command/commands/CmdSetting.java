@@ -18,6 +18,7 @@
 package bleach.hack.command.commands;
 
 import bleach.hack.command.Command;
+import bleach.hack.command.CommandCategory;
 import bleach.hack.module.Module;
 import bleach.hack.module.ModuleManager;
 import bleach.hack.setting.base.SettingBase;
@@ -28,29 +29,18 @@ import bleach.hack.util.BleachLogger;
 
 public class CmdSetting extends Command {
 
-	@Override
-	public String getAlias() {
-		return "setting";
+	public CmdSetting() {
+		super("setting", "Changes a setting in a module.", "setting <module> <setting number (starts at 0)> <value>", CommandCategory.MODULES);
 	}
 
 	@Override
-	public String getDescription() {
-		return "Changes a setting in a module";
-	}
-
-	@Override
-	public String getSyntax() {
-		return "setting <Module> <Setting number (starts at 0)> <value>";
-	}
-
-	@Override
-	public void onCommand(String command, String[] args) throws Exception {
+	public void onCommand(String alias, String[] args) throws Exception {
 		if (args.length < 2) {
 			printSyntaxError();
 			return;
 		}
 
-		Module m = ModuleManager.getModuleByName(args[0]);
+		Module m = ModuleManager.getModule(args[0]);
 		SettingBase s = m.getSetting(Integer.parseInt(args[1]));
 
 		if (s instanceof SettingSlider) {

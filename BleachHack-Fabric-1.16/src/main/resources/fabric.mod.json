@@ -4,13 +4,13 @@
   "version": "${version}",
 
   "name": "BleachHack-VpEdition",
-  "description": "egirl client",
+  "description": "Egirl hack",
   "authors": [
     "Bleach#0136 , Vp#0001"
   ],
   "contact": {
     "homepage": "https://github.com/HerraVp/",
-    "sources": "https://github.com/HerraVp/BleachHack-VpEdition/"
+    "sources": "https://github.com/HerraVp/BleachHack-VpEdition"
   },
 
   "license": "CC0-1.0",

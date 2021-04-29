@@ -11,7 +11,8 @@ import bleach.hack.module.Category;
 import bleach.hack.module.Module;
 import bleach.hack.setting.base.SettingColor;
 import bleach.hack.setting.base.SettingToggle;
-import bleach.hack.util.RenderUtils;
+import bleach.hack.util.render.RenderUtils;
+import bleach.hack.util.render.color.QuadColor;
 import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket.Mode;
 import net.minecraft.util.math.BlockPos;
@@ -86,12 +87,12 @@ public class AutoParkour extends Module {
 			}
 		}
 	}
-	
+
 	@Subscribe
 	public void onWorldRender(EventWorldRender event) {
 		if (smartPos != null && getSetting(1).asToggle().getChild(1).asToggle().state) {
 			float[] rgb = getSetting(1).asToggle().getChild(1).asToggle().getChild(0).asColor().getRGBFloat();
-			RenderUtils.drawFilledBox(smartPos, rgb[0], rgb[1], rgb[2], 0.5f);
+			RenderUtils.drawBoxBoth(smartPos, QuadColor.single(rgb[0], rgb[1], rgb[2], 0.5f), 2.5f);
 		}
 	}
 
@@ -100,9 +101,9 @@ public class AutoParkour extends Module {
 		if (smartPos != null && getSetting(1).asToggle().state) {
 			if (!getSetting(1).asToggle().getChild(0).asToggle().state
 					&& (mc.player.getBoundingBox().maxX < smartPos.getX()
-						|| mc.player.getBoundingBox().minX > smartPos.getX() + 1
-						|| mc.player.getBoundingBox().maxZ < smartPos.getZ()
-						|| mc.player.getBoundingBox().minZ > smartPos.getZ() + 1)) {
+					|| mc.player.getBoundingBox().minX > smartPos.getX() + 1
+					|| mc.player.getBoundingBox().maxZ < smartPos.getZ()
+					|| mc.player.getBoundingBox().minZ > smartPos.getZ() + 1)) {
 				return;
 			}
 

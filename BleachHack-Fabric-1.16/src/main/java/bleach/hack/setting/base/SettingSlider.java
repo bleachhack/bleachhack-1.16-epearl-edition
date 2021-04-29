@@ -1,19 +1,10 @@
 /*
- * This file is part of the BleachHack distribution (https://github.com/BleachDrinker420/bleachhack-1.14/).
- * Copyright (c) 2019 Bleach.
+ * This file is part of the BleachHack distribution (https://github.com/BleachDrinker420/BleachHack/).
+ * Copyright (c) 2021 Bleach and contributors.
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * This source code is subject to the terms of the GNU General Public
+ * License, version 3. If a copy of the GPL was not distributed with this
+ * file, You can obtain one at: https://www.gnu.org/licenses/gpl-3.0.txt
  */
 package bleach.hack.setting.base;
 
@@ -57,6 +48,18 @@ public class SettingSlider extends SettingBase {
 		return round(value, decimals);
 	}
 
+	public float getValueFloat() {
+		return (float) getValue();
+	}
+
+	public int getValueInt() {
+		return (int) getValue();
+	}
+
+	public long getValueLong() {
+		return (long) getValue();
+	}
+
 	public void setValue(double value) {
 		this.value = value;
 		BleachFileHelper.SCHEDULE_SAVE_MODULES = true;
@@ -77,7 +80,7 @@ public class SettingSlider extends SettingBase {
 		if (mo) {
 			DrawableHelper.fill(matrix, x + 1, y, x + len, y + 12, 0x70303070);
 		}
-		
+
 		int pixels = (int) Math.round(MathHelper.clamp(len * ((getValue() - min) / (max - min)), 0, len));
 		Window.horizontalGradient(matrix, x + 1, y, x + pixels, y + 12,
 				mo ? 0xf03078b0 : 0xf03080a0, mo ? 0xf02068c0 : 0xf02070b0);

@@ -30,7 +30,7 @@ import net.minecraft.util.math.Vec3d;
 
 @Mixin(Entity.class)
 public class MixinEntity {
-	
+
 	@Shadow public void addVelocity(double deltaX, double deltaY, double deltaZ) {}
 
 	@Redirect(method = "pushAwayFrom", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;addVelocity(DDD)V"))
@@ -38,7 +38,7 @@ public class MixinEntity {
 		if (entity == MinecraftClient.getInstance().player) {
 			EventPlayerPushed event = new EventPlayerPushed(new Vec3d(deltaX, deltaY, deltaZ));
 			BleachHack.eventBus.post(event);
-			
+
 			addVelocity(event.getPush().x, event.getPush().y, event.getPush().z);
 		}
 	}

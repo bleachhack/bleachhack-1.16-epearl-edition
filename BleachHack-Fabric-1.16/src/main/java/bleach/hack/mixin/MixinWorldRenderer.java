@@ -41,7 +41,8 @@ public class MixinWorldRenderer implements IMixinWorldRenderer {
 	@Shadow private ShaderEffect entityOutlineShader;
 
 	/** Fixes that the outline framebuffer only resets if any glowing entites are drawn **/
-	@ModifyVariable(method = "render", at = @At(value = "STORE"), index = 37)
+	@ModifyVariable(method = "render", at = @At(value = "STORE"), index = 37,
+			require = 0 /* TODO: optifabric */)
 	public boolean render_modifyBoolean(boolean bool) {
 		return true;
 	}
@@ -49,12 +50,12 @@ public class MixinWorldRenderer implements IMixinWorldRenderer {
 	@Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V"))
 	private void render_swap(Profiler profiler, String string) {
 		if (string.equals("entities")) {
-			BleachHack.eventBus.post(new EventEntityRender());
+			BleachHack.eventBus.post(new EventEntityRender.PreAll());
 		} else if (string.equals("blockentities")) {
-			BleachHack.eventBus.post(new EventEntityRender());
+			BleachHack.eventBus.post(new EventEntityRender.PostAll());
 			BleachHack.eventBus.post(new EventBlockEntityRender.PreAll());
 		} else if (string.equals("blockentities")) {
-			BleachHack.eventBus.post(new EventEntityRender());
+			BleachHack.eventBus.post(new EventEntityRender.PostAll());
 			BleachHack.eventBus.post(new EventBlockEntityRender.PreAll());
 		} else if (string.equals("destroyProgress")) {
 			BleachHack.eventBus.post(new EventBlockEntityRender.PostAll());
@@ -63,7 +64,7 @@ public class MixinWorldRenderer implements IMixinWorldRenderer {
 
 	@Inject(method = "render", at = @At("HEAD"), cancellable = true)
 	private void render_head(MatrixStack matrices, float tickDelta, long limitTime, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer,
-			LightmapTextureManager lightmapTextureManager, Matrix4f matrix4f, CallbackInfo info) {
+							 LightmapTextureManager lightmapTextureManager, Matrix4f matrix4f, CallbackInfo info) {
 		EventWorldRender.Pre event = new EventWorldRender.Pre(tickDelta);
 		BleachHack.eventBus.post(event);
 
@@ -74,12 +75,12 @@ public class MixinWorldRenderer implements IMixinWorldRenderer {
 
 	@Inject(method = "render", at = @At("RETURN"))
 	private void render_return(MatrixStack matrices, float tickDelta, long limitTime, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer,
-			LightmapTextureManager lightmapTextureManager, Matrix4f matrix4f, CallbackInfo info) {
+							   LightmapTextureManager lightmapTextureManager, Matrix4f matrix4f, CallbackInfo info) {
 		RenderSystem.clear(GL11.GL_DEPTH_BUFFER_BIT, MinecraftClient.IS_SYSTEM_MAC);
 		EventWorldRender.Post event = new EventWorldRender.Post(tickDelta);
 		BleachHack.eventBus.post(event);
 	}
-	
+
 	@Redirect(method = "renderEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/EntityRenderDispatcher;render(Lnet/minecraft/entity/Entity;DDDFFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V"))
 	public <E extends Entity> void renderEntity_render(EntityRenderDispatcher dispatcher, E entity, double x, double y, double z, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
 		EventEntityRender.Single.Pre event = new EventEntityRender.Single.Pre(entity, matrices, vertexConsumers);
@@ -102,13 +103,13 @@ public class MixinWorldRenderer implements IMixinWorldRenderer {
 			return vertexConsumer.color(red, green, blue, alpha);
 		}
 	}
-	
+
 	/*@Redirect(method = "setupTerrain", at = @At(value = "FIELD", target = "Lnet/minecraft/client/MinecraftClient;chunkCullingEnabled:Z", ordinal = 0),
 			require = 0 / TODO: sodium? /)
 	private boolean setupTerrain_chunkCullingEnabled(MinecraftClient client) {
 		EventChunkCulling event = new EventChunkCulling(client.chunkCullingEnabled);
 		BleachHack.eventBus.post(event);
-		
+
 		return event.shouldCull();
 	}*/
 

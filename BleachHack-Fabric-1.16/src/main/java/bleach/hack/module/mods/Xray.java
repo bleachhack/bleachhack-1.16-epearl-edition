@@ -21,7 +21,6 @@ import org.lwjgl.glfw.GLFW;
 
 import com.google.common.eventbus.Subscribe;
 
-import bleach.hack.event.events.EventBlockRender;
 import bleach.hack.event.events.EventTick;
 import bleach.hack.module.Category;
 import bleach.hack.module.Module;
@@ -52,41 +51,38 @@ public class Xray extends Module {
 						Blocks.NETHER_GOLD_ORE,
 						Blocks.ANCIENT_DEBRIS).withDesc("Edit the xray blocks"));
 	}
-	
+
 	public boolean isVisible(Block block) {
 		return !isEnabled() || getSetting(1).asList(Block.class).contains(block);
 	}
 
 	@Override
 	public void onEnable() {
+		super.onEnable();
+
+		mc.chunkCullingEnabled = false;
 		mc.worldRenderer.reload();
 
 		gamma = mc.options.gamma;
-
-		super.onEnable();
 	}
 
 	@Override
 	public void onDisable() {
-		if (mc.world != null)
-			mc.worldRenderer.setWorld(mc.world);
-
 		mc.options.gamma = gamma;
 
+		mc.chunkCullingEnabled = true;
 		mc.worldRenderer.reload();
 
 		super.onDisable();
 	}
 
 	@Subscribe
-	public void blockRender(EventBlockRender eventBlockRender) {
-		if (isVisible(eventBlockRender.getBlockState().getBlock())) {
-			eventBlockRender.setCancelled(true);
-		}
-	}
-
-	@Subscribe
 	public void onTick(EventTick eventPreUpdate) {
 		mc.options.gamma = 69.420;
 	}
+
+	/*@Subscribe
+	public void onChunkCulling(EventChunkCulling event) {
+		event.setCull(false);
+	}*/
 }

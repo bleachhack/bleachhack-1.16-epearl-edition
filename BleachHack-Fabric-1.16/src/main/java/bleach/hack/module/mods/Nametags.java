@@ -56,7 +56,7 @@ import bleach.hack.module.Module;
 import bleach.hack.setting.base.SettingMode;
 import bleach.hack.setting.base.SettingSlider;
 import bleach.hack.setting.base.SettingToggle;
-import bleach.hack.util.WorldRenderUtils;
+import bleach.hack.util.render.WorldRenderUtils;
 import bleach.hack.util.world.EntityUtils;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.math.MatrixStack;
@@ -179,7 +179,7 @@ public class Nametags extends Module {
 
 			lines.add(Formatting.GOLD + e.getName().getString()
 					+ (getSetting(5).asToggle().getChild(2).asToggle().state
-							? Formatting.YELLOW + " [x" + e.getStack().getCount() + "]" : ""));
+					? Formatting.YELLOW + " [x" + e.getStack().getCount() + "]" : ""));
 
 			if (!e.getName().getString().equals(e.getStack().getName().getString()) && getSetting(5).asToggle().getChild(1).asToggle().state) {
 				lines.add(0, Formatting.GOLD + "\"" + e.getStack().getName().getString() + Formatting.GOLD + "\"");
@@ -319,7 +319,7 @@ public class Nametags extends Module {
 			int w1 = mc.textRenderer.getWidth(subText) / 2;
 			mc.textRenderer.draw(subText, -2 - w1, c * 10 - 19,
 					m.getKey() == Enchantments.VANISHING_CURSE || m.getKey() == Enchantments.BINDING_CURSE ? 0xff5050 : 0xffb0e0,
-							true, matrix.peek().getModel(), mc.getBufferBuilders().getEntityVertexConsumers(), true, 0, 0xf000f0);
+					true, matrix.peek().getModel(), mc.getBufferBuilders().getEntityVertexConsumers(), true, 0, 0xf000f0);
 			c--;
 		}
 
@@ -330,11 +330,10 @@ public class Nametags extends Module {
 	}
 
 	private Vec3d getRenderPos(Entity e) {
-		return mc.currentScreen != null && mc.currentScreen.isPauseScreen() ? e.getPos().add(0, e.getHeight(), 0)
-				: new Vec3d(
-						e.lastRenderX + (e.getX() - e.lastRenderX) * mc.getTickDelta(),
-						(e.lastRenderY + (e.getY() - e.lastRenderY) * mc.getTickDelta()) + e.getHeight(),
-						e.lastRenderZ + (e.getZ() - e.lastRenderZ) * mc.getTickDelta());
+		return new Vec3d(
+				e.lastRenderX + (e.getX() - e.lastRenderX) * mc.getTickDelta(),
+				(e.lastRenderY + (e.getY() - e.lastRenderY) * mc.getTickDelta()) + e.getHeight(),
+				e.lastRenderZ + (e.getZ() - e.lastRenderZ) * mc.getTickDelta());
 	}
 
 	private String getHealthText(LivingEntity e) {
@@ -400,12 +399,12 @@ public class Nametags extends Module {
 				try {
 					String url = "https://api.mojang.com/user/profiles/" + uuid.toString().replace("-", "") + "/names";
 					String response = Resources.toString(new URL(url), StandardCharsets.UTF_8);
-					System.out.println("bruh uuid time: " + url);
+					BleachHack.logger.info("bruh uuid time: " + url);
 
 					JsonElement json = new JsonParser().parse(response);
 
 					if (!json.isJsonArray()) {
-						System.out.println("[Nametags] Invalid Owner UUID: " + uuid.toString());
+						BleachHack.logger.error("[Nametags] Invalid Owner UUID: " + uuid.toString());
 						return "\u00a7c[Invalid]";
 					}
 
@@ -413,7 +412,7 @@ public class Nametags extends Module {
 
 					return ja.get(ja.size() - 1).getAsJsonObject().get("name").getAsString();
 				} catch (IOException e) {
-					System.out.println("[Nametags] Error Getting Owner UUID: " + uuid.toString());
+					BleachHack.logger.error("[Nametags] Error Getting Owner UUID: " + uuid.toString());
 					return "\u00a7c[Error]";
 				}
 			}

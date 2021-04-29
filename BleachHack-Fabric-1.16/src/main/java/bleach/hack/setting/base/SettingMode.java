@@ -56,7 +56,7 @@ public class SettingMode extends SettingBase {
 		if (window.mouseOver(x, y, x + len, y + 12)) {
 			DrawableHelper.fill(matrix, x + 1, y, x + len, y + 12, 0x70303070);
 		}
-		
+
 		MinecraftClient.getInstance().textRenderer.drawWithShadow(matrix, text + ": " + modes[mode], x + 3, y + 2, 0xcfe0cf);
 
 		if (window.mouseOver(x, y, x + len, y + 12) && window.lmDown) {

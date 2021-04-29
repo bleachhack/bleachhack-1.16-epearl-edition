@@ -20,6 +20,7 @@ package bleach.hack.command.commands;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import bleach.hack.command.Command;
+import bleach.hack.command.CommandCategory;
 import bleach.hack.util.BleachLogger;
 import bleach.hack.util.BleachQueue;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
@@ -28,23 +29,13 @@ import net.minecraft.client.util.math.MatrixStack;
 
 public class CmdInvPeek extends Command {
 
-	@Override
-	public String getAlias() {
-		return "invpeek";
+	public CmdInvPeek() {
+		super("invpeek", "Shows the inventory of another player in your render distance.", "invpeek <player>", CommandCategory.MISC,
+				"playerpeek", "invsee", "inv");
 	}
 
 	@Override
-	public String getDescription() {
-		return "Shows the inventory of another player in your render distance";
-	}
-
-	@Override
-	public String getSyntax() {
-		return "invpeek <player>";
-	}
-
-	@Override
-	public void onCommand(String command, String[] args) throws Exception {
+	public void onCommand(String alias, String[] args) throws Exception {
 		if (args.length == 0) {
 			printSyntaxError();
 			return;

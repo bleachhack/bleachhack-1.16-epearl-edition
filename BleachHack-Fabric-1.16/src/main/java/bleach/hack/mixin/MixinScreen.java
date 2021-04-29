@@ -16,10 +16,10 @@ import net.minecraft.text.OrderedText;
 
 @Mixin(Screen.class)
 public class MixinScreen {
- 
+
 	@Unique private int lastMX = 0;
 	@Unique private int lastMY = 0;
-	
+
 	@Unique private boolean skipTooltip = false;
 
 	@Inject(method = "render", at = @At("HEAD"))
@@ -34,7 +34,7 @@ public class MixinScreen {
 			skipTooltip = false;
 			return;
 		}
-		
+
 		EventDrawTooltip event = new EventDrawTooltip(matrices, lines, x, y, lastMX, lastMY);
 		BleachHack.eventBus.post(event);
 

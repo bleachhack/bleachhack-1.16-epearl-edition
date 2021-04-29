@@ -135,7 +135,7 @@ public class AutoTrap extends Module {
             }
 
             mc.player.inventory.selectedSlot = prevSlot;
-            ModuleManager.getModule(AutoTrap.class).toggle();
+
         }
     }
 }

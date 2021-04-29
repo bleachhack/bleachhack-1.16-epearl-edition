@@ -41,9 +41,10 @@ import bleach.hack.setting.base.SettingSlider;
 import bleach.hack.setting.base.SettingToggle;
 import bleach.hack.setting.other.SettingRotate;
 import bleach.hack.util.InventoryUtils;
-import bleach.hack.util.RenderUtils;
+import bleach.hack.util.render.RenderUtils;
+import bleach.hack.util.render.color.QuadColor;
 import bleach.hack.util.world.EntityUtils;
-import bleach.hack.util.world.ExplosionUtils;
+import bleach.hack.util.world.DamageUtils;
 import bleach.hack.util.world.WorldUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -88,7 +89,7 @@ public class CrystalAura extends Module {
 						new SettingToggle("Blacklist", true).withDesc("Blacklists a crystal when it can't place so it doesn't spam packets"),
 						new SettingToggle("Force Legit", false).withDesc("Only places a crystal if you can see it"),
 						new SettingSlider("MinDamg", 1, 20, 2, 0).withDesc("Minimun damage to the target to place crystals"),
-						new SettingSlider("MinRatio", 0.5, 6, 2, 1).withDesc("Minimun damage ratio to place a crystal at (Target damg/Player damg)"),
+						new SettingSlider("MinRatio", 0.5, 6, 2, 1).withDesc("Minimun damage ratio to place a crystal at (Target dmg/Player dmg)"),
 						new SettingSlider("CPT", 1, 10, 2, 0).withDesc("How many crystals to place per tick"),
 						new SettingSlider("Cooldown", 0, 10, 0, 0).withDesc("How many ticks to wait before placing the next batch of crystals"),
 						new SettingColor("Place Color", 0.7f, 0.7f, 1f, false)),
@@ -134,12 +135,12 @@ public class CrystalAura extends Module {
 			boolean end = false;
 			for (EndCrystalEntity c: nearestCrystals) {
 				if (mc.player.distanceTo(c) > getSetting(7).asSlider().getValue()
-						|| ExplosionUtils.willKill(c.getPos(), 6f, mc.player)
-						|| (mc.player.getHealth() + mc.player.getAbsorptionAmount()) - ExplosionUtils.getExplosionDamage(c.getPos(), 6f, mc.player) 
+						|| DamageUtils.willExplosionKill(c.getPos(), 6f, mc.player)
+						|| (mc.player.getHealth() + mc.player.getAbsorptionAmount()) - DamageUtils.getExplosionDamage(c.getPos(), 6f, mc.player)
 						< getSetting(3).asToggle().getChild(4).asSlider().getValue()
 						|| mc.world.getOtherEntities(null,
-								new Box(c.getPos(), c.getPos()).expand(7),
-								e -> e instanceof LivingEntity && e != mc.player && e != mc.player.getVehicle()).isEmpty()) {
+						new Box(c.getPos(), c.getPos()).expand(7),
+						e -> e instanceof LivingEntity && e != mc.player && e != mc.player.getVehicle()).isEmpty()) {
 					continue;
 				}
 
@@ -166,7 +167,7 @@ public class CrystalAura extends Module {
 				}
 			}
 
-			breakCooldown = (int) getSetting(3).asToggle().getChild(3).asSlider().getValue() + 1;
+			breakCooldown = getSetting(3).asToggle().getChild(3).asSlider().getValueInt() + 1;
 
 			if (!getSetting(5).asToggle().state && end) {
 				return;
@@ -180,9 +181,9 @@ public class CrystalAura extends Module {
 		if (getSetting(4).asToggle().state && placeCooldown <= 0) {
 			int crystalSlot = !getSetting(4).asToggle().getChild(0).asToggle().state
 					? (mc.player.getMainHandStack().getItem() == Items.END_CRYSTAL ? mc.player.inventory.selectedSlot
-							: mc.player.getOffHandStack().getItem() == Items.END_CRYSTAL ? 40
-									: -1)
-							: InventoryUtils.getSlot(true, i -> mc.player.inventory.getStack(i).getItem() == Items.END_CRYSTAL);
+					: mc.player.getOffHandStack().getItem() == Items.END_CRYSTAL ? 40
+					: -1)
+					: InventoryUtils.getSlot(true, i -> mc.player.inventory.getStack(i).getItem() == Items.END_CRYSTAL);
 
 			if (crystalSlot == -1) {
 				return;
@@ -202,18 +203,18 @@ public class CrystalAura extends Module {
 			Map<BlockPos, Float> placeBlocks = new LinkedHashMap<>();
 
 			for (Vec3d v: getCrystalPoses()) {
-				float playerDamg = ExplosionUtils.getExplosionDamage(v, 6f, mc.player);
+				float playerDamg = DamageUtils.getExplosionDamage(v, 6f, mc.player);
 
-				if (ExplosionUtils.willKill(v, 6f, mc.player)) {
+				if (DamageUtils.willExplosionKill(v, 6f, mc.player)) {
 					continue;
 				}
 
 				for (LivingEntity e: targets) {
-					if (ExplosionUtils.willPop(v, 6f, mc.player) && !ExplosionUtils.willPopOrKill(v, 6f, e)) {
+					if (DamageUtils.willExplosionPop(v, 6f, mc.player) && !DamageUtils.willExplosionPopOrKill(v, 6f, e)) {
 						continue;
 					}
 
-					float targetDamg = ExplosionUtils.getExplosionDamage(v, 6f, e);
+					float targetDamg = DamageUtils.getExplosionDamage(v, 6f, e);
 
 					if (targetDamg >= getSetting(4).asToggle().getChild(4).asSlider().getValue()) {
 						float ratio = playerDamg == 0 ? targetDamg : targetDamg / playerDamg;
@@ -260,7 +261,7 @@ public class CrystalAura extends Module {
 				mc.interactionManager.interactBlock(mc.player, mc.world, hand, new BlockHitResult(vec, dir, block, false));
 
 				places++;
-				if (places >= (int) getSetting(4).asToggle().getChild(6).asSlider().getValue()) {
+				if (places >= getSetting(4).asToggle().getChild(6).asSlider().getValueInt()) {
 					break;
 				}
 			}
@@ -271,7 +272,7 @@ public class CrystalAura extends Module {
 					mc.player.inventory.selectedSlot = oldSlot;
 				}
 
-				placeCooldown = (int) getSetting(4).asToggle().getChild(7).asSlider().getValue() + 1;
+				placeCooldown = getSetting(4).asToggle().getChild(7).asSlider().getValueInt() + 1;
 			}
 		}
 	}
@@ -280,7 +281,7 @@ public class CrystalAura extends Module {
 	public void onRenderWorld(EventWorldRender.Post event) {
 		if (this.render != null) {
 			float[] col = getSetting(4).asToggle().getChild(8).asColor().getRGBFloat();
-			RenderUtils.drawFilledBox(render, col[0], col[1], col[2], 0.4f);
+			RenderUtils.drawBoxBoth(render, QuadColor.single(col[0], col[1], col[2], 0.4f), 2.5f);
 		}
 	}
 

@@ -18,28 +18,19 @@
 package bleach.hack.command.commands;
 
 import bleach.hack.command.Command;
+import bleach.hack.command.CommandCategory;
 import bleach.hack.util.BleachLogger;
 import net.minecraft.world.GameMode;
 
 public class CmdGamemode extends Command {
 
-	@Override
-	public String getAlias() {
-		return "gm";
+	public CmdGamemode() {
+		super("gamemode", "Sets your clientside gamemode.", "gm <0-3>", CommandCategory.MISC,
+				"gm");
 	}
 
 	@Override
-	public String getDescription() {
-		return "Sets clientside gamemode.";
-	}
-
-	@Override
-	public String getSyntax() {
-		return "gm <0-3>";
-	}
-
-	@Override
-	public void onCommand(String command, String[] args) throws Exception {
+	public void onCommand(String alias, String[] args) throws Exception {
 		int gm;
 
 		try {
