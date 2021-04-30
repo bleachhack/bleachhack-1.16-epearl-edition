@@ -1,5 +1,5 @@
 
-# BleachHack VpEdition 1.1
+# BleachHack VpEdition 1.2
 ![](https://img.shields.io/tokei/lines/github/HerraVp/bleachhack-VpEdition?style=flat-square)
 ![](https://img.shields.io/github/last-commit/HerraVp/bleachhack-VpEdition?style=flat-square)
 ![](https://img.shields.io/badge/daily%20commit-maybeKEKW-red?style=flat-square)
@@ -14,7 +14,7 @@ Credits to BleachDrinker420!
 > Website: https://bleachhack.github.io/  
 > Discord: https://discord.gg/b5Wc4nQ
 > 
-> [Real BleachHack releses](https://github.com/BleachDrinker420/BleachHack/releases).
+> [Real BleachHack releases](https://github.com/BleachDrinker420/BleachHack/releases).
 
 ## Images  (Taken on version 1.0)
 Video footage of me testing the client -> https://youtu.be/yu9yVbSqEHU
