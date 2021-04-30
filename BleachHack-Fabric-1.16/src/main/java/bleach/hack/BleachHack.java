@@ -85,6 +85,6 @@ public class BleachHack implements ModInitializer {
 			BleachTitleScreen.customTitleScreen = false;
 		}
 
-		logger.log(Level.INFO, "Loaded BleachHack in %d ms.", System.currentTimeMillis() - initStartTime);
+		logger.log(Level.INFO, "Loaded BleachHack-VpEdition in %d ms.", System.currentTimeMillis() - initStartTime);
 	}
 }

@@ -52,7 +52,7 @@ public class DiscordRPCMod extends Module {
 		silent = getSetting(3).asToggle().state;
 
 		tick = 0;
-		DiscordRPCManager.start(silent ? "827588916462747648" : "740928841433743370");
+		DiscordRPCManager.start(silent ? "827588916462747648" : "827588916462747648");  //740928841433743370
 
 		super.onEnable();
 	}
@@ -143,7 +143,7 @@ public class DiscordRPCMod extends Module {
 
 			DiscordRPC.discordUpdatePresence(
 					new DiscordRichPresence.Builder(text2)
-					.setBigImage(silent ? "mc" : "bh15", silent ? "Minecraft " + SharedConstants.getGameVersion().getName() : "BleachHackVpEdition " + BleachHack.VERSION)
+					.setBigImage(silent ? "mc" : "bh15", silent ? "Minecraft " + SharedConstants.getGameVersion().getName() : " BleachHackVpEdition " + BleachHack.VERSION)
 					.setDetails(text1).setStartTimestamps(start).build());
 		}
 
