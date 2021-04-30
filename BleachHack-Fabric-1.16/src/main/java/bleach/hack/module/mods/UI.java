@@ -76,8 +76,8 @@ public class UI extends Module {
 						new SettingToggle("Inner Line", true).withDesc("Adds an extra line to the front of the module list"), // 0-0
 						new SettingToggle("Outer Line", false).withDesc("Adds an outer line to the module list"), // 0-1
 						new SettingToggle("Fill", true).withDesc("Adds a black fill behind the module list"), // 0-2
-						new SettingToggle("Watermark", true).withDesc("Adds the BleachHack watermark to the module list").withChildren( // 0-3
-								new SettingMode("Mode", "New", "Old").withDesc("The watermark type")), // 0-3-0
+						new SettingToggle("Watermark/Welcomer", true).withDesc("Adds the BleachHack watermark / welcomes u on top of the module list").withChildren( // 0-3
+								new SettingMode("Mode", "WaterMark", "Welcomer").withDesc("The watermark or welcomer")), // 0-3-0
 						new SettingSlider("HueBright", 0, 1, 1, 2).withDesc("Rainbow Hue"), // 0-4
 						new SettingSlider("HueSat", 0, 1, 0.5, 2).withDesc("Rainbow Saturation"), // 0-5
 						new SettingSlider("HueSpeed", 0.1, 50, 25, 1).withDesc("Rainbow Speed")), // 0-6
@@ -95,7 +95,7 @@ public class UI extends Module {
 				new SettingToggle("Players", false).withDesc("Lists all the players in your render distance"), //2
 				new SettingToggle("Armor", true).withDesc("Shows your current armor").withChildren( // 3
 						new SettingMode("Damage", "Number", "Bar", "Both").withDesc("How to show the armor durability")), // 3-0
-				new SettingToggle("Lag-Meter", true).withDesc("Shows when the server isn't responding")); // 4
+				new SettingToggle("Lag-Meter", true).withDesc("Shows when the server isn't responding"));// 4
 	}
 
 	@Subscribe
@@ -110,12 +110,12 @@ public class UI extends Module {
 				int watermarkMode = getSetting(0).asToggle().getChild(3).asToggle().getChild(0).asMode().mode;
 
 				if (watermarkMode == 0) {
-					MutableText text1 = new LiteralText("> Bleach").styled(s -> s.withColor(TextColor.fromRgb(0xffbf30)));
-					MutableText text2 = new LiteralText("Hack-VpEdition " + BleachHack.VERSION).styled(s -> s.withColor(TextColor.fromRgb(0xffafcc)));
+					MutableText text1 = new LiteralText("> Bleach").styled(s -> s.withColor(TextColor.fromRgb(0xfff700ff)));
+					MutableText text2 = new LiteralText("Hack-VpEdition " + BleachHack.VERSION).styled(s -> s.withColor(TextColor.fromRgb(0xff8c0d73)));
 
 					lines.add(0, text1.append(text2));
-				} else {
-					lines.add(0, new LiteralText("\u00a7a> BleachHack-VpEdition " + BleachHack.VERSION));
+				}else {
+					lines.add(0, new LiteralText("Welcome, " + mc.player.getName().asString() + "! :^)").styled(s -> s.withColor(TextColor.fromRgb(0xfff700ff))));
 				}
 			}
 
