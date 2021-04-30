@@ -25,11 +25,11 @@ import java.util.*;
  * @author <a href="https://github.com/lasnikprogram">Lasnik</a>
  */
 
-public class LogOutSpot extends Module {
+public class LogoutSpot extends Module {
 
     private final HashMap<UUID, Pair<PlayerCopyEntity, Long>> players = new HashMap<>();
 
-    public LogOutSpot() {
+    public LogoutSpot() {
         super("LogoutSpot", KEY_UNBOUND, Category.RENDER, "Shows where a player logged out",
                 new SettingToggle("Remove", true).withDesc("Removes logout spots").withChildren( // 1
                         new SettingToggle("Distance", false).withDesc("Remove logout spots based on distance").withChildren( // 0-0
