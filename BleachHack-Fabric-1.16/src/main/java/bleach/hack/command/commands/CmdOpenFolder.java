@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 public class CmdOpenFolder extends Command {
 
     public CmdOpenFolder() {
-        super("openfolder", "Opens BleachHack folder", "lol", CommandCategory.MODULES);
+        super("openfolder", "Opens BleachHack folder", "openfolder", CommandCategory.MODULES);
     }
 
     @Override
