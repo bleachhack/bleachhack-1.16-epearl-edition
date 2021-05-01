@@ -24,7 +24,7 @@ import net.minecraft.util.Util;
 public class StarGithub extends Module {
 
 	public StarGithub() {
-		super("StarGithub", KEY_UNBOUND, Category.MISC, "Give a star to Me(Vp) and Bleach on github!");
+		super("StarGithub", KEY_UNBOUND, Category.FUN, "Give a star to Me(Vp) and Bleach on github!");
 	}
 
 	public void onEnable() {

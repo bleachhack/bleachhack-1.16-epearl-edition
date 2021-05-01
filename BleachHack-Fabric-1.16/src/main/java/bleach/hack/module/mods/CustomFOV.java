@@ -9,7 +9,7 @@ import net.minecraft.client.options.GameOptions;
 public class CustomFOV extends Module {
 
     public CustomFOV() {
-        super ("CustomFOV", KEY_UNBOUND, Category.RENDER, "OMG CUSTOM FOV? (This is kinda broken)",
+        super ("CustomFOV", KEY_UNBOUND, Category.RENDER, "Changes ur fov (This is kinda broken)",
                 new SettingSlider("Scale", 0, 1, 0.3, 1));
     }
 
