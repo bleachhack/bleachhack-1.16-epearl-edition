@@ -181,7 +181,7 @@ public class BleachTitleScreen extends WindowScreen {
 
 		getWindow(1).buttons.add(
 				new WindowButton(105, 115, 195, 135, "Github", () -> {
-					Util.getOperatingSystem().open(URI.create("https://github.com/BleachDrinker420/BleachHack/"));
+					Util.getOperatingSystem().open(URI.create("https://github.com/HerraVp/BleachHack-VpEdition/"));
 				}));
 
 		if (version == null) {

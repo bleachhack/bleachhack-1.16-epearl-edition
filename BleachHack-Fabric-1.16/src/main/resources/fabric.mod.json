@@ -4,7 +4,7 @@
   "version": "${version}",
 
   "name": "BleachHack-VpEdition",
-  "description": "Egirl hack",
+  "description": "egirl client",
   "authors": [
     "Bleach#0136 , Vp#0001"
   ],
