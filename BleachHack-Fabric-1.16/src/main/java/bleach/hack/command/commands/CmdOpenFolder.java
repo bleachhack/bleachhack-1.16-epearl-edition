@@ -1,6 +1,5 @@
 package bleach.hack.command.commands;
 
-
 import bleach.hack.command.Command;
 import bleach.hack.command.CommandCategory;
 import bleach.hack.util.BleachLogger;

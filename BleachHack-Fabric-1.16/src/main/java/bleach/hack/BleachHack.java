@@ -37,7 +37,7 @@ public class BleachHack implements ModInitializer {
 	private static BleachHack instance = null;
 	public static Logger logger;
 
-	public static final String VERSION = "1.3";
+	public static final String VERSION = "1.2.1";
 	public static final int INTVERSION = 28;
 
 	public static final EventBus eventBus = new EventBus();
