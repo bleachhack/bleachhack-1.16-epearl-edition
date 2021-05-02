@@ -90,7 +90,7 @@ public class StorageESP extends Module {
 				new SettingSlider("Box", 0.1, 4, 2, 1).withDesc("The thickness of the box lines"),
 				new SettingSlider("Fill", 0, 1, 0.3, 2).withDesc("The opacity of the fill"),
 
-				new SettingToggle("Chests", true).withDesc("Highlights chests"),
+				new SettingToggle("Chests", true).withDesc("Highlights chests and barrels"),
 				new SettingToggle("EnderChests", true).withDesc("Highlights enderchests"),
 				new SettingToggle("Furnaces", true).withDesc("Highlights furnaces"),
 				new SettingToggle("Dispensers", true).withDesc("Highlights dispensers"),
@@ -150,7 +150,7 @@ public class StorageESP extends Module {
 
 				Block block = e.getKey().getCachedState().getBlock();
 
-				if (block == Blocks.CHEST || block == Blocks.TRAPPED_CHEST || block == Blocks.ENDER_CHEST) {
+				if (block == Blocks.CHEST || block == Blocks.TRAPPED_CHEST || block == Blocks.ENDER_CHEST || block == Blocks.BARREL) {
 					box = box.contract(0.06);
 					box = box.offset(0, -0.06, 0);
 
