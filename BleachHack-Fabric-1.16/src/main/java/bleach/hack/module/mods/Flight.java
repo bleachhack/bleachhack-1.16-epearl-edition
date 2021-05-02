@@ -46,18 +46,14 @@ public class Flight extends Module {
 
 	@Override
 	public void onDisable() {
-		if (!mc.player.isCreative() && !mc.player.isSpectator()) {
-			mc.player.abilities.allowFlying = false;
-		}
-
 		mc.player.abilities.flying = false;
-		
+
 		super.onDisable();
 	}
 
 	@Subscribe
 	public void onTick(EventTick event) {
-		float speed = (float) getSetting(1).asSlider().getValue();
+		float speed = getSetting(1).asSlider().getValueFloat();
 
 		if (mc.player.age % 20 == 0 && getSetting(2).asMode().mode == 3 && !(getSetting(0).asMode().mode == 1)) {
 			mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionOnly(mc.player.getX(), mc.player.getY() - 0.069, mc.player.getZ(), false));

@@ -95,7 +95,7 @@ public class AutoBedBomb extends Module {
             return;
         }
 
-        //BleachLogger.infoMessage("Target: "+targetPlayer.getDisplayName().toString()+" pos: "+targetPlayerPos.toString());
+      //BleachLogger.infoMessage("Target: "+targetPlayer.getDisplayName().toString()+" pos: "+targetPlayerPos.toString());
 
         currentSlot = mc.player.inventory.selectedSlot;
 

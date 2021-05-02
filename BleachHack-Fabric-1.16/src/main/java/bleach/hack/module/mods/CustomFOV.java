@@ -31,3 +31,4 @@ public class CustomFOV extends Module {
         options.fov = options.fov / (1 + getSetting(0).asSlider().getValue());
     }
 }
+
