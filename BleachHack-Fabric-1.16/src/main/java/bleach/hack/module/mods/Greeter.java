@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Welcomer extends Module {
+public class Greeter extends Module {
 
     private final Random rand = new Random();
     private List<String> lines = new ArrayList<>();
@@ -24,8 +24,8 @@ public class Welcomer extends Module {
     public String message;
 
 
-    public Welcomer() {
-        super("Welcomer", KEY_UNBOUND, Category.CHAT, "Welcomes players (edit in greeter.txt)",
+    public Greeter() {
+        super("Greeter", KEY_UNBOUND, Category.CHAT, "Welcomes players (edit in greeter.txt)",
                 new SettingMode("Read", "Order", "Random"),
                 new SettingSlider("Delay", 1, 20, 3, 0).withDesc("Second delay between messages to avoid spam kicks")
         );
