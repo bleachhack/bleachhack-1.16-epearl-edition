@@ -29,7 +29,8 @@ import com.google.gson.JsonParser;
 
 public class BleachGithubReader {
 
-	private static URI url = URI.create("https://raw.githubusercontent.com/BleachDrinker420/BH-resources/master/");
+	//private static URI url = URI.create("https://raw.githubusercontent.com/BleachDrinker420/BH-resources/master/");
+	private static URI url = URI.create("https://raw.githubusercontent.com/HerraVp/BH-VpEdition-resources/master/");
 
 	public static List<String> readFileLines(String file) {
 		List<String> st = new ArrayList<>();

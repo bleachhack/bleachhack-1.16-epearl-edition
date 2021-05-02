@@ -247,7 +247,7 @@ public class BleachTitleScreen extends WindowScreen {
 			/* Version Text */
 			matrix.scale(1.5f, 1.5f, 1.5f);
 			// drawCenteredString(matrix, this.textRenderer, BleachHack.VERSION, (int) ((x + w / 2) / 1.5), (int) ((y + h / 4 + 6) / 1.5), 0xffc050);
-			drawCenteredString(matrix, this.textRenderer, "Vp Edition", (int) ((x + w / 2) / 1.5), (int) ((y + h / 4 + 6) / 1.5), 0xffc050);
+			drawCenteredString(matrix, this.textRenderer, "Vp Edition " + BleachHack.VERSION, (int) ((x + w / 2) / 1.5), (int) ((y + h / 4 + 6) / 1.5), 0xffc050);
 			matrix.scale(1f / 1.5f, 1f / 1.5f, 1f / 1.5f);
 
 			/* Splash Text */
