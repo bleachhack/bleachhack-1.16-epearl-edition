@@ -1,28 +1,21 @@
 package bleach.hack.module.mods;
 
 import bleach.hack.BleachHack;
-import bleach.hack.event.events.EventSendPacket;
 import bleach.hack.event.events.EventTick;
 import bleach.hack.module.Category;
 import bleach.hack.module.Module;
 import bleach.hack.setting.base.SettingSlider;
 import bleach.hack.util.BleachLogger;
 import bleach.hack.util.CrystalUtils;
-import bleach.hack.util.world.EntityUtils;
 import bleach.hack.util.world.WorldUtils;
 import com.google.common.collect.Streams;
 import com.google.common.eventbus.Subscribe;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.mob.Monster;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BedItem;
-import net.minecraft.item.Items;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
@@ -95,7 +88,7 @@ public class AutoBedBomb extends Module {
             return;
         }
 
-      //BleachLogger.infoMessage("Target: "+targetPlayer.getDisplayName().toString()+" pos: "+targetPlayerPos.toString());
+        //BleachLogger.infoMessage("Target: "+targetPlayer.getDisplayName().toString()+" pos: "+targetPlayerPos.toString());
 
         currentSlot = mc.player.inventory.selectedSlot;
 
