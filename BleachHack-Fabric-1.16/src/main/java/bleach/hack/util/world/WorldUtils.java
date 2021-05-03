@@ -34,6 +34,12 @@ public class WorldUtils {
 
 	protected static final MinecraftClient mc = MinecraftClient.getInstance();
 
+	public static final Set<Block> NONSOLID_BLOCKS = Sets.newHashSet(
+			Blocks.AIR, Blocks.LAVA, Blocks.WATER, Blocks.GRASS,
+			Blocks.VINE, Blocks.SEAGRASS, Blocks.TALL_SEAGRASS,
+			Blocks.SNOW, Blocks.TALL_GRASS, Blocks.FIRE, Blocks.VOID_AIR,
+			Blocks.CAVE_AIR);
+
 	public static final Set<Block> RIGHTCLICKABLE_BLOCKS = Sets.newHashSet(
 			Blocks.CHEST, Blocks.TRAPPED_CHEST, Blocks.ENDER_CHEST,
 			Blocks.WHITE_SHULKER_BOX, Blocks.ORANGE_SHULKER_BOX, Blocks.MAGENTA_SHULKER_BOX,
@@ -118,6 +124,68 @@ public class WorldUtils {
 		}
 
 		return true;
+	}
+
+	public static boolean newPlaceBlock(BlockPos pos, int slot, SettingRotate sr, boolean forceLegit, boolean swingHand) {
+		return newPlaceBlock(pos, slot, !sr.state ? 0 : sr.getRotateMode() + 1, forceLegit, swingHand);
+	}
+
+	public static boolean newPlaceBlock(BlockPos pos, int slot, int rotateMode, boolean forceLegit, boolean swingHand) {
+		if (pos.getY() < 0 || pos.getY() > 255 || !isBlockEmpty(pos))
+			return false;
+
+		if (slot != mc.player.inventory.selectedSlot && slot >= 0 && slot <= 8)
+			mc.player.inventory.selectedSlot = slot;
+
+		for (Direction d : Direction.values()) {
+			if ((d == Direction.DOWN && pos.getY() == 0) || (d == Direction.UP && pos.getY() == 255))
+				continue;
+
+			Block neighborBlock = mc.world.getBlockState(pos.offset(d)).getBlock();
+
+			if (NONSOLID_BLOCKS.contains(neighborBlock))
+				continue;
+
+			Vec3d vec = getLegitLookPos(pos.offset(d), d.getOpposite(), true, 5);
+
+			if (vec == null) {
+				if (forceLegit) {
+					continue;
+				}
+
+				vec = getLegitLookPos(pos.offset(d), d.getOpposite(), false, 5);
+
+				if (vec == null) {
+					continue;
+				}
+			}
+
+			if (rotateMode == 1) {
+				facePosPacket(vec.x, vec.y, vec.z);
+			} else if (rotateMode == 2) {
+				facePos(vec.x, vec.y, vec.z);
+			}
+
+			if (RIGHTCLICKABLE_BLOCKS.contains(neighborBlock)) {
+				mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, Mode.PRESS_SHIFT_KEY));
+			}
+
+			if (swingHand) {
+				mc.player.swingHand(Hand.MAIN_HAND);
+			} else {
+				mc.player.networkHandler.sendPacket(new HandSwingC2SPacket(Hand.MAIN_HAND));
+			}
+
+			mc.interactionManager.interactBlock(
+					mc.player, mc.world, Hand.MAIN_HAND, new BlockHitResult(Vec3d.of(pos), d.getOpposite(), pos.offset(d), false));
+
+			if (RIGHTCLICKABLE_BLOCKS.contains(neighborBlock))
+				mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, Mode.RELEASE_SHIFT_KEY));
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public static boolean placeBlock(BlockPos pos, int slot, SettingRotate sr, boolean forceLegit, boolean swingHand) {
