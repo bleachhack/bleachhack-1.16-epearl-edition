@@ -25,6 +25,7 @@ import net.minecraft.entity.Entity;
 public class EventEntityRender extends Event {
 
 	public static class Single extends EventEntityRender {
+
 		protected Entity entity;
 		protected MatrixStack matrix;
 		protected VertexConsumerProvider vertex;
@@ -84,6 +85,7 @@ public class EventEntityRender extends Event {
 				this.vertex = vertex;
 			}
 		}
+
 	}
 
 	public static class PreAll extends EventEntityRender {
@@ -92,22 +94,5 @@ public class EventEntityRender extends Event {
 	public static class PostAll extends EventEntityRender {
 	}
 
-	protected Entity entity;
-
-	public Entity getEntity() {
-		return entity;
-	}
-
-	public static class Render extends EventEntityRender {
-		public Render(Entity entity) {
-			this.entity = entity;
-		}
-	}
-
-	public static class Label extends EventEntityRender {
-		public Label(Entity entity) {
-			this.entity = entity;
-		}
-	}
 }
 

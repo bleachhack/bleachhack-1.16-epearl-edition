@@ -174,6 +174,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import bleach.hack.module.mods.UI;
 import org.lwjgl.glfw.GLFW;
 
 import com.google.gson.Gson;
@@ -250,4 +252,5 @@ public class ModuleManager {
 			modules.values().stream().filter(m -> m.getKey() == key).forEach(Module::toggle);
 		}
 	}
+
 }
