@@ -48,7 +48,7 @@ public class PopCounter extends Module {
     public void
     onTick(EventTick tick)
     {
-        impact_toggle_state  = ModuleManager.getModuleByClass(UI.class).getSetting(24).asToggle().state;
+        impact_toggle_state  = ModuleManager.getModuleByClass(UI.class).isEnabled();
         if(mc.world == null)
             return;
 
