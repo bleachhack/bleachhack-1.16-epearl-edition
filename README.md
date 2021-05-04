@@ -16,9 +16,9 @@ Credits to BleachDrinker420!
 > 
 > [Real BleachHack releases](https://github.com/BleachDrinker420/BleachHack/releases).
 
-## Images  (Taken on version 1.0)
-![Gui](https://cdn.discordapp.com/attachments/817858188753240104/827993234709545000/BleachHackVp.png)
-![Gui2](https://cdn.discordapp.com/attachments/817858188753240104/827993994277027880/BleachHackVp2.png)
+## Images
+![Gui](https://cdn.discordapp.com/attachments/817858188753240104/839137084773761094/BleachHackVp.png)
+![Gui2](https://cdn.discordapp.com/attachments/817858188753240104/839137109147123742/BleachHackVp2.png)
 
 ## Installation
 Download [fabric for minecraft 1.16/1.17](https://fabricmc.net/use/).
