@@ -26,6 +26,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
 import bleach.hack.command.Command;
 import bleach.hack.command.CommandCategory;
+import bleach.hack.command.exception.CmdSyntaxException;
 import bleach.hack.util.BleachLogger;
 import net.minecraft.item.AirBlockItem;
 import net.minecraft.item.ItemStack;
@@ -43,6 +44,10 @@ public class CmdGive extends Command {
 
 	@Override
 	public void onCommand(String alias, String[] args) throws Exception {
+		if (args.length == 0) {
+			throw new CmdSyntaxException();
+		}
+
 		if (!mc.player.abilities.creativeMode) {
 			BleachLogger.errorMessage("Not In Creative Mode!");
 			return;
@@ -221,7 +226,7 @@ public class CmdGive extends Command {
 				Registry.ITEM.get(new Identifier("minecraft:" + args[0].toLowerCase(Locale.ENGLISH))));
 
 		if (item.getItem() instanceof AirBlockItem)
-			printSyntaxError();
+			throw new CmdSyntaxException();
 
 		if (args.length >= 2 && NumberUtils.isCreatable(args[1]))
 			item.setCount(NumberUtils.createNumber(args[1]).intValue());

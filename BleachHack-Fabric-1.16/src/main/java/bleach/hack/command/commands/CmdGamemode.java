@@ -19,6 +19,7 @@ package bleach.hack.command.commands;
 
 import bleach.hack.command.Command;
 import bleach.hack.command.CommandCategory;
+import bleach.hack.command.exception.CmdSyntaxException;
 import bleach.hack.util.BleachLogger;
 import net.minecraft.world.GameMode;
 
@@ -36,8 +37,7 @@ public class CmdGamemode extends Command {
 		try {
 			gm = Integer.parseInt(args[0]);
 		} catch (Exception e) {
-			printSyntaxError("Unable to parse gamemode.");
-			return;
+			throw new CmdSyntaxException("Unable to parse gamemode.");
 		}
 
 		if (gm == 0) {
@@ -57,7 +57,7 @@ public class CmdGamemode extends Command {
 			mc.interactionManager.setGameMode(GameMode.SPECTATOR);
 			BleachLogger.infoMessage("Set gamemode to spectator.");
 		} else {
-			printSyntaxError("Unknown Gamemode Number.");
+			throw new CmdSyntaxException("Unknown Gamemode Number.");
 		}
 	}
 

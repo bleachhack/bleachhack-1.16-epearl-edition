@@ -19,6 +19,7 @@ package bleach.hack.command.commands;
 
 import bleach.hack.command.Command;
 import bleach.hack.command.CommandCategory;
+import bleach.hack.command.exception.CmdSyntaxException;
 import bleach.hack.module.Module;
 import bleach.hack.module.ModuleManager;
 import bleach.hack.util.BleachLogger;
@@ -32,6 +33,10 @@ public class CmdToggle extends Command {
 
 	@Override
 	public void onCommand(String alias, String[] args) throws Exception {
+		if (args.length != 1) {
+			throw new CmdSyntaxException();
+		}
+
 		for (Module m : ModuleManager.getModules()) {
 			if (args[0].equalsIgnoreCase(m.getName())) {
 				BleachQueue.add(() -> m.toggle());

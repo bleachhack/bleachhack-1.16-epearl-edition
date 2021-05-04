@@ -6,6 +6,7 @@ import com.google.gson.JsonPrimitive;
 
 import bleach.hack.command.Command;
 import bleach.hack.command.CommandCategory;
+import bleach.hack.command.exception.CmdSyntaxException;
 import bleach.hack.module.ModuleManager;
 import bleach.hack.module.mods.DiscordRPCMod;
 import bleach.hack.util.BleachLogger;
@@ -20,6 +21,10 @@ public class CmdRpc extends Command {
 
 	@Override
 	public void onCommand(String alias, String[] args) throws Exception {
+		if (args.length == 0) {
+			throw new CmdSyntaxException();
+		}
+
 		DiscordRPCMod rpc = (DiscordRPCMod) ModuleManager.getModule("DiscordRPC");
 		String text = StringUtils.join(args, ' ', 1, args.length);
 
@@ -36,7 +41,7 @@ public class CmdRpc extends Command {
 		} else if (args[0].equalsIgnoreCase("current")) {
 			BleachLogger.infoMessage("Current RPC status:\n" + rpc.getTopText() + "\n" + rpc.getBottomText());
 		} else {
-			printSyntaxError();
+			throw new CmdSyntaxException();
 		}
 	}
 

@@ -23,6 +23,7 @@ import java.util.stream.IntStream;
 
 import bleach.hack.command.Command;
 import bleach.hack.command.CommandCategory;
+import bleach.hack.command.exception.CmdSyntaxException;
 import bleach.hack.util.BleachLogger;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -34,17 +35,16 @@ import net.minecraft.text.LiteralText;
 public class CmdDupe extends Command {
 
 	public CmdDupe() {
-		super("dupe", "Dupes items, (Vanilla mode patched on 1.14.4+)", "dupe <vanilla/book>", CommandCategory.MISC);
+		super("dupe", "Dupes items, (Old aka the 11/11 dupe is patched on 1.14.4+, Book mode works on all vanilla servers)", "dupe <old/book>", CommandCategory.MISC);
 	}
 
 	@Override
 	public void onCommand(String alias, String[] args) throws Exception {
 		if (args.length == 0) {
-			printSyntaxError("Invaild dupe method");
-			return;
+			throw new CmdSyntaxException("Invaild dupe method");
 		}
 
-		if (args[0].equalsIgnoreCase("vanilla")) {
+		if (args[0].equalsIgnoreCase("old")) {
 			mc.player.dropSelectedItem(true);
 			mc.player.networkHandler.getConnection().disconnect(new LiteralText("Duping..."));
 		} else if (args[0].equalsIgnoreCase("book")) {
@@ -66,7 +66,7 @@ public class CmdDupe extends Command {
 			item.getOrCreateTag().put("pages", textSplit);
 			mc.player.networkHandler.sendPacket(new BookUpdateC2SPacket(item, false, mc.player.inventory.selectedSlot));
 		} else {
-			printSyntaxError("Invaild dupe method");
+			throw new CmdSyntaxException("Invaild dupe method");
 		}
 	}
 

@@ -23,6 +23,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 
 import bleach.hack.command.Command;
 import bleach.hack.command.CommandCategory;
+import bleach.hack.command.exception.CmdSyntaxException;
 import bleach.hack.util.BleachLogger;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
@@ -34,11 +35,15 @@ import net.minecraft.util.registry.Registry;
 public class CmdEnchant extends Command {
 
 	public CmdEnchant() {
-		super("enchant", "Enchants an item", "enchant <enchant/id> <level> | enchant all <level> | enchant list", CommandCategory.CREATIVE);
+		super("enchant", "Enchants an item.", "enchant <enchant/id> <level> | enchant all <level> | enchant list", CommandCategory.CREATIVE);
 	}
 
 	@Override
 	public void onCommand(String alias, String[] args) throws Exception {
+		if (args.length == 0 || (args.length == 1 && !args[0].equalsIgnoreCase("list"))) {
+			throw new CmdSyntaxException();
+		}
+
 		if (args[0].equalsIgnoreCase("list")) {
 			BleachLogger.infoMessage("\u00a7d[Aqua_Affinity/Aqua] \u00a75[Arthropods] \u00a7d[Blast/Blast_Prot] "
 					+ "\u00a75[Channeling] \u00a7d[Curse_Binding/Binding] \u00a75[Curse_Vanish/Vanish] \u00a7d[Depth_Strider/Strider] "
@@ -53,8 +58,7 @@ public class CmdEnchant extends Command {
 		}
 
 		if (!mc.player.abilities.creativeMode) {
-			printSyntaxError("Not In Creative Mode!");
-			return;
+			throw new CmdSyntaxException("Not In Creative Mode!");
 		}
 
 		int level = Integer.parseInt(args[1]);
@@ -183,8 +187,7 @@ public class CmdEnchant extends Command {
 
 	public void enchant(ItemStack item, Enchantment e, int level) {
 		if (e == null) {
-			printSyntaxError("Invalid enchantment!");
-			return;
+			throw new CmdSyntaxException("Invalid enchantment!");
 		}
 
 		if (item.getTag() == null)

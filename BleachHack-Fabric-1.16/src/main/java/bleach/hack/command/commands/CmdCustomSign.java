@@ -24,6 +24,7 @@ import com.google.gson.JsonArray;
 
 import bleach.hack.command.Command;
 import bleach.hack.command.CommandCategory;
+import bleach.hack.command.exception.CmdSyntaxException;
 import bleach.hack.module.ModuleManager;
 import bleach.hack.module.mods.NoRender;
 import bleach.hack.util.BleachLogger;
@@ -34,14 +35,13 @@ import net.minecraft.text.Text;
 public class CmdCustomSign extends Command {
 
 	public CmdCustomSign() {
-		super("customsign", "Sets the NoRender custom sign text", "customsign <line1/line2/line3/line4/all> <text> | customsign list", CommandCategory.MODULES);
+		super("customsign", "Sets the NoRender custom sign text.", "customsign <line1/line2/line3/line4/all> <text> | customsign list", CommandCategory.MODULES);
 	}
 
 	@Override
 	public void onCommand(String alias, String[] args) {
 		if (args.length == 0) {
-			printSyntaxError();
-			return;
+			throw new CmdSyntaxException();
 		}
 
 		NoRender noRender = (NoRender) ModuleManager.getModule("NoRender");

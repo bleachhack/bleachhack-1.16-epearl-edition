@@ -21,6 +21,7 @@ import java.util.Locale;
 
 import bleach.hack.command.Command;
 import bleach.hack.command.CommandCategory;
+import bleach.hack.command.exception.CmdSyntaxException;
 import bleach.hack.module.Module;
 import bleach.hack.module.ModuleManager;
 import bleach.hack.util.BleachLogger;
@@ -29,14 +30,13 @@ import net.minecraft.client.util.InputUtil;
 public class CmdBind extends Command {
 
 	public CmdBind() {
-		super("bind", "Binds a module", "bind set <Module> <Key> | bind del <Module> | bind clear", CommandCategory.MODULES);
+		super("bind", "Binds a module.", "bind set <Module> <Key> | bind del <Module> | bind clear", CommandCategory.MODULES);
 	}
 
 	@Override
 	public void onCommand(String alias, String[] args) throws Exception {
 		if (args.length == 0) {
-			printSyntaxError();
-			return;
+			throw new CmdSyntaxException();
 		}
 
 		if (args[0].equalsIgnoreCase("clear")) {
@@ -63,19 +63,16 @@ public class CmdBind extends Command {
 								try {
 									key = InputUtil.fromTranslationKey("key.keyboard." + args[2].toLowerCase(Locale.ENGLISH).replaceFirst("right", "right.")).getCode();
 								} catch (IllegalArgumentException e1) {
-									printSyntaxError("Unknown key: " + args[2] + " / " + args[2].toLowerCase(Locale.ENGLISH).replaceFirst("right", "right."));
-									return;
+									throw new CmdSyntaxException("Unknown key: " + args[2] + " / " + args[2].toLowerCase(Locale.ENGLISH).replaceFirst("right", "right."));
 								}
 							} else if (args[2].toLowerCase(Locale.ENGLISH).startsWith("r")) {
 								try {
 									key = InputUtil.fromTranslationKey("key.keyboard." + args[2].toLowerCase(Locale.ENGLISH).replaceFirst("r", "right.")).getCode();
 								} catch (IllegalArgumentException e1) {
-									printSyntaxError("Unknown key: " + args[2] + " / " + args[2].toLowerCase(Locale.ENGLISH).replaceFirst("r", "right."));
-									return;
+									throw new CmdSyntaxException("Unknown key: " + args[2] + " / " + args[2].toLowerCase(Locale.ENGLISH).replaceFirst("r", "right."));
 								}
 							} else {
-								printSyntaxError("Unknown key: " + args[2]);
-								return;
+								throw new CmdSyntaxException("Unknown key: " + args[2]);
 							}
 						}
 
@@ -90,9 +87,9 @@ public class CmdBind extends Command {
 				}
 			}
 
-			printSyntaxError("Could Not Find Module \"" + args[1] + "\"");
+			throw new CmdSyntaxException("Could Not Find Module \"" + args[1] + "\"");
 		} else {
-			printSyntaxError();
+			throw new CmdSyntaxException();
 		}
 	}
 
