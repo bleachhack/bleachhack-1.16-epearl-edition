@@ -1,5 +1,5 @@
 
-# BleachHack VpEdition 1.2.2
+# BleachHack VpEdition 1.2.3
 ![](https://img.shields.io/tokei/lines/github/HerraVp/bleachhack-VpEdition?style=flat-square)
 ![](https://img.shields.io/github/last-commit/HerraVp/bleachhack-VpEdition?style=flat-square)
 ![](https://img.shields.io/badge/daily%20commit-maybeKEKW-red?style=flat-square)
