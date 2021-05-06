@@ -5,6 +5,7 @@ import bleach.hack.command.CommandCategory;
 import bleach.hack.util.BleachLogger;
 import net.minecraft.client.MinecraftClient;
 
+import net.minecraft.util.Util;
 import java.awt.*;
 import java.io.File;
 import java.nio.file.Paths;
@@ -20,7 +21,7 @@ public class CmdOpenFolder extends Command {
         if(!GraphicsEnvironment.isHeadless()) {
             System.setProperty("java.awt.headless", "false");
         }
-        Desktop.getDesktop().open(new File(String.valueOf(Paths.get(MinecraftClient.getInstance().runDirectory.getPath(), "bleach/hack/"))));
+        Util.getOperatingSystem().open(new File(String.valueOf(Paths.get(MinecraftClient.getInstance().runDirectory.getPath(), "/bleach/"))));
     }
 
 }
