@@ -21,6 +21,7 @@ import com.google.common.eventbus.EventBus;
 import com.google.gson.JsonElement;
 
 import bleach.hack.command.CommandManager;
+import bleach.hack.command.CommandSuggestor;
 import bleach.hack.gui.title.BleachTitleScreen;
 import bleach.hack.module.ModuleManager;
 import bleach.hack.module.mods.ClickGui;
@@ -37,7 +38,7 @@ public class BleachHack implements ModInitializer {
 	private static BleachHack instance = null;
 	public static Logger logger;
 
-	public static final String VERSION = "1.2.3";
+	public static final String VERSION = "1.3-DEV";
 	public static final int INTVERSION = 29;
 
 	public static final EventBus eventBus = new EventBus();
@@ -79,6 +80,7 @@ public class BleachHack implements ModInitializer {
 		BleachFileHelper.readFriends();
 
 		CommandManager.readPrefix();
+		CommandSuggestor.init();
 
 		JsonElement mainMenu = BleachFileHelper.readMiscSetting("customTitleScreen");
 		if (mainMenu != null && !mainMenu.getAsBoolean()) {

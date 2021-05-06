@@ -20,6 +20,7 @@ package bleach.hack.event.events;
 import bleach.hack.event.Event;
 
 public class EventKeyPress extends Event {
+
 	private int key;
 	private int scanCode;
 
@@ -34,5 +35,34 @@ public class EventKeyPress extends Event {
 
 	public int getScanCode() {
 		return scanCode;
+	}
+
+	public static class Global extends EventKeyPress {
+
+		private int action;
+		private int modifiers;
+
+		public Global(int key, int scanCode, int action, int modifiers) {
+			super(key, scanCode);
+			this.action = action;
+			this.modifiers = modifiers;
+		}
+
+		public int getAction() {
+			return action;
+		}
+
+		public int getModifiers() {
+			return modifiers;
+		}
+
+	}
+
+	public static class InWorld extends EventKeyPress {
+
+		public InWorld(int key, int scanCode) {
+			super(key, scanCode);
+		}
+
 	}
 }
