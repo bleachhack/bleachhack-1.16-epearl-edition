@@ -20,7 +20,6 @@ package bleach.hack.util;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.net.URL;
 import java.nio.file.Files;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -32,7 +31,9 @@ import java.util.zip.ZipFile;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 
+import bleach.hack.BleachHack;
 import bleach.hack.util.file.BleachFileMang;
+import bleach.hack.util.file.BleachGithubReader;
 import net.minecraft.block.enums.Instrument;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.sound.PositionedSoundInstance;
@@ -44,7 +45,7 @@ public class NotebotUtils {
 	public static void downloadSongs(boolean log) {
 		try {
 			FileUtils.copyURLToFile(
-					new URL("https://github.com/BleachDrinker420/BH-resources/raw/master/notebot/songs.zip"),
+					BleachGithubReader.stringsToURI("notebot", "songs.zip").toURL(),
 					BleachFileMang.stringsToPath("notebot", "songs.zip").toFile());
 			ZipFile zip = new ZipFile(BleachFileMang.stringsToPath("notebot", "songs.zip").toFile());
 			Enumeration<? extends ZipEntry> files = zip.entries();
@@ -85,7 +86,7 @@ public class NotebotUtils {
 				if (split[0].equals(tick + ""))
 					notes.put(Instrument.values()[Integer.parseInt(split[2])], Integer.parseInt(split[1]));
 			} catch (Exception e) {
-				System.out.println("oops");
+				BleachHack.logger.error("oops");
 			}
 		}
 
