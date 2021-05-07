@@ -32,7 +32,7 @@ import com.google.gson.JsonParser;
 
 public class BleachGithubReader {
 
-	private static URI url = URI.create("https://raw.githubusercontent.com/HerraVp/BH-VpEdition-resources/main");
+	private static URI url = URI.create("https://raw.githubusercontent.com/HerraVp/BH-VpEdition-resources/main/");
 
 	public static List<String> readFileLines(String... path) {
 		List<String> st = new ArrayList<>();
