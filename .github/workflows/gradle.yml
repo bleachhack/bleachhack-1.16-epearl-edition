@@ -18,12 +18,16 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
+    - name: cd into folder
+      run: cd BleachHack-Fabric-1.16
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew build
+    - name: cd out of folder
+      run: cd ..
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
         name: BH-CupEdition
-        path: build/libs/bleachhack-1.16.5.jar
+        path: build/libs/bleachhack_cupedition-1.16.5.jar
