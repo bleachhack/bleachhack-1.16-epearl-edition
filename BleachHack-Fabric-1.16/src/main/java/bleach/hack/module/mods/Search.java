@@ -77,7 +77,7 @@ public class Search extends Module {
                 new SettingToggle("Tracers", false).withDesc("Renders a line from the player to all found blocks").withChildren(
                         new SettingSlider("Width", 0.1, 5, 1.5, 1).withDesc("Thickness of the tracers"),
                         new SettingSlider("Opacity", 0, 1, 0.75, 2).withDesc("Opacity of the tracers")),
-                new SettingToggle("Color", false).withDesc("Change the color of tracers and boxes").withChildren(
+                new SettingToggle("Color", true).withDesc("Change the color of tracers and boxes").withChildren(
                         new SettingColor("Color", 0.074509f, 0.584313f, 0.117647f, false)),
                 SettingLists.newBlockList("Edit Blocks", "Edit Search Blocks",
                         Blocks.DIAMOND_ORE,
