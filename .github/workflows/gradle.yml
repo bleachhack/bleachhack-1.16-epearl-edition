@@ -29,5 +29,5 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: BH-CupEdition
+        name: BleachHack-Vp-Edition
         path: build/libs/bleachhack-1.16.5.jar
