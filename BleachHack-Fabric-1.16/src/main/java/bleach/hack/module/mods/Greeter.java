@@ -32,7 +32,7 @@ public class Greeter extends Module {
 
 
     public Greeter() {
-        super("Greeter", KEY_UNBOUND, Category.MISC, "Welcomes and says goodbyes to players (edit in greeter.txt & goodbye.txt)",
+        super("Greeter", KEY_UNBOUND, Category.CHAT, "Welcomes and says goodbyes to players (edit in greeter.txt & goodbye.txt)",
                 new SettingMode("Read", "Order", "Random"),
                 new SettingSlider("Delay", 0, 20, 3, 0).withDesc("Second delay between messages to avoid spam kicks"),
                 new SettingToggle("Welcome", true),
