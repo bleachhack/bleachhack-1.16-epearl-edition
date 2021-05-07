@@ -30,7 +30,7 @@ public class LogoutSpot extends Module {
     private final HashMap<UUID, Pair<PlayerCopyEntity, Long>> players = new HashMap<>();
 
     public LogoutSpot() {
-        super("LogoutSpot", KEY_UNBOUND, Category.RENDER, "Shows where a player logged out",
+        super("LogoutSpot", KEY_UNBOUND, Category.WORLD, "Shows where a player logged out",
                 new SettingToggle("Remove", true).withDesc("Removes logout spots").withChildren( // 1
                         new SettingToggle("Distance", false).withDesc("Remove logout spots based on distance").withChildren( // 0-0
                                 new SettingSlider("Radius", 1, 1000, 200, 0).withDesc("Radius in which logout spots get shown")), // 0-0-0
@@ -42,7 +42,8 @@ public class LogoutSpot extends Module {
                         new SettingToggle("Name", true).withDesc("Shows the name of the logged player"), // 1-0
                         new SettingToggle("Coords", false).withDesc("Shows the coords of the logged player"), // 1-1
                         new SettingToggle("Health", true).withDesc("Shows the health of the logged player"), // 1-2
-                        new SettingToggle("Time", true).withDesc("Shows the time ago the player logged"))); // 1-3
+                        new SettingToggle("Time", true).withDesc("Shows the time ago the player logged")), // 1-3
+                new SettingToggle("Ghost", true).withDesc("Makes the logout spot players transparent")); // 2
     }
 
     @Override
@@ -125,6 +126,8 @@ public class LogoutSpot extends Module {
                 return false;
             });
         }
+
+        players.values().forEach(e -> e.getLeft().setGhost(getSetting(2).asToggle().state));
     }
 
     @Subscribe
@@ -172,6 +175,11 @@ public class LogoutSpot extends Module {
 
     private PlayerCopyEntity spawnDummy(PlayerEntity player) {
         PlayerCopyEntity dummy = new PlayerCopyEntity(player);
+
+        if (getSetting(2).asToggle().state) {
+            dummy.setGhost(true);
+        }
+
         dummy.spawn();
 
         return dummy;

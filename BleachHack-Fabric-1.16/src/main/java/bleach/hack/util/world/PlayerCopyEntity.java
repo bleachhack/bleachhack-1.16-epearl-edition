@@ -15,15 +15,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package bleach.hack.util.world;
 
 import java.util.UUID;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.OtherClientPlayerEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 
 public class PlayerCopyEntity extends OtherClientPlayerEntity {
+
+	private boolean ghost;
 
 	public PlayerCopyEntity() {
 		this(MinecraftClient.getInstance().player);
@@ -46,6 +50,13 @@ public class PlayerCopyEntity extends OtherClientPlayerEntity {
 		getPlayerListEntry();
 		setUuid(UUID.randomUUID());
 
+		setHealth(player.getHealth());
+		setAbsorptionAmount(player.getAbsorptionAmount());
+
+		for (StatusEffectInstance effect: player.getStatusEffects()) {
+			addStatusEffect(effect);
+		}
+
 		inventory.main.set(inventory.selectedSlot, player.getMainHandStack());
 		inventory.offHand.set(0, player.getOffHandStack());
 		inventory.armor.set(0, player.inventory.armor.get(0));
@@ -55,11 +66,26 @@ public class PlayerCopyEntity extends OtherClientPlayerEntity {
 	}
 
 	public void spawn() {
+		removed = false;
 		MinecraftClient.getInstance().world.addEntity(this.getEntityId(), this);
 	}
 
 	public void despawn() {
 		MinecraftClient.getInstance().world.removeEntity(this.getEntityId());
+	}
+
+	public void setGhost(boolean ghost) {
+		this.ghost = ghost;
+	}
+
+	@Override
+	public boolean isInvisible() {
+		return ghost ? true : super.isInvisible();
+	}
+
+	@Override
+	public boolean isInvisibleTo(PlayerEntity player) {
+		return ghost ? false : super.isInvisibleTo(player);
 	}
 
 }
