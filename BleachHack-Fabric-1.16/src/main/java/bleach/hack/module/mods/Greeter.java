@@ -55,15 +55,16 @@ public class Greeter extends Module {
     @Override
     public void onEnable() {
         super.onEnable();
-        if (!BleachFileMang.fileExists("greeter.txt"))
+        if (!BleachFileMang.fileExists("greeter.txt")) {
             BleachFileMang.createFile("greeter.txt");
-            BleachFileMang.appendFile("Welcome, $p", "greeter.txt");
+            BleachFileMang.appendFile("Welcome back, $p", "greeter.txt");
 
-
-        if (!BleachFileMang.fileExists("goodbye.txt"))
+        }
+        if (!BleachFileMang.fileExists("goodbye.txt")) {
             BleachFileMang.createFile("goodbye.txt");
             BleachFileMang.appendFile("Goodbye, $p", "goodbye.txt");
 
+        }
         lines = BleachFileMang.readFileLines("greeter.txt");
         lines2 = BleachFileMang.readFileLines("goodbye.txt");
         lineCount = 0;
@@ -93,9 +94,9 @@ public class Greeter extends Module {
             if (player == null) return;
             if (mc.player == null) return;
             if (player.equals(mc.player.getDisplayName().asString())) return;
-            if (getSetting(1).asMode().mode == 0) {
+            if (getSetting(0).asMode().mode == 0) {
                 message_queue.add(lines2.get(lineCount2).replace("$p", player));
-            } else if (getSetting(1).asMode().mode == 1) {
+            } else if (getSetting(0).asMode().mode == 1) {
                 message_queue.add(lines2.get(rand.nextInt(lines.size())).replace("$p", player));
             }
             if (lineCount2 >= lines2.size() - 1) lineCount2 = 0;
