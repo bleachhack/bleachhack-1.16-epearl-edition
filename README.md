@@ -7,7 +7,7 @@
 My own skid of BleachHack.
 
 
-Works on fabric 1.16 
+Works on fabric 1.16.5 
 
 Credits to BleachDrinker420!
 ## Real BleachHack
