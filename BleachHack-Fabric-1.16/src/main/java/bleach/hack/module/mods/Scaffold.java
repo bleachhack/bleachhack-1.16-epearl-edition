@@ -26,7 +26,7 @@ import com.google.common.eventbus.Subscribe;
 
 import bleach.hack.event.events.EventTick;
 import bleach.hack.event.events.EventWorldRender;
-import bleach.hack.module.Category;
+import bleach.hack.module.ModuleCategory;
 import bleach.hack.module.Module;
 import bleach.hack.setting.base.SettingColor;
 import bleach.hack.setting.base.SettingMode;
@@ -34,6 +34,7 @@ import bleach.hack.setting.base.SettingSlider;
 import bleach.hack.setting.base.SettingToggle;
 import bleach.hack.setting.other.SettingLists;
 import bleach.hack.setting.other.SettingRotate;
+import bleach.hack.util.InventoryUtils;
 import bleach.hack.util.render.RenderUtils;
 import bleach.hack.util.render.color.QuadColor;
 import bleach.hack.util.world.WorldUtils;
@@ -48,12 +49,12 @@ public class Scaffold extends Module {
 	private Set<BlockPos> renderBlocks = new LinkedHashSet<>();
 
 	public Scaffold() {
-		super("Scaffold", GLFW.GLFW_KEY_N, Category.WORLD, "Places blocks under you",
+		super("Scaffold", GLFW.GLFW_KEY_N, ModuleCategory.WORLD, "Places blocks under you",
 				new SettingMode("Mode", "Normal", "3x3", "5x5", "7x7").withDesc("How big of an area to scaffold"),
 				new SettingSlider("BPT", 1, 10, 2, 0).withDesc("Blocks Per Tick, how many blocks to place per tick"),
 				new SettingSlider("Range", 0, 1, 0.3, 1).withDesc("How far to place ahead of you in Normal mode"),
 				new SettingRotate(false).withDesc("Rotates when placing blocks"),
-				new SettingToggle("Legit Place", false).withDesc("Only places on sides you can see"),
+				new SettingToggle("LegitPlace", false).withDesc("Only places on sides you can see"),
 				new SettingToggle("Filter", false).withDesc("Filters certain blocks").withChildren(
 						new SettingMode("Mode", "Blacklist", "Whitelist").withDesc("How to handle the list"),
 						SettingLists.newItemList("Edit Blocks", "Edit Filtered Blocks", i -> i instanceof BlockItem).withDesc("Edit the filtered blocks")),
@@ -68,23 +69,26 @@ public class Scaffold extends Module {
 						new SettingToggle("Placed", false).withDesc("Highlights blocks that are already placed")));
 	}
 
+	private boolean shouldUseItem(Item item) {
+		if (!(item instanceof BlockItem)) {
+			return false;
+		}
+
+		if (getSetting(5).asToggle().state) {
+			boolean contains = getSetting(5).asToggle().getChild(1).asList(Item.class).contains(item);
+
+			return (getSetting(5).asToggle().getChild(0).asMode().mode == 0 && !contains)
+					|| (getSetting(5).asToggle().getChild(0).asMode().mode == 1 && contains);
+		}
+
+		return true;
+	}
+
 	@Subscribe
 	public void onTick(EventTick event) {
 		renderBlocks.clear();
 
-		int slot = -1;
-		int prevSlot = mc.player.inventory.selectedSlot;
-
-		if (mc.player.inventory.getMainHandStack().getItem() instanceof BlockItem) {
-			slot = mc.player.inventory.selectedSlot;
-		} else {
-			for (int i = 0; i < 9; i++) {
-				if (mc.player.inventory.getStack(i).getItem() instanceof BlockItem) {
-					slot = i;
-					break;
-				}
-			}
-		}
+		int slot = InventoryUtils.getSlot(true, i -> shouldUseItem(mc.player.inventory.getStack(i).getItem()));
 
 		if (slot == -1) {
 			if (getSetting(10).asToggle().state) {
@@ -92,19 +96,6 @@ public class Scaffold extends Module {
 			}
 
 			return;
-		}
-
-		if (getSetting(5).asToggle().state) {
-			boolean contains = getSetting(5).asToggle().getChild(1).asList(Item.class).contains(mc.player.inventory.getStack(slot).getItem());
-
-			if ((getSetting(5).asToggle().getChild(0).asMode().mode == 0 && contains)
-					|| (getSetting(5).asToggle().getChild(0).asMode().mode == 1 && !contains)) {
-				if (getSetting(10).asToggle().state) {
-					setEnabled(false);
-				}
-
-				return;
-			}
 		}
 
 		double range = getSetting(2).asSlider().getValue();
@@ -153,15 +144,14 @@ public class Scaffold extends Module {
 
 		int cap = 0;
 		for (BlockPos bp : blocks) {
-			boolean placed = WorldUtils.placeBlock(bp, slot, getSetting(3).asRotate(), getSetting(4).asToggle().state, !getSetting(9).asToggle().state);
-
-			if (!placed && getSetting(7).asToggle().state) {
-				placed = WorldUtils.airPlaceBlock(bp, slot, getSetting(3).asRotate(), getSetting(4).asToggle().state, !getSetting(9).asToggle().state);
-			}
+			boolean placed = WorldUtils.placeBlock(
+					bp, slot,
+					getSetting(3).asRotate(),
+					getSetting(4).asToggle().state,
+					getSetting(7).asToggle().state,
+					!getSetting(9).asToggle().state);
 
 			if (placed) {
-				mc.player.inventory.selectedSlot = prevSlot;
-
 				cap++;
 
 				if (cap >= getSetting(1).asSlider().getValueInt()) {

@@ -1,7 +1,7 @@
 package bleach.hack.module.mods;
 
 import bleach.hack.event.events.EventTick;
-import bleach.hack.module.Category;
+import bleach.hack.module.ModuleCategory;
 import bleach.hack.module.Module;
 import bleach.hack.setting.base.SettingMode;
 import bleach.hack.setting.base.SettingSlider;
@@ -17,7 +17,7 @@ import net.minecraft.screen.slot.SlotActionType;
 public class BedReplenish extends Module {
 
     public BedReplenish() {
-        super("BedReplenish", KEY_UNBOUND, Category.COMBAT, "Automatically equips beds.",
+        super("BedReplenish", KEY_UNBOUND, ModuleCategory.COMBAT, "Automatically equips beds.",
                 new SettingToggle("Override", true).withDesc("Equips a bed even if theres another item in the offhand"),
                 new SettingSlider("Slot: ", 0, 8, 8, 0),
                 new SettingMode("Item: ", "Bed", "Snowball", "Packed Ice"));

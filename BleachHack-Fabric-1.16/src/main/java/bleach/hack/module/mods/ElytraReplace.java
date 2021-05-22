@@ -3,7 +3,7 @@ package bleach.hack.module.mods;
 import com.google.common.eventbus.Subscribe;
 
 import bleach.hack.event.events.EventTick;
-import bleach.hack.module.Category;
+import bleach.hack.module.ModuleCategory;
 import bleach.hack.module.Module;
 import net.minecraft.item.ElytraItem;
 import net.minecraft.item.ItemStack;
@@ -15,7 +15,7 @@ public class ElytraReplace extends Module {
 	private boolean jump = false;
 
 	public ElytraReplace() {
-		super("ElytraReplace", KEY_UNBOUND, Category.PLAYER, "Automatically replaces broken elytra and continues flying");
+		super("ElytraReplace", KEY_UNBOUND, ModuleCategory.PLAYER, "Automatically replaces broken elytra and continues flying");
 	}
 
 	@Subscribe

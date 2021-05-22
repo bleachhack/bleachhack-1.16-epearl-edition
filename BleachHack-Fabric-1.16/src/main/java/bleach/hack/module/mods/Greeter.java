@@ -2,7 +2,7 @@ package bleach.hack.module.mods;
 
 import bleach.hack.event.events.EventReadPacket;
 import bleach.hack.event.events.EventTick;
-import bleach.hack.module.Category;
+import bleach.hack.module.ModuleCategory;
 import bleach.hack.module.Module;
 import bleach.hack.setting.base.SettingMode;
 import bleach.hack.setting.base.SettingSlider;
@@ -32,7 +32,7 @@ public class Greeter extends Module {
 
 
     public Greeter() {
-        super("Greeter", KEY_UNBOUND, Category.CHAT, "Welcomes and says goodbyes to players (edit in greeter.txt & goodbye.txt)",
+        super("Greeter", KEY_UNBOUND, ModuleCategory.CHAT, "Welcomes and says goodbyes to players (edit in greeter.txt & goodbye.txt)",
                 new SettingMode("Read", "Order", "Random"),
                 new SettingSlider("Delay", 0, 20, 3, 0).withDesc("Second delay between messages to avoid spam kicks"),
                 new SettingToggle("Welcome", true),

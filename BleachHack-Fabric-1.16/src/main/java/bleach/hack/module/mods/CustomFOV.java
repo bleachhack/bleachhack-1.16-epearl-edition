@@ -1,6 +1,6 @@
 package bleach.hack.module.mods;
 
-import bleach.hack.module.Category;
+import bleach.hack.module.ModuleCategory;
 import bleach.hack.module.Module;
 import bleach.hack.setting.base.SettingSlider;
 import net.minecraft.client.MinecraftClient;
@@ -9,7 +9,7 @@ import net.minecraft.client.options.GameOptions;
 public class CustomFOV extends Module {
 
     public CustomFOV() {
-        super ("CustomFOV", KEY_UNBOUND, Category.RENDER, "Changes ur fov (This is kinda broken)",
+        super ("CustomFOV", KEY_UNBOUND, ModuleCategory.RENDER, "Changes ur fov (This is kinda broken)",
                 new SettingSlider("Scale", 0, 1, 0.3, 1));
     }
 

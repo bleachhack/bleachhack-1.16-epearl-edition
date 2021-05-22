@@ -1,7 +1,7 @@
 package bleach.hack.module.mods;
 
 import bleach.hack.event.events.EventTick;
-import bleach.hack.module.Category;
+import bleach.hack.module.ModuleCategory;
 import bleach.hack.module.Module;
 import bleach.hack.setting.base.SettingMode;
 import bleach.hack.setting.base.SettingSlider;
@@ -32,7 +32,7 @@ public class HighwayNuker extends Module {
     private final List<Block> blockList = new ArrayList<>();
 
     public HighwayNuker() {
-        super("HighwayNuker", KEY_UNBOUND, Category.WORLD, "Breaks blocks around you",
+        super("HighwayNuker", KEY_UNBOUND, ModuleCategory.WORLD, "Breaks blocks around you",
                 new SettingMode("Mode: ", "Normal", "Multi", "Instant"),
                 new SettingMode("Blocks: ", "1x3", "2x3", "3x3", "Highway"),
                 new SettingSlider("Cooldown: ", 0, 4, 0, 0),

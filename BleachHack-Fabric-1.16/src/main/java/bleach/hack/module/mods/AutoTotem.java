@@ -20,7 +20,7 @@ package bleach.hack.module.mods;
 import com.google.common.eventbus.Subscribe;
 
 import bleach.hack.event.events.EventTick;
-import bleach.hack.module.Category;
+import bleach.hack.module.ModuleCategory;
 import bleach.hack.module.Module;
 import bleach.hack.setting.base.SettingToggle;
 import net.minecraft.item.Items;
@@ -34,7 +34,7 @@ import net.minecraft.util.math.Direction;
 public class AutoTotem extends Module {
 
 	public AutoTotem() {
-		super("AutoTotem", KEY_UNBOUND, Category.COMBAT, "Automatically equips totems.",
+		super("AutoTotem", KEY_UNBOUND, ModuleCategory.COMBAT, "Automatically equips totems.",
 				new SettingToggle("Override", false).withDesc("Equips a totem even if theres another item in the offhand"));
 	}
 

@@ -27,7 +27,7 @@ import com.google.common.collect.Multimap;
 import com.google.common.eventbus.Subscribe;
 
 import bleach.hack.event.events.EventTick;
-import bleach.hack.module.Category;
+import bleach.hack.module.ModuleCategory;
 import bleach.hack.module.Module;
 import bleach.hack.util.BleachLogger;
 import bleach.hack.util.FabricReflect;
@@ -42,7 +42,7 @@ public class NotebotStealer extends Module {
 	private int ticks = 0;
 
 	public NotebotStealer() {
-		super("NotebotStealer", KEY_UNBOUND, Category.MISC, "Steals noteblock songs");
+		super("NotebotStealer", KEY_UNBOUND, ModuleCategory.MISC, "Steals noteblock songs");
 	}
 
 	@Override

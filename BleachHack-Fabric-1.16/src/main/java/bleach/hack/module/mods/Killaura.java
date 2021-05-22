@@ -25,7 +25,7 @@ import com.google.common.eventbus.Subscribe;
 
 import bleach.hack.BleachHack;
 import bleach.hack.event.events.EventTick;
-import bleach.hack.module.Category;
+import bleach.hack.module.ModuleCategory;
 import bleach.hack.module.Module;
 import bleach.hack.setting.base.SettingSlider;
 import bleach.hack.setting.base.SettingToggle;
@@ -45,7 +45,7 @@ public class Killaura extends Module {
 	private int delay = 0;
 
 	public Killaura() {
-		super("Killaura", GLFW.GLFW_KEY_K, Category.COMBAT, "Automatically attacks entities",
+		super("Killaura", GLFW.GLFW_KEY_K, ModuleCategory.COMBAT, "Automatically attacks entities",
 				new SettingToggle("Players", true).withDesc("Attack players"),
 				new SettingToggle("Mobs", true).withDesc("Attack mobs"),
 				new SettingToggle("Animals", false).withDesc("Attack animals"),

@@ -1,14 +1,14 @@
 package bleach.hack.module.mods;
 
 import bleach.hack.event.events.EventTick;
-import bleach.hack.module.Category;
+import bleach.hack.module.ModuleCategory;
 import bleach.hack.module.Module;
 import com.google.common.eventbus.Subscribe;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 
 public class HoleTP extends Module {
     public HoleTP() {
-        super("HoleTP", KEY_UNBOUND, Category.MOVEMENT, "Fall fast :O");
+        super("HoleTP", KEY_UNBOUND, ModuleCategory.MOVEMENT, "Fall fast :O");
     }
 
     private boolean flag;

@@ -2,7 +2,7 @@ package bleach.hack.module.mods;
 
 import bleach.hack.event.events.EventReadPacket;
 import bleach.hack.event.events.EventTick;
-import bleach.hack.module.Category;
+import bleach.hack.module.ModuleCategory;
 import bleach.hack.module.Module;
 import bleach.hack.module.ModuleManager;
 import bleach.hack.util.BleachLogger;
@@ -19,7 +19,7 @@ public class PopCounter extends Module {
     public boolean impact_toggle_state;
 
     public PopCounter() {
-        super("PopCounter", KEY_UNBOUND, Category.CHAT, "Counts totem pops");
+        super("PopCounter", KEY_UNBOUND, ModuleCategory.CHAT, "Counts totem pops");
     }
 
     public void

@@ -1,8 +1,7 @@
 package bleach.hack.module.mods;
 
-import bleach.hack.module.Category;
+import bleach.hack.module.ModuleCategory;
 import bleach.hack.module.Module;
-import bleach.hack.module.ModuleManager;
 import bleach.hack.setting.base.SettingMode;
 import bleach.hack.setting.base.SettingSlider;
 import bleach.hack.util.BleachLogger;
@@ -12,7 +11,7 @@ import net.minecraft.entity.player.PlayerEntity;
 public class AutoAlign extends Module {
 
     public AutoAlign() {
-        super("AutoAlign", KEY_UNBOUND, Category.PLAYER, "Resets your yaw and then disables.",
+        super("AutoAlign", KEY_UNBOUND, ModuleCategory.PLAYER, "Resets your yaw and then disables.",
                 new SettingMode("Mode ", "Auto", "Choose"),
                 new SettingSlider("Yaw", -179, 180, -90, 0));
     }

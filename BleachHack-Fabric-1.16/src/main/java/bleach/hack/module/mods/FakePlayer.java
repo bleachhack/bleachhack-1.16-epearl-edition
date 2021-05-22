@@ -1,6 +1,6 @@
 package bleach.hack.module.mods;
 
-import bleach.hack.module.Category;
+import bleach.hack.module.ModuleCategory;
 import bleach.hack.module.Module;
 import net.minecraft.util.math.Vec3d;
 
@@ -11,7 +11,7 @@ public class FakePlayer extends Module {
     private Vec3d newPos;
 
     public FakePlayer() {
-        super("FakePlayer", KEY_UNBOUND, Category.RENDER, "Creates fake player");
+        super("FakePlayer", KEY_UNBOUND, ModuleCategory.RENDER, "Creates fake player");
     }
 
     public void

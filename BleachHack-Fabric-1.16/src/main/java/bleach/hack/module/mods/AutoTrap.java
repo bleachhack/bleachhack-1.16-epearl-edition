@@ -2,9 +2,8 @@ package bleach.hack.module.mods;
 
 import bleach.hack.BleachHack;
 import bleach.hack.event.events.EventTick;
-import bleach.hack.module.Category;
+import bleach.hack.module.ModuleCategory;
 import bleach.hack.module.Module;
-import bleach.hack.module.ModuleManager;
 import bleach.hack.setting.base.SettingMode;
 import com.google.common.eventbus.Subscribe;
 import net.minecraft.block.Blocks;
@@ -17,7 +16,7 @@ import net.minecraft.util.math.Direction;
 public class AutoTrap extends Module {
 
     public AutoTrap() {
-        super("AutoTrap", KEY_UNBOUND, Category.COMBAT, "autotraps other players near you, does not trap friends!",
+        super("AutoTrap", KEY_UNBOUND, ModuleCategory.COMBAT, "autotraps other players near you, does not trap friends!",
                 new SettingMode("Mode", "Top", "Full", "Bed Aura")
         );
     }

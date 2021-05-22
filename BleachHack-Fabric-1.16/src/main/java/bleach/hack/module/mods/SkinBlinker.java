@@ -1,6 +1,6 @@
 package bleach.hack.module.mods;
 
-import bleach.hack.module.Category;
+import bleach.hack.module.ModuleCategory;
 import bleach.hack.module.Module;
 import bleach.hack.event.events.EventTick;
 import java.util.Random;
@@ -15,7 +15,7 @@ import net.minecraft.client.render.entity.PlayerModelPart;
 
 public class SkinBlinker extends Module {
     public SkinBlinker() {
-        super("SkinBlinker", KEY_UNBOUND, Category.FUN, "Makes ur skins body parts blink");
+        super("SkinBlinker", KEY_UNBOUND, ModuleCategory.FUN, "Makes ur skins body parts blink");
     }
 
     private final Random random = new Random();

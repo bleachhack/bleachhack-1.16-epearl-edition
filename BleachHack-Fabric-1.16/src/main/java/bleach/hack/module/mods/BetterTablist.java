@@ -2,7 +2,7 @@ package bleach.hack.module.mods;
 
 import bleach.hack.BleachHack;
 import bleach.hack.event.events.EventTick;
-import bleach.hack.module.Category;
+import bleach.hack.module.ModuleCategory;
 import bleach.hack.module.Module;
 import bleach.hack.setting.base.SettingToggle;
 import com.google.common.eventbus.Subscribe;
@@ -14,7 +14,7 @@ import java.util.Objects;
 public class BetterTablist extends Module {
 
     public BetterTablist() {
-        super("BetterTablist", KEY_UNBOUND, Category.RENDER, "Tablist Modifications",
+        super("BetterTablist", KEY_UNBOUND, ModuleCategory.RENDER, "Tablist Modifications",
                 new SettingToggle("TabFriends", true).withDesc("Highlights friends in the tablist"),
                 new SettingToggle("TabPing", false).withDesc("Adds player ping to the tablist"));
     }

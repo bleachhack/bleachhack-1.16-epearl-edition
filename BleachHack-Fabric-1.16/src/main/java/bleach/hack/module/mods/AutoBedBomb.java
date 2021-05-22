@@ -2,7 +2,7 @@ package bleach.hack.module.mods;
 
 import bleach.hack.BleachHack;
 import bleach.hack.event.events.EventTick;
-import bleach.hack.module.Category;
+import bleach.hack.module.ModuleCategory;
 import bleach.hack.module.Module;
 import bleach.hack.setting.base.SettingSlider;
 import bleach.hack.util.BleachLogger;
@@ -28,7 +28,7 @@ public class AutoBedBomb extends Module {
     int currentSlot;
 
     public AutoBedBomb() {
-        super("AutoBedBomb", KEY_UNBOUND, Category.COMBAT, "Automatically places beds on targets",
+        super("AutoBedBomb", KEY_UNBOUND, ModuleCategory.COMBAT, "Automatically places beds on targets",
                 new SettingSlider("Delay", 0, 20, 10, 0),
                 new SettingSlider("Range", 0, 10, 5, 2)
         );

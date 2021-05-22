@@ -17,13 +17,13 @@
  */
 package bleach.hack.module.mods;
 
-import bleach.hack.module.Category;
+import bleach.hack.module.ModuleCategory;
 import bleach.hack.module.Module;
 
 public class AntiChunkBan extends Module {
 
 	public AntiChunkBan() {
-		super("AntiChunkBan", KEY_UNBOUND, Category.EXPLOITS, "bypasses chunks bans");
+		super("AntiChunkBan", KEY_UNBOUND, ModuleCategory.EXPLOITS, "bypasses chunks bans");
 	}
 
 }

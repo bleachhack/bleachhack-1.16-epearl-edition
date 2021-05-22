@@ -17,14 +17,14 @@
  */
 package bleach.hack.module.mods;
 
-import bleach.hack.module.Category;
+import bleach.hack.module.ModuleCategory;
 import bleach.hack.module.Module;
 import net.minecraft.util.Util;
 
 public class StarGithub extends Module {
 
 	public StarGithub() {
-		super("StarGithub", KEY_UNBOUND, Category.FUN, "Give a star to Me(Vp) and Bleach on github!");
+		super("StarGithub", KEY_UNBOUND, ModuleCategory.FUN, "Give a star to Me(Vp) and Bleach on github!");
 	}
 
 	public void onEnable() {

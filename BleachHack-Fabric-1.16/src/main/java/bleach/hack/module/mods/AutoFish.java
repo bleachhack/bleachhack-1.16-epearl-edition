@@ -2,14 +2,12 @@ package bleach.hack.module.mods;
 
 import bleach.hack.event.events.EventReadPacket;
 import bleach.hack.event.events.EventTick;
-import bleach.hack.mixin.MixinMinecraftClient;
-import bleach.hack.module.Category;
+import bleach.hack.module.ModuleCategory;
 import bleach.hack.module.Module;
 import bleach.hack.setting.base.SettingSlider;
 import com.google.common.eventbus.Subscribe;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerInteractItemC2SPacket;
-import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
@@ -20,7 +18,7 @@ public class AutoFish extends Module {
     public static boolean pullFish;
 
     public AutoFish() {
-        super("AutoFish", KEY_UNBOUND, Category.PLAYER, "Fishes for u. U lazy bitch.",
+        super("AutoFish", KEY_UNBOUND, ModuleCategory.PLAYER, "Fishes for u. U lazy bitch.",
                 new SettingSlider("Recast Delay", 1, 10, 3, 0));
     }
 

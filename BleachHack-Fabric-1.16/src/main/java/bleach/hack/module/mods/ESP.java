@@ -24,7 +24,7 @@ import com.google.gson.JsonSyntaxException;
 import bleach.hack.BleachHack;
 import bleach.hack.event.events.EventEntityRender;
 import bleach.hack.event.events.EventWorldRender;
-import bleach.hack.module.Category;
+import bleach.hack.module.ModuleCategory;
 import bleach.hack.module.Module;
 import bleach.hack.setting.base.SettingColor;
 import bleach.hack.setting.base.SettingMode;
@@ -57,7 +57,7 @@ public class ESP extends Module {
 	private boolean shaderUnloaded = true;
 
 	public ESP() {
-		super("ESP", KEY_UNBOUND, Category.RENDER, "Allows you to see entities though walls.",
+		super("ESP", KEY_UNBOUND, ModuleCategory.RENDER, "Allows you to see entities though walls.",
 				new SettingMode("Render", "Shader", "Box+Fill", "Box", "Fill"),
 				new SettingSlider("Shader", 0, 3, 1.5, 1).withDesc("The thickness of the shader outline"),
 				new SettingSlider("Box", 0.1, 4, 2, 1).withDesc("The thickness of the box lines"),
