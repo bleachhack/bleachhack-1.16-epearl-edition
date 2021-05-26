@@ -14,7 +14,6 @@ Credits to BleachDrinker420!
 > Website: https://bleachhack.github.io/  
 > Discord: https://discord.gg/b5Wc4nQ
 > 
-> [Real BleachHack releases](https://github.com/BleachDrinker420/BleachHack/releases).
 
 ## Images
 ![Gui](https://cdn.discordapp.com/attachments/817858188753240104/839137084773761094/BleachHackVp.png)
@@ -26,6 +25,13 @@ Download [fabric for minecraft 1.16/1.17](https://fabricmc.net/use/).
 Download my skid version [from the releases section](https://github.com/HerraVp/BleachHack-VpEdition/releases).
 
 Put the jar file in the mods folder located in .minecraft folder.
+
+## Dev Builds
+
+U can download dev builds from [here](https://github.com/HerraVp/BleachHack-VpEdition/actions)
+
+### How ? 
+Simply just click on the newest commit and there u can see "Artifacts" then just download the zip file and inside that is the jar file.
 
 ## Recommended Mods
 
