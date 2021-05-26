@@ -21,7 +21,7 @@ public class AutoEZ extends Module {
 
     public AutoEZ() {
         super("AutoEZ", KEY_UNBOUND, ModuleCategory.CHAT, "Sends a message when you kill someone (edit in autoez.txt)",
-                new SettingMode("Message", "None", "EZ", "Custom", "GG").withDesc("Send a chat message when you kill someone"),
+                new SettingMode("Message", "EZ", "Custom", "GG").withDesc("Send a chat message when you kill someone"),
                 new SettingMode("Read", "Random", "Order").withDesc("How to read the custom ezmessage"));
     }
 
@@ -45,16 +45,16 @@ public class AutoEZ extends Module {
                 for (PlayerEntity e : mc.world.getPlayers()) {
                     if (e == mc.player)
                         continue;
-                    List<String> list = new ArrayList<String>(Arrays.asList(msg.split(" ")));
+                    List<String> list = new ArrayList(Arrays.asList(msg.split(" ")));
                     int index = list.indexOf("by");
 
                     if (mc.player.distanceTo(e) < 12 && msg.contains(e.getName().getString())
                             && !msg.contains("<" + e.getName().getString() + ">") && !msg.contains("<" + mc.player.getName().getString() + ">") && (list.get(index + 1).equals(mc.player.getName().getString()))) {
-                        if (getSetting(0).asMode().mode == 1) {
+                        if (getSetting(0).asMode().mode == 0) {
                             mc.player.sendChatMessage(e.getName().getString() + " Just got EZ'd by ʙʟᴇᴀᴄʜʜᴀᴄᴋ ᴠᴘᴇᴅɪᴛɪᴏɴ!");
-                        } else if (getSetting(0).asMode().mode == 3) {
-                            mc.player.sendChatMessage("GG, " + e.getName().getString() + ", but ʙʟᴇᴀᴄʜʜᴀᴄᴋ ᴠᴘᴇᴅɪᴛɪᴏɴ is ontop!");
                         } else if (getSetting(0).asMode().mode == 2) {
+                            mc.player.sendChatMessage("GG, " + e.getName().getString() + ", but ʙʟᴇᴀᴄʜʜᴀᴄᴋ ᴠᴘᴇᴅɪᴛɪᴏɴ is ontop!");
+                        } else if (getSetting(0).asMode().mode == 1) {
                             if (getSetting(1).asMode().mode == 0) {
                                 mc.player.sendChatMessage(lines.get(rand.nextInt(lines.size())).replace("$p", e.getName().getString()));
                             } else if (getSetting(1).asMode().mode == 1) {
