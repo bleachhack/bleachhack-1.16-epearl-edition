@@ -16,8 +16,8 @@ Credits to BleachDrinker420!
 > 
 
 ## Images
-![Gui](https://cdn.discordapp.com/attachments/817858188753240104/839137084773761094/BleachHackVp.png)
-![Gui2](https://cdn.discordapp.com/attachments/817858188753240104/839137109147123742/BleachHackVp2.png)
+![Gui](https://cdn.discordapp.com/attachments/817859390882709515/847927647987695646/java_20ffjyVqLM.png)
+![Gui2](https://cdn.discordapp.com/attachments/817859390882709515/847927626870161418/java_k2xpaQ26VQ.png)
 
 ## Installation
 Download [fabric for minecraft 1.16/1.17](https://fabricmc.net/use/).
