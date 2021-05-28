@@ -3,13 +3,16 @@ package bleach.hack.gui.clickgui;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
+
+import bleach.hack.BleachHack;
 import bleach.hack.command.Command;
-import bleach.hack.gui.clickgui.modulewindow.ModuleWindow;
+import bleach.hack.gui.clickgui.window.ModuleWindow;
 import bleach.hack.gui.window.Window;
 import bleach.hack.module.ModuleCategory;
 import bleach.hack.module.Module;
 import bleach.hack.module.ModuleManager;
 import bleach.hack.util.file.BleachFileHelper;
+import net.minecraft.SharedConstants;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
@@ -72,6 +75,10 @@ public class ModuleClickGuiScreen extends ClickGuiScreen {
 
     public void render(MatrixStack matrix, int mouseX, int mouseY, float delta) {
         BleachFileHelper.SCHEDULE_SAVE_CLICKGUI = true;
+
+
+        textRenderer.draw(matrix, "BleachHack-VpEdition" + BleachHack.VERSION + "-" + SharedConstants.getGameVersion().getName(), 3, 3, 0x4f82f0);
+        textRenderer.draw(matrix, "BleachHack-VpEdition" + BleachHack.VERSION + "-" + SharedConstants.getGameVersion().getName(), 2, 2, 0x345aad);
 
         searchField.visible = ModuleManager.getModule("ClickGui").getSetting(1).asToggle().state;
 

@@ -5,7 +5,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 import bleach.hack.command.Command;
 import bleach.hack.command.CommandCategory;
 import bleach.hack.command.exception.CmdSyntaxException;
-import bleach.hack.gui.clickgui.modulewindow.ClickGuiWindow;
+import bleach.hack.gui.clickgui.window.ClickGuiWindow;
 import bleach.hack.gui.window.Window;
 import bleach.hack.module.ModuleManager;
 import bleach.hack.module.mods.ClickGui;

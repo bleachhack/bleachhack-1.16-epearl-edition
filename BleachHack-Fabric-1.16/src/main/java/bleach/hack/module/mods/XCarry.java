@@ -1,8 +1,6 @@
 package bleach.hack.module.mods;
 
-import bleach.hack.event.events.EventReadPacket;
 import bleach.hack.event.events.EventSendPacket;
-import bleach.hack.event.events.EventTick;
 import bleach.hack.mixin.CloseHandledScreenC2SPacketAccessor;
 import bleach.hack.module.ModuleCategory;
 import bleach.hack.module.Module;
@@ -32,12 +30,13 @@ public class XCarry extends Module {
         }
     }
 
-    private void onSendPacket(EventSendPacket event) {
-        if (!(event.getPacket() instanceof CloseHandledScreenC2SPacket)) return;
-
-        if (((CloseHandledScreenC2SPacketAccessor) event.getPacket()).getSyncId() == mc.player.playerScreenHandler.syncId) {
-            invOpened = true;
-            event.isCancelled();
+    @Subscribe
+    private void onEventSend(EventSendPacket event){
+        if (event.getPacket() instanceof CloseHandledScreenC2SPacket) {
+            if (((CloseHandledScreenC2SPacketAccessor) event.getPacket()).getSyncId() == mc.player.playerScreenHandler.syncId) {
+                invOpened = true;
+                event.isCancelled();
+            }
         }
     }
 }

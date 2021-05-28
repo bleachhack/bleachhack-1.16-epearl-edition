@@ -24,11 +24,9 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.tuple.Triple;
-import bleach.hack.BleachHack;
 import bleach.hack.gui.window.WindowScreen;
-import bleach.hack.gui.clickgui.modulewindow.ClickGuiWindow;
+import bleach.hack.gui.clickgui.window.ClickGuiWindow;
 import bleach.hack.gui.window.Window;
-import net.minecraft.SharedConstants;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
@@ -44,16 +42,12 @@ public abstract class ClickGuiScreen extends WindowScreen {
 		super(title);
 	}
 
-	public abstract void initWindows();
-
 	public boolean isPauseScreen() {
 		return false;
 	}
 
 	public void render(MatrixStack matrix, int mouseX, int mouseY, float delta) {
 		this.renderBackground(matrix);
-		textRenderer.draw(matrix, "BleachHack-VpEdition-" + BleachHack.VERSION + "-" + SharedConstants.getGameVersion().getName(), 3, 3, 0xfff700ff);
-		textRenderer.draw(matrix, "BleachHack-VpEdition-" + BleachHack.VERSION + "-" + SharedConstants.getGameVersion().getName(), 2, 2, 0xff8c0d73);
 
 		for (Window w : getWindows()) {
 			if (w instanceof ClickGuiWindow) {
@@ -121,7 +115,7 @@ public abstract class ClickGuiScreen extends WindowScreen {
 		// Fix having to double click windows to move them
 		for (Window w : getWindows()) {
 			if (mouseX > w.x1 && mouseX < w.x2 && mouseY > w.y1 && mouseY < w.y2 && !w.closed) {
-				w.onMousePressed((int) mouseX, (int) mouseY);
+				w.mouseClicked(mouseX, mouseY, button);
 				break;
 			}
 		}

@@ -17,7 +17,6 @@
  */
 package bleach.hack.gui.window;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -41,15 +40,16 @@ public abstract class WindowScreen extends Screen {
 	private List<Window> windows = new ArrayList<>();
 
 	/* [Layer, Window Index] */
-	private SortedMap<Integer, Integer> windowOrder = new TreeMap<>(); 
+	private SortedMap<Integer, Integer> windowOrder = new TreeMap<>();
 
 	public WindowScreen(Text title) {
 		super(title);
 	}
 
-	public void addWindow(Window window) {
+	public <T extends Window> T addWindow(T window) {
 		windows.add(window);
 		windowOrder.put(windows.size() - 1, windows.size() - 1);
+		return window;
 	}
 
 	public Window getWindow(int i) {
@@ -122,14 +122,6 @@ public abstract class WindowScreen extends Screen {
 	}
 
 	public void selectWindow(int window) {
-		for (Window w: windows) {
-			if (w.selected) {
-				w.inactiveTime = 2;
-			}
-
-			w.selected = false;
-		}
-
 		for (int i = 0; i < windows.size(); i++) {
 			Window w = windows.get(i);
 
@@ -152,6 +144,8 @@ public abstract class WindowScreen extends Screen {
 				}
 
 				windowOrder.put(windowOrder.size(), window);
+			} else {
+				w.selected = false;
 			}
 		}
 	}
@@ -161,14 +155,14 @@ public abstract class WindowScreen extends Screen {
 		for (int wi: getWindowsFrontToBack()) {
 			Window w = getWindow(wi);
 
-			if (w.inactiveTime <= 0 && mouseX > w.x1 && mouseX < w.x2 && mouseY > w.y1 && mouseY < w.y2 && !w.closed) {
+			if (mouseX > w.x1 && mouseX < w.x2 && mouseY > w.y1 && mouseY < w.y2 && !w.closed) {
 				if (w.shouldClose((int) mouseX, (int) mouseY)) {
 					w.closed = true;
 					break;
 				}
 
 				if (w.selected) {
-					w.onMousePressed((int) mouseX, (int) mouseY);
+					w.mouseClicked(mouseX, mouseY, button);
 				} else {
 					selectWindow(wi);
 				}
@@ -176,23 +170,43 @@ public abstract class WindowScreen extends Screen {
 				break;
 			}
 		}
+
 		return super.mouseClicked(mouseX, mouseY, button);
 	}
 
 	public boolean mouseReleased(double mouseX, double mouseY, int button) {
 		for (Window w : windows) {
-			w.onMouseReleased((int) mouseX, (int) mouseY);
+			w.mouseReleased(mouseX, mouseY, button);
 		}
 
 		return super.mouseReleased(mouseX, mouseY, button);
 	}
 
-	public void renderBackgroundTexture(int vOffset) {
-		Color colorTL = new Color(100, 120, 0);
-		Color colorTR = new Color(70, 120, 20);
-		Color colorBL = new Color(60, 160, 0);
-		Color colorBR = new Color(60, 200, 60);
+	public void tick() {
+		for (Window w : windows) {
+			w.tick();
+		}
 
+		super.tick();
+	}
+
+	public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+		for (Window w : windows) {
+			w.keyPressed(keyCode, scanCode, modifiers);
+		}
+
+		return super.keyPressed(keyCode, scanCode, modifiers);
+	}
+
+	public boolean charTyped(char chr, int modifiers) {
+		for (Window w : windows) {
+			w.charTyped(chr, modifiers);
+		}
+
+		return super.charTyped(chr, modifiers);
+	}
+
+	public void renderBackgroundTexture(int vOffset) {
 		RenderSystem.enableTexture();
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
@@ -201,10 +215,10 @@ public abstract class WindowScreen extends Screen {
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
 		bufferBuilder.begin(7, VertexFormats.POSITION_COLOR);
-		bufferBuilder.vertex(width, 0, 0).color(colorTR.getRed(), colorTR.getBlue(), colorTR.getGreen(), 255).next();
-		bufferBuilder.vertex(0, 0, 0).color(colorTL.getRed(), colorTL.getBlue(), colorTL.getGreen(), 255).next();
-		bufferBuilder.vertex(0, height + 14, 0).color(colorBL.getRed(), colorBL.getBlue(), colorBL.getGreen(), 255).next();
-		bufferBuilder.vertex(width, height + 14, 0).color(colorBR.getRed(), colorBR.getBlue(), colorBR.getGreen(), 255).next();
+		bufferBuilder.vertex(width, 0, 0).color(70, 20, 120, 255).next();
+		bufferBuilder.vertex(0, 0, 0).color(100, 0, 120, 255).next();
+		bufferBuilder.vertex(0, height + 14, 0).color(60, 0, 160, 255).next();
+		bufferBuilder.vertex(width, height + 14, 0).color(60, 60, 200, 255).next();
 		tessellator.draw();
 
 		RenderSystem.shadeModel(GL11.GL_FLAT);
