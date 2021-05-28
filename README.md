@@ -10,10 +10,6 @@ My own skid of BleachHack.
 Works on fabric 1.16.5 
 
 Credits to BleachDrinker420!
-## Real BleachHack
-> Website: https://bleachhack.github.io/  
-> Discord: https://discord.gg/b5Wc4nQ
-> 
 
 ## Images (taken on 1.3 devbuild-0.5)
 ![Gui](https://cdn.discordapp.com/attachments/817859390882709515/847927647987695646/java_20ffjyVqLM.png)
@@ -33,12 +29,10 @@ U can download dev builds from [here](https://github.com/HerraVp/BleachHack-VpEd
 ### How ? 
 Simply just click on the newest commit and there u can see "Artifacts" then just download the zip file and inside that is the jar file.
 
-## Recommended Mods
+## Real BleachHack
+> Website: https://bleachhack.github.io/  
+> Discord: https://discord.gg/b5Wc4nQ
 
-Here are some nice to have mods that are compatible with BleachHack, none of these require Fabric API.
-
-### [Baritone](https://github.com/cabaletta/baritone)
-Baritone allows you to automate tasks such as walking, mining or building.
 
 ## License
 
