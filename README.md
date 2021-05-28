@@ -1,5 +1,5 @@
 
-# BleachHack VpEdition 1.2.3
+# BleachHack VpEdition 1.2.3 
 ![](https://img.shields.io/tokei/lines/github/HerraVp/bleachhack-VpEdition?style=flat-square)
 ![](https://img.shields.io/github/last-commit/HerraVp/bleachhack-VpEdition?style=flat-square)
 ![](https://img.shields.io/badge/daily%20commit-maybeKEKW-red?style=flat-square)
@@ -15,7 +15,7 @@ Credits to BleachDrinker420!
 > Discord: https://discord.gg/b5Wc4nQ
 > 
 
-## Images
+## Images (taken on 1.3 devbuild-0.5)
 ![Gui](https://cdn.discordapp.com/attachments/817859390882709515/847927647987695646/java_20ffjyVqLM.png)
 ![Gui2](https://cdn.discordapp.com/attachments/817859390882709515/847927626870161418/java_k2xpaQ26VQ.png)
 
