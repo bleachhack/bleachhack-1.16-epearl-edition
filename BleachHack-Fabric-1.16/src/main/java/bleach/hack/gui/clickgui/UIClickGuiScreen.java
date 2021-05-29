@@ -104,8 +104,8 @@ public class UIClickGuiScreen extends ClickGuiScreen {
 
         for (Pair<String, Integer> atm: window.position.getAttachments()) {
             if (ArrayUtils.contains(passIds, id)) continue;
-            if (atm.getLeft().equals("l")) return 0;
-            if (atm.getLeft().equals("r")) return client.getWindow().getScaledWidth() - window.getSize()[0];
+            if (atm.getLeft().equals("l")) return -1;
+            if (atm.getLeft().equals("r")) return client.getWindow().getScaledWidth() + 1 - window.getSize()[0];
             if (atm.getRight() == 1) return getRight(atm.getLeft(), ArrayUtils.add(passIds, id));
             if (atm.getRight() == 3) return getLeft(atm.getLeft(), ArrayUtils.add(passIds, id)) - window.getSize()[0];
         }
@@ -118,8 +118,8 @@ public class UIClickGuiScreen extends ClickGuiScreen {
 
         for (Pair<String, Integer> atm: window.position.getAttachments()) {
             if (ArrayUtils.contains(passIds, id)) continue;
-            if (atm.getLeft().equals("l")) return window.getSize()[0];
-            if (atm.getLeft().equals("r")) return client.getWindow().getScaledWidth();
+            if (atm.getLeft().equals("l")) return window.getSize()[0] - 1;
+            if (atm.getLeft().equals("r")) return client.getWindow().getScaledWidth() + 1;
             if (atm.getRight() == 1) return getRight(atm.getLeft(), ArrayUtils.add(passIds, id)) + window.getSize()[0];
             if (atm.getRight() == 3) return getLeft(atm.getLeft(), ArrayUtils.add(passIds, id));
         }
@@ -132,8 +132,8 @@ public class UIClickGuiScreen extends ClickGuiScreen {
 
         for (Pair<String, Integer> atm: window.position.getAttachments()) {
             if (ArrayUtils.contains(passIds, id)) continue;
-            if (atm.getLeft().equals("t")) return 0;
-            if (atm.getLeft().equals("b")) return client.getWindow().getScaledHeight() - window.getSize()[1];
+            if (atm.getLeft().equals("t")) return -1;
+            if (atm.getLeft().equals("b")) return client.getWindow().getScaledHeight() + 1 - window.getSize()[1];
             if (atm.getRight() == 0) return getTop(atm.getLeft(), ArrayUtils.add(passIds, id)) - window.getSize()[1];
             if (atm.getRight() == 2) return getBottom(atm.getLeft(), ArrayUtils.add(passIds, id));
         }
@@ -146,8 +146,8 @@ public class UIClickGuiScreen extends ClickGuiScreen {
 
         for (Pair<String, Integer> atm: window.position.getAttachments()) {
             if (ArrayUtils.contains(passIds, id)) continue;
-            if (atm.getLeft().equals("t")) return window.getSize()[1];
-            if (atm.getLeft().equals("b")) return client.getWindow().getScaledHeight();
+            if (atm.getLeft().equals("t")) return window.getSize()[1] - 1;
+            if (atm.getLeft().equals("b")) return client.getWindow().getScaledHeight() + 1;
             if (atm.getRight() == 0) return getTop(atm.getLeft(), ArrayUtils.add(passIds, id));
             if (atm.getRight() == 2) return getBottom(atm.getLeft(), ArrayUtils.add(passIds, id)) + window.getSize()[1];
         }

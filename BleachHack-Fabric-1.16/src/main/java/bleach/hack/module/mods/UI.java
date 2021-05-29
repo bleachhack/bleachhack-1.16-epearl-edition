@@ -241,7 +241,7 @@ public class UI extends Module {
 
 		for (String s : infoList) {
 			mc.textRenderer.drawWithShadow(matrices, s,
-					rightAlign ? x + longestText - mc.textRenderer.getWidth(s) - 1 : x + 1, y + 1 + count * 10, 0xa0a0a0);
+					rightAlign ? x + longestText - mc.textRenderer.getWidth(s) + 1 : x + 1, y + 1 + count * 10, 0xa0a0a0);
 
 			count++;
 		}
