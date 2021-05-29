@@ -8,59 +8,59 @@
  */
 package bleach.hack.gui.clickgui.window;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Supplier;
 
-import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.util.TriConsumer;
 
-import bleach.hack.gui.clickgui.UIClickGuiScreen.Position;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
 
 public class UIWindow extends ClickGuiWindow {
 
+    public Position position;
+
     private Supplier<int[]> sizeSupplier;
     private TriConsumer<MatrixStack, Integer, Integer> renderConsumer;
 
-    private Map<String, MutablePair<Position, UIWindow>> otherWindows;
+    private Map<String, UIWindow> otherWindows;
 
-    public UIWindow(Map<String, MutablePair<Position, UIWindow>> otherWindows, Supplier<int[]> sizeSupplier, TriConsumer<MatrixStack, Integer, Integer> renderConsumer) {
-        this(0, 0, otherWindows, sizeSupplier, renderConsumer);
-    }
+    public UIWindow(Position pos, Map<String, UIWindow> otherWindows, Supplier<int[]> sizeSupplier, TriConsumer<MatrixStack, Integer, Integer> renderConsumer) {
+        super(0, 0, 0, 0, "", null);
 
-    public UIWindow(int x1, int y1, Map<String, MutablePair<Position, UIWindow>> otherWindows, Supplier<int[]> sizeSupplier, TriConsumer<MatrixStack, Integer, Integer> renderConsumer) {
-        super(x1, y1, x1 + 80, y1 + 80, "", null);
-
+        this.position = pos;
         this.sizeSupplier = sizeSupplier;
         this.renderConsumer = renderConsumer;
         this.otherWindows = otherWindows;
     }
 
     public int[] getSize() {
-        return sizeSupplier.get();
+        int[] size = sizeSupplier.get();
+        return new int[] { size[0] + 2, size[1] + 2 };
     }
 
     public void renderUI(MatrixStack matrix) {
-        renderConsumer.accept(matrix, x1, y1);
+        renderConsumer.accept(matrix, x1 + 1, y1 + 1);
     }
 
     public void render(MatrixStack matrix, int mouseX, int mouseY) {
         // Snapping
         int sens = 5;
         if (dragging) {
-            Entry<String, MutablePair<Position, UIWindow>> thisEntry = otherWindows.entrySet().stream()
-                    .filter(p -> p.getValue().right == this)
-                    .findFirst().orElse(null);
+            String thisId = otherWindows.entrySet().stream()
+                    .filter(p -> p.getValue() == this)
+                    .findFirst().orElse(null).getKey();
 
             // Really messy way to detach this from all its neighbors
-            thisEntry.getValue().left.getAttachments().stream()
+            position.getAttachments().stream()
                     .filter(p -> p.getLeft().length() > 1)
-                    .forEach(p -> otherWindows.get(p.getLeft()).left.getAttachments()
-                            .removeIf(a -> a.getLeft().equals(thisEntry.getKey())));
+                    .forEach(p -> otherWindows.get(p.getLeft()).position.getAttachments()
+                            .removeIf(a -> a.getLeft().equals(thisId)));
 
             x2 = (x2 - x1) + mouseX - dragOffX - Math.min(0, mouseX - dragOffX);
             y2 = (y2 - y1) + mouseY - dragOffY - Math.min(0, mouseY - dragOffY);
@@ -78,8 +78,8 @@ public class UIWindow extends ClickGuiWindow {
                 x1 = mc.getWindow().getScaledWidth() - (x2 - x1);
                 x2 = mc.getWindow().getScaledWidth();
             } else {
-                for (Entry<String, MutablePair<Position, UIWindow>> e: otherWindows.entrySet()) {
-                    UIWindow window = e.getValue().right;
+                for (Entry<String, UIWindow> e: otherWindows.entrySet()) {
+                    UIWindow window = e.getValue();
                     if (window != this
                             && ((y1 >= window.y1 && y1 <= window.y2)
                             || (y2 >= window.y1 && y2 <= window.y2)
@@ -106,8 +106,8 @@ public class UIWindow extends ClickGuiWindow {
                 y1 = mc.getWindow().getScaledHeight() - (y2 - y1);
                 y2 = mc.getWindow().getScaledHeight();
             } else {
-                for (Entry<String, MutablePair<Position, UIWindow>> e: otherWindows.entrySet()) {
-                    UIWindow window = e.getValue().right;
+                for (Entry<String, UIWindow> e: otherWindows.entrySet()) {
+                    UIWindow window = e.getValue();
                     if (window != this
                             && ((x1 >= window.x1 && x1 <= window.x2)
                             || (x2 >= window.x1 && x2 <= window.x2)
@@ -126,7 +126,7 @@ public class UIWindow extends ClickGuiWindow {
             }
 
 
-            thisEntry.getValue().left = newPos;
+            position = newPos;
         }
 
         boolean realDragging = dragging;
@@ -134,17 +134,17 @@ public class UIWindow extends ClickGuiWindow {
         super.render(matrix, mouseX, mouseY);
         dragging = realDragging;
 
-        renderConsumer.accept(matrix, x1, y1);
+        renderUI(matrix);
     }
 
     protected void drawBar(MatrixStack matrix, int mouseX, int mouseY, TextRenderer textRend) {
         /* background */
-        DrawableHelper.fill(matrix, x1 - 1, y1, x1, y2, 0xff6060b0);
-        horizontalGradient(matrix, x1, y1 - 1, x2, y1, 0xff6060b0, 0xff8070b0);
-        DrawableHelper.fill(matrix, x2, y1, x2 + 1, y2, 0xff8070b0);
-        horizontalGradient(matrix, x1, y2, x2, y2 + 1, 0xff6060b0, 0xff8070b0);
+        DrawableHelper.fill(matrix, x1, y1 + 1, x1 + 1, y2 - 1, 0xff6060b0);
+        horizontalGradient(matrix, x1 + 1, y1, x2 - 1, y1 + 1, 0xff6060b0, 0xff8070b0);
+        DrawableHelper.fill(matrix, x2 - 1, y1 + 1, x2, y2 - 1, 0xff8070b0);
+        horizontalGradient(matrix, x1 + 1, y2 - 1, x2 - 1, y2, 0xff6060b0, 0xff8070b0);
 
-        DrawableHelper.fill(matrix, x1, y1, x2, y2, 0x90606090);
+        DrawableHelper.fill(matrix, x1 + 1, y1 + 1, x2 - 1, y2 - 1, 0x90606090);
     }
 
     public void mouseClicked(double mouseX, double mouseY, int button) {
@@ -154,6 +154,52 @@ public class UIWindow extends ClickGuiWindow {
             dragging = true;
             dragOffX = (int) mouseX - x1;
             dragOffY = (int) mouseY - y1;
+        }
+    }
+
+    public static class Position {
+
+        public double xPercent;
+        public double yPercent;
+        private List<Pair<String, Integer>> attachments = new ArrayList<>();
+
+        public Position(double xPercent, double yPercent) {
+            this.xPercent = xPercent;
+            this.yPercent = yPercent;
+        }
+
+        public Position(double xPercent, double yPercent, Pair<String, Integer> attachment) {
+            this.xPercent = xPercent;
+            this.yPercent = yPercent;
+            addAttachment(attachment);
+        }
+
+        public Position(Pair<String, Integer> attachment1, Pair<String, Integer> attachment2) {
+            addAttachment(attachment1);
+            addAttachment(attachment2);
+        }
+
+        public List<Pair<String, Integer>> getAttachments() {
+            return attachments;
+        }
+
+        public boolean addAttachment(Pair<String, Integer> attachment) {
+            if (attachments.isEmpty()) {
+                attachments.add(attachment);
+                return true;
+            }
+
+            if (attachments.size() == 1) {
+                int side = attachments.get(0).getRight();
+                int newSide = attachment.getRight();
+                if (newSide != side && newSide != side + 2 % 4) {
+                    attachments.add(attachment);
+                    return true;
+                }
+
+            }
+
+            return false;
         }
     }
 }
