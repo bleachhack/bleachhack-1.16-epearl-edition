@@ -32,14 +32,14 @@ public class XCarry extends Module {
 
     @Subscribe
     private void onEventSend(EventSendPacket event){
-        if (event.getPacket() instanceof CloseHandledScreenC2SPacket)
+        if (!(event.getPacket() instanceof CloseHandledScreenC2SPacket))
             return;
-        {
-            if (((CloseHandledScreenC2SPacketAccessor) event.getPacket()).getSyncId() == mc.player.playerScreenHandler.syncId) {
-                invOpened = true;
-                event.setCancelled(true);
-            }
+
+        if (((CloseHandledScreenC2SPacketAccessor) event.getPacket()).getSyncId() == mc.player.playerScreenHandler.syncId) {
+            invOpened = true;
+            event.isCancelled();
         }
+
     }
 }
 
