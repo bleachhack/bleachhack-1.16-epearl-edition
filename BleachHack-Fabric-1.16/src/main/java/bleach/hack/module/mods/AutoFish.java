@@ -18,14 +18,13 @@ public class AutoFish extends Module {
     public static boolean pullFish;
 
     public AutoFish() {
-        super("AutoFish", KEY_UNBOUND, ModuleCategory.PLAYER, "Fishes for u. U lazy bitch.",
+        super("AutoFish", KEY_UNBOUND, ModuleCategory.PLAYER, "Fishes for u",
                 new SettingSlider("Recast Delay", 1, 10, 3, 0));
     }
 
     @Subscribe
     public void onReceivePacket(EventReadPacket event) {
-        if (
-                mc.player != null
+        if (mc.player != null
                         && (mc.player.getMainHandStack().getItem() == Items.FISHING_ROD || mc.player.getOffHandStack().getItem() == Items.FISHING_ROD)
                         && event.getPacket() instanceof PlaySoundS2CPacket
                         && SoundEvents.ENTITY_FISHING_BOBBER_SPLASH.equals(((PlaySoundS2CPacket) event.getPacket()).getSound())

@@ -17,21 +17,36 @@
  */
 package bleach.hack.module.mods;
 
+import bleach.hack.setting.base.SettingMode;
 import com.google.common.eventbus.Subscribe;
 
 import bleach.hack.event.events.EventTick;
 import bleach.hack.module.ModuleCategory;
 import bleach.hack.module.Module;
+import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 
 public class Sprint extends Module {
 
 	public Sprint() {
-		super("Sprint", KEY_UNBOUND, ModuleCategory.MOVEMENT, "Makes the player automatically sprint.");
+		super("Sprint", KEY_UNBOUND, ModuleCategory.MOVEMENT, "Makes the player automatically sprint.",
+		new SettingMode("Mode", "Vanilla", "MultiDirect").withDesc("Mode for sprint"));
 	}
 
 	@Subscribe
 	public void onTick(EventTick event) {
+		if (getSetting(0).asMode().mode == 0) {
 		mc.player.setSprinting(mc.player.input.movementForward > 0 && mc.player.input.movementSideways != 0 ||
-				mc.player.input.movementForward > 0 && !mc.player.isSneaking());
-	}
+				mc.player.input.movementForward > 0 && !mc.player.isSneaking()); }
+
+		else if (getSetting(0).asMode().mode == 1) {
+			if ((mc.player.input.movementForward > 0 || mc.player.input.movementSideways > 0))
+				if (!mc.player.isSneaking())
+					return;
+				if (!mc.player.isSprinting())
+				mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.START_SPRINTING));
+
+		}
+
+   }
 }
+
