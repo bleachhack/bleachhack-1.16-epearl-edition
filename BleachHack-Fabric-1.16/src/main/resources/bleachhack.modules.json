@@ -2,6 +2,7 @@
   "package": "bleach.hack.module.mods",
   "modules": [
     "AirPlace",
+    "AllahHaram",
     "Ambience",
     "AntiChunkBan",
     "AntiHunger",
@@ -91,7 +92,6 @@
     "StarGithub",
     "Step",
     "StorageESP",
-    "Suicide",
     "Surround",
     "Timer",
     "Tracers",
