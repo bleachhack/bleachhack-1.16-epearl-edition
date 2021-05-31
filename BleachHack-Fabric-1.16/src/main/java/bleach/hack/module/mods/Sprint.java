@@ -36,7 +36,10 @@ public class Sprint extends Module {
 	public void onTick(EventTick event) {
 		if (getSetting(0).asMode().mode == 0) {
 			if (mc.player.forwardSpeed > 0) {
-				mc.player.setSprinting(true);
+				if (!mc.player.isSneaking() && !mc.player.handSwinging && !mc.player.horizontalCollision) {
+					if (!mc.player.isSprinting())
+						mc.player.setSprinting(true);
+		}
 			}
 		}
 		else if (getSetting(0).asMode().mode == 1) {
