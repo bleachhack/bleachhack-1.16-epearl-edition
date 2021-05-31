@@ -1,5 +1,6 @@
 package bleach.hack.gui;
 
+import java.net.URI;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 
 import bleach.hack.module.ModuleManager;
 import bleach.hack.module.mods.EntityMenu;
+import bleach.hack.util.BleachLogger;
 import bleach.hack.util.Boxes;
 import bleach.hack.util.PairList;
 import net.minecraft.client.MinecraftClient;
@@ -22,6 +24,7 @@ import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.text.LiteralText;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.Direction.Axis;
 import net.minecraft.util.math.MathHelper;
 
@@ -78,8 +81,16 @@ public class EntityMenuScreen extends Screen {
                     .replaceAll("%y%", coordFormat.format(entity.getY()))
                     .replaceAll("%z%", coordFormat.format(entity.getZ()));
 
-            if (message.startsWith("%suggestion")) {
-                client.openScreen(new ChatScreen(message.replaceFirst("%suggestion", "")));
+            if (message.startsWith(">suggest ")) {
+                client.openScreen(new ChatScreen(message.substring(9)));
+            } else if (message.startsWith(">url ")) {
+                try {
+                    Util.getOperatingSystem().open(new URI(message.substring(5)));
+                } catch (Exception e) {
+                    BleachLogger.errorMessage("Invalid url \"" + message.substring(5) + "\"");
+                }
+
+                client.openScreen((Screen) null);
             } else {
                 client.player.sendChatMessage(message);
                 client.openScreen((Screen) null);

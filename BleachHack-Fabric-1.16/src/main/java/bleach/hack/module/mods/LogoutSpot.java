@@ -16,6 +16,7 @@ import com.google.common.eventbus.Subscribe;
 import net.minecraft.client.gui.screen.DisconnectedScreen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.packet.s2c.play.PlayerListS2CPacket;
+import net.minecraft.text.LiteralText;
 import net.minecraft.util.math.Vec3d;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -30,7 +31,7 @@ public class LogoutSpot extends Module {
     private final HashMap<UUID, Pair<PlayerCopyEntity, Long>> players = new HashMap<>();
 
     public LogoutSpot() {
-        super("LogoutSpot", KEY_UNBOUND, ModuleCategory.WORLD, "Shows where a player logged out",
+        super("LogoutSpot", KEY_UNBOUND, ModuleCategory.RENDER, "Shows where a player logged out",
                 new SettingToggle("Remove", true).withDesc("Removes logout spots").withChildren( // 1
                         new SettingToggle("Distance", false).withDesc("Remove logout spots based on distance").withChildren( // 0-0
                                 new SettingSlider("Radius", 1, 1000, 200, 0).withDesc("Radius in which logout spots get shown")), // 0-0-0
@@ -159,7 +160,8 @@ public class LogoutSpot extends Module {
                     lines.add("\u00a7c" + getTimeElapsed(playerPair.getRight()));
 
                 for (int i = 0; i < lines.size(); i++) {
-                    WorldRenderUtils.drawText(lines.get(i), rVec.x + offset.x, rVec.y + 0.1 - i * 0.25, rVec.z + offset.z, 1f);
+                    WorldRenderUtils.drawText(new LiteralText(lines.get(i)),
+                            rVec.x + offset.x, rVec.y + 0.1 - i * 0.25, rVec.z + offset.z, 1, false);
                 }
             }
         }

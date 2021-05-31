@@ -27,7 +27,6 @@ import net.minecraft.block.ChestBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.ChestBlockEntity;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.c2s.play.CloseHandledScreenC2SPacket;
@@ -37,6 +36,7 @@ import net.minecraft.network.packet.s2c.play.ScreenHandlerSlotUpdateS2CPacket;
 import net.minecraft.screen.GenericContainerScreenHandler;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.SlotActionType;
+import net.minecraft.text.LiteralText;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -58,7 +58,7 @@ public class AutoSteal extends Module {
 	private int lastOpen = 0;
 
 	public AutoSteal() {
-		super("AutoSteal", KEY_UNBOUND, ModuleCategory.WORLD, "Automatically steals items from chests",
+		super("AutoSteal", KEY_UNBOUND, ModuleCategory.PLAYER, "Automatically steals items from chests",
 				new SettingMode("Gui", "Normal", "Project", "NoGui" /* Novoline cheststealer*/).withDesc("How to display the chest gui when stealing"),
 				new SettingSlider("Delay", 0, 20, 2, 0).withDesc("Delay between taking items (in ticks)"),
 				new SettingSlider("RandDelay", 0, 8, 2, 0).withDesc("Extra random delay between taking items (in ticks)"),
@@ -75,7 +75,7 @@ public class AutoSteal extends Module {
 		SettingToggle setting = getSetting(4).asToggle();
 		return setting.state
 				&& ((setting.getChild(0).asMode().mode == 0 && setting.getChild(1).asList(Item.class).contains(item))
-						|| (setting.getChild(0).asMode().mode == 1 && !setting.getChild(1).asList(Item.class).contains(item)));
+				|| (setting.getChild(0).asMode().mode == 1 && !setting.getChild(1).asList(Item.class).contains(item)));
 	}
 
 	@Override
@@ -106,14 +106,14 @@ public class AutoSteal extends Module {
 						int fi = i;
 						boolean openSlot = InventoryUtils.getSlot(false, j -> mc.player.inventory.getStack(j).isEmpty()
 								|| (mc.player.inventory.getStack(j).isStackable()
-										&& mc.player.inventory.getStack(j).getCount() < mc.player.inventory.getStack(j).getMaxCount()
-										&& currentItems.get(fi).isItemEqual(mc.player.inventory.getStack(j)))) != 1;
+								&& mc.player.inventory.getStack(j).getCount() < mc.player.inventory.getStack(j).getMaxCount()
+								&& currentItems.get(fi).isItemEqual(mc.player.inventory.getStack(j)))) != 1;
 
 						if (openSlot) {
 							mc.interactionManager.clickSlot(currentSyncId, i, 0, SlotActionType.QUICK_MOVE, mc.player);
 							currentItems.set(i, ItemStack.EMPTY);
 
-							lastSteal = currentTime + RandomUtils.nextInt(0, (int) getSetting(2).asSlider().getValue() + 1);
+							lastSteal = currentTime + RandomUtils.nextInt(0, getSetting(2).asSlider().getValueInt() + 1);
 						}
 
 						return;
@@ -140,7 +140,7 @@ public class AutoSteal extends Module {
 
 					mc.interactionManager.interactBlock(mc.player, mc.world, Hand.MAIN_HAND,
 							new BlockHitResult(lookVec, Direction.UP, be.getPos(), false));
-					opened.put(be.getPos(), (int) getSetting(3).asToggle().getChild(1).asSlider().getValue() * 20);
+					opened.put(be.getPos(), getSetting(3).asToggle().getChild(1).asSlider().getValueInt() * 20);
 					return;
 				}
 			}
@@ -164,17 +164,19 @@ public class AutoSteal extends Module {
 				Vec3d startPos = new Vec3d(currentPos.getX() + 0.5, currentPos.getY() + 1 + (renderItems.size() / 9) * 0.4, currentPos.getZ() + 0.5);
 
 				for (int i = 0; i < renderItems.size(); i++) {
-					MatrixStack matrix = WorldRenderUtils.drawGuiItem(startPos.x, startPos.y - (i / 9) * 0.4, startPos.z, i % 9 - 4.5, 0, 0.3, renderItems.get(i));
+					WorldRenderUtils.drawGuiItem(startPos.x, startPos.y - i / 9 * 0.4, startPos.z, (4.5 - i % 9) * 0.3, 0, 0.3, renderItems.get(i));
 
 					if (renderItems.get(i).getCount() > 1) {
-						matrix.scale(-0.05F, -0.05F, 1f);
-						int w = mc.textRenderer.getWidth("" + renderItems.get(i).getCount()) / 2;
-						mc.textRenderer.drawWithShadow(matrix, "" + renderItems.get(i).getCount(), 7 - w, 3, 0xffffff);
+						double w = mc.textRenderer.getWidth(renderItems.get(i).getCount() + "") / 300d;
+						WorldRenderUtils.drawText(
+								new LiteralText(renderItems.get(i).getCount() + ""),
+								startPos.x, startPos.y - i / 9 * 0.4 - 0.03, startPos.z, (4.5 - i % 9) * 0.3 - w, 0, 0.5, false);
 					}
 				}
 			} else if (getSetting(0).asMode().mode == 2) {
-				WorldRenderUtils.drawText("[" + currentItems.stream().filter(i -> !i.isEmpty() && !isBlacklisted(i.getItem())).count() + "]",
-						currentPos.getX() + 0.5, currentPos.getY() + 1.2, currentPos.getZ() + 0.5, 0.8f);
+				WorldRenderUtils.drawText(
+						new LiteralText("[" + currentItems.stream().filter(i -> !i.isEmpty() && !isBlacklisted(i.getItem())).count() + "]"),
+						currentPos.getX() + 0.5, currentPos.getY() + 1.2, currentPos.getZ() + 0.5, 0.8, false);
 			}
 		}
 	}
