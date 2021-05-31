@@ -42,6 +42,7 @@ public class CommandManager {
 			new CmdBind(),
 			new CmdCI(),
 			new CmdClickGui(),
+			new CmdClip(),
 			new CmdCustomChat(),
 			new CmdCustomSign(),
 			new CmdDupe(),
@@ -103,8 +104,8 @@ public class CommandManager {
 				} catch (Exception e) {
 					e.printStackTrace();
 
-					BleachLogger.errorMessage("\u00a7l" + e.getClass().getSimpleName() + ":");
-					BleachLogger.errorMessage("\u00a7l" + e.getMessage());
+					BleachLogger.errorMessage("\u00a7l> " + e.getClass().getSimpleName());
+					BleachLogger.errorMessage("\u00a7l> \u00a7c" + e.getMessage());
 
 					int i = 0;
 					for (StackTraceElement st: e.getStackTrace()) {
