@@ -29,24 +29,32 @@ public class Sprint extends Module {
 
 	public Sprint() {
 		super("Sprint", KEY_UNBOUND, ModuleCategory.MOVEMENT, "Makes the player automatically sprint.",
-		new SettingMode("Mode", "Vanilla", "MultiDirect").withDesc("Mode for sprint"));
+		new SettingMode("Mode", "Legit", "Rage", "MultiDirect").withDesc("Mode for sprint (NOTE! Multidirect might get u banned from servers!)"));
 	}
 
 	@Subscribe
 	public void onTick(EventTick event) {
 		if (getSetting(0).asMode().mode == 0) {
-		mc.player.setSprinting(mc.player.input.movementForward > 0 && mc.player.input.movementSideways != 0 ||
-				mc.player.input.movementForward > 0 && !mc.player.isSneaking()); }
-
+			if (mc.player.forwardSpeed > 0) {
+				mc.player.setSprinting(true);
+			}
+		}
 		else if (getSetting(0).asMode().mode == 1) {
+			if (mc.player.forwardSpeed > 0 || mc.player.sidewaysSpeed > 0) {
+				mc.player.setSprinting(true);
+			}
+		}
+
+		else if (getSetting(0).asMode().mode == 2) {
 			if ((mc.player.input.movementForward > 0 || mc.player.input.movementSideways > 0))
 				if (!mc.player.isSneaking())
 					return;
-				if (!mc.player.isSprinting())
-				mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.START_SPRINTING));
-
+			mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.START_SPRINTING));
 		}
 
-   }
+  }
+
 }
+
+
 
