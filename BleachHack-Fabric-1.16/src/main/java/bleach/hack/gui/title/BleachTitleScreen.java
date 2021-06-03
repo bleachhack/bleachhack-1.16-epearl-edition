@@ -144,13 +144,13 @@ public class BleachTitleScreen extends WindowScreen {
 				}));
 
 		// Version Text
-		getWindow(0).addWidget(new WindowTextWidget(BleachHack.VERSION, true, WindowTextWidget.TextAlign.MIDDLE, 1.5f, w / 2, h / 4 - 6, 0xffc050));
+		getWindow(0).addWidget(new WindowTextWidget("VpEdition " + BleachHack.VERSION, true, WindowTextWidget.TextAlign.MIDDLE, 1.5f, w / 2, h / 4 - 6, 0xffc050));
 
 		// Splash
 		if (!splash.isEmpty()) {
 			getWindow(0).addWidget(new WindowTextWidget(new LiteralText(splash), true, WindowTextWidget.TextAlign.MIDDLE, 2f, -20f, w / 2 + 80, h / 4 + 6, 0xffff00)
 					.withRenderEvent(widget -> {
-						float scale = 1.8F - MathHelper.abs(MathHelper.sin(Util.getMeasuringTimeMs() % 1000L / 1000.0F * 6.2831855F) * 0.1F);
+						float scale = 1.9F - MathHelper.abs(MathHelper.sin(Util.getMeasuringTimeMs() % 1000L / 1000.0F * 6.2831855F) * 0.1F);
 						scale = scale * 60.0F / (textRenderer.getWidth(splash) + 32);
 						((WindowTextWidget) widget).setScale(scale);
 					}));

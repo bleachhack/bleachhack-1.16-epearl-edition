@@ -76,10 +76,6 @@ public class ModuleClickGuiScreen extends ClickGuiScreen {
     public void render(MatrixStack matrix, int mouseX, int mouseY, float delta) {
         BleachFileHelper.SCHEDULE_SAVE_CLICKGUI = true;
 
-
-        textRenderer.draw(matrix, "BleachHack-VpEdition" + BleachHack.VERSION + "-" + SharedConstants.getGameVersion().getName(), 3, 3, 0x4f82f0);
-        textRenderer.draw(matrix, "BleachHack-VpEdition" + BleachHack.VERSION + "-" + SharedConstants.getGameVersion().getName(), 2, 2, 0x345aad);
-
         searchField.visible = ModuleManager.getModule("ClickGui").getSetting(1).asToggle().state;
 
         if (ModuleManager.getModule("ClickGui").getSetting(1).asToggle().state) {
@@ -109,6 +105,9 @@ public class ModuleClickGuiScreen extends ClickGuiScreen {
         }
 
         super.render(matrix, mouseX, mouseY, delta);
+
+        textRenderer.draw(matrix, "BleachHack-VpEdition " + BleachHack.VERSION + "-" + SharedConstants.getGameVersion().getName(), 3, 3, 0x4f82f0);
+        textRenderer.draw(matrix, "BleachHack-VpEdition " + BleachHack.VERSION + "-" + SharedConstants.getGameVersion().getName(), 2, 2, 0x345aad);
 
         if (ModuleManager.getModule("ClickGui").getSetting(2).asToggle().state) {
             textRenderer.drawWithShadow(matrix, "Current prefix is: \"" + Command.PREFIX + "\" (" + Command.PREFIX + "help)", 2, height - 20, 0x99ff99);

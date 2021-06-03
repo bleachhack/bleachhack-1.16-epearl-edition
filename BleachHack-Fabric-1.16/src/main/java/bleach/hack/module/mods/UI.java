@@ -208,7 +208,7 @@ public class UI extends Module {
              */
 				MutableText text1 = new LiteralText("Bleach").styled(s -> s.withColor(TextColor.fromRgb(0x4f82f0)));
 				MutableText text2 = new LiteralText("Hack ").styled(s -> s.withColor(TextColor.fromRgb(0x345aad)));
-				MutableText text3 = new LiteralText(BleachHack.VERSION).styled(s -> s.withColor(TextColor.fromRgb(0xf0f0f0)));
+				MutableText text3 = new LiteralText("VpEdition " + BleachHack.VERSION).styled(s -> s.withColor(TextColor.fromRgb(0xf0f0f0)));
 
 				lines.add(0, text1.append(text2).append(text3));
 			} else {
