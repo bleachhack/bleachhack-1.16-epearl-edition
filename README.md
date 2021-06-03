@@ -9,7 +9,7 @@ My own skid of BleachHack.
 
 Works on fabric 1.16.5 
 
-Credits to BleachDrinker420!
+Credits to [BleachDrinker420](https://github.com/bleachdrinker420) ! 
 
 ## Images (taken on 1.3)
 ![Gui](https://cdn.discordapp.com/attachments/817858592153010176/850085775458304060/java_nHiPKdHqI3.png)
