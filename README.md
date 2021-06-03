@@ -1,5 +1,5 @@
 
-# BleachHack VpEdition 1.2.3 
+# BleachHack VpEdition 1.3
 ![](https://img.shields.io/tokei/lines/github/HerraVp/bleachhack-VpEdition?style=flat-square)
 ![](https://img.shields.io/github/last-commit/HerraVp/bleachhack-VpEdition?style=flat-square)
 ![](https://img.shields.io/badge/daily%20commit-maybeKEKW-red?style=flat-square)
@@ -11,9 +11,9 @@ Works on fabric 1.16.5
 
 Credits to BleachDrinker420!
 
-## Images (taken on 1.3 devbuild-0.5)
-![Gui](https://cdn.discordapp.com/attachments/817859390882709515/847927647987695646/java_20ffjyVqLM.png)
-![Gui2](https://cdn.discordapp.com/attachments/817859390882709515/847927626870161418/java_k2xpaQ26VQ.png)
+## Images (taken on 1.3)
+![Gui](https://cdn.discordapp.com/attachments/817858592153010176/850085775458304060/java_nHiPKdHqI3.png)
+![Gui2](https://cdn.discordapp.com/attachments/817858592153010176/850085771423776778/java_hM8mqZHNRK.png)
 
 
 ## Installation
