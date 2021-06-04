@@ -34,6 +34,8 @@ public class UIWindow extends ClickGuiWindow {
 
     private Map<String, UIWindow> otherWindows;
 
+    private boolean detachedFromOthers = false;
+
     public UIWindow(Position pos, Map<String, UIWindow> otherWindows, Function<UI, Boolean> enabledFunction, Supplier<int[]> sizeSupplier, TriConsumer<MatrixStack, Integer, Integer> renderConsumer) {
         super(0, 0, 0, 0, "", null);
 
@@ -58,13 +60,36 @@ public class UIWindow extends ClickGuiWindow {
         return !enabledFunction.apply(uiModule);
     }
 
+    private void detachFromOthers(boolean detachFromConstants) {
+        // Really messy way to detach this from all its neighbors
+        String thisId = otherWindows.entrySet().stream()
+                .filter(p -> p.getValue() == this)
+                .findFirst().orElse(null).getKey();
+
+        position.getAttachments().stream()
+                .filter(p -> p.getLeft().length() > 1)
+                .forEach(p -> otherWindows.get(p.getLeft()).position.getAttachments()
+                        .removeIf(a -> a.getLeft().equals(thisId)));
+        position.getAttachments().removeIf(p -> detachFromConstants || p.getLeft().length() > 1);
+    }
+
     public void render(MatrixStack matrix, int mouseX, int mouseY) {
         if (shouldClose((UI) ModuleManager.getModule("UI"))) {
+
+            if (!detachedFromOthers) {
+                detachFromOthers(false);
+                detachedFromOthers = true;
+            }
+
             return;
         }
+
+        detachedFromOthers = false;
+
         // Snapping
         int sens = 5;
         if (dragging) {
+            detachFromOthers(true);
             String thisId = otherWindows.entrySet().stream()
                     .filter(p -> p.getValue() == this)
                     .findFirst().orElse(null).getKey();

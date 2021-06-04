@@ -62,8 +62,10 @@ public class UI extends Module {
 	private double tps = 20;
 	private long lastPacket = 0;
 
+	private int chunkSize;
+	private long lastChunkTime;
 	private ExecutorService chunkExecutor;
-	private Pair<ChunkPos, Future<Integer>> chunkSize;
+	private Pair<ChunkPos, Future<Integer>> chunkFuture;
 
 	public UI() {
 		super("UI", KEY_UNBOUND, ModuleCategory.RENDER, true, "Shows stuff onscreen.",
@@ -274,25 +276,26 @@ public class UI extends Module {
 		}
 
 		if (getSetting(1).asToggle().getChild(6).asToggle().state) {
-			if (chunkSize != null && new ChunkPos(mc.player.getBlockPos()).equals(chunkSize.getLeft())) {
-				if (chunkSize.getRight().isDone()) {
+			if (chunkFuture != null && new ChunkPos(mc.player.getBlockPos()).equals(chunkFuture.getLeft())) {
+				if (chunkFuture.getRight().isDone()) {
 					try {
-						int size = chunkSize.getRight().get();
-						infoList.add("Chunk: \u00a7f" + (size < 1000 ? size + "B" : size / 1000d + "KB"));
+						chunkSize = chunkFuture.getRight().get();
+
 					} catch (InterruptedException | ExecutionException e) {
 						e.printStackTrace();
 					}
 				}
 			} else if (mc.world.getWorldChunk(mc.player.getBlockPos()) != null) {
-				infoList.add("Chunk: \u00a7fLoading..");
+				lastChunkTime = System.currentTimeMillis();
+				chunkFuture = Pair.of(new ChunkPos(mc.player.getBlockPos()), chunkExecutor.submit(() -> {
 
-				chunkSize = Pair.of(new ChunkPos(mc.player.getBlockPos()), chunkExecutor.submit(() -> {
 					CompoundTag tag = ClientChunkSerializer.serialize(mc.world, mc.world.getWorldChunk(mc.player.getBlockPos()));
 					DataOutputStream output = new DataOutputStream(
 							new BufferedOutputStream(new DeflaterOutputStream(new ByteArrayOutputStream(8096))));
 					try {
 						NbtIo.writeCompressed(tag, output);
 					} catch (IOException e) {
+						e.printStackTrace();
 						BleachLogger.errorMessage("[ChunkSize] Error serializing chunk");
 						return 0;
 					}
@@ -300,6 +303,8 @@ public class UI extends Module {
 					return output.size();
 				}));
 			}
+
+			infoList.add("Chunk: \u00a7f" + (chunkSize < 1000 ? chunkSize + "B" : chunkSize / 1000d + "KB"));
 		}
 
 		if (getSetting(1).asToggle().getChild(0).asToggle().state) {
