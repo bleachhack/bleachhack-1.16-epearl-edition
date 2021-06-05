@@ -8,7 +8,7 @@ import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 
 public class HoleTP extends Module {
     public HoleTP() {
-        super("HoleTP", KEY_UNBOUND, ModuleCategory.MOVEMENT, "Fall fast :O");
+        super("HoleTP", KEY_UNBOUND, ModuleCategory.MOVEMENT, "fall faster");
     }
 
     private boolean flag;
