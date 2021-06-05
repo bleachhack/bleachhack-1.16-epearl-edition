@@ -1,3 +1,4 @@
+/*
 package bleach.hack.module.mods;
 
 import bleach.hack.BleachHack;
@@ -20,14 +21,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 
-public class AutoBedBomb extends Module {
+public class OLDBedAura extends Module {
     int ticksPassed;
     Entity targetPlayer;
     BlockPos targetPlayerPos;
     int bed;
     int currentSlot;
 
-    public AutoBedBomb() {
+    public OLDBedAura() {
         super("AutoBedBomb", KEY_UNBOUND, ModuleCategory.COMBAT, "Automatically places beds on targets",
                 new SettingSlider("Delay", 0, 20, 10, 0),
                 new SettingSlider("Range", 0, 10, 5, 2)
@@ -138,3 +139,4 @@ public class AutoBedBomb extends Module {
         ticksPassed = 0;
     }
 }
+ */

@@ -1,14 +1,11 @@
-/* package bleach.hack.module.mods;
+package bleach.hack.module.mods;
 
+import bleach.hack.event.events.EventTick;
 import bleach.hack.module.Module;
-import bleach.hack.setting.base.SettingMode;
+import bleach.hack.module.ModuleCategory;
 import bleach.hack.setting.base.SettingSlider;
-import bleach.hack.setting.base.SettingBase;
-import bleach.hack.util.CrystalUtils;
-import bleach.hack.module.Category;
-import bleach.hack.util.BleachLogger;
 import com.google.common.collect.Streams;
-import com.sun.applet2.preloader.event.ConfigEvent;
+import com.google.common.eventbus.Subscribe;
 import net.minecraft.block.BedBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -29,7 +26,7 @@ import java.util.stream.Collectors;
 /**
  * @Author Vp
  * https://github.com/HerraVp
- /
+ */
 
 public class NewBedAura extends Module {
     int ticksPassed;
@@ -39,26 +36,36 @@ public class NewBedAura extends Module {
     int currentSlot;
 
     public NewBedAura(){
-        super("BedAura", KEY_UNBOUND, Category.COMBAT, "Automatically places beds on target",
-        new SettingSlider("Range", 0, 4.0f, 0.1f, 0),
-        new SettingSlider("Delay", 0, 10, 0, 40
-        ));
+        super("BedAura", KEY_UNBOUND, ModuleCategory.COMBAT, "Automatically places beds on targets and explodes em",
+                new SettingSlider("Delay", 0, 10, 5, 2),
+                new SettingSlider("Range", 0, 20, 10, 0));
     }
 
-    int bedSlot = -1;
+   int bedSlot = -1;
     int oldSlot = -1;
 
     int ticks = 0;
 
     @Override
     public void onEnable() {
+        super.onEnable();
+        assert mc.player != null;
+        ticksPassed = 0;
+        if (mc.player == null) {
+            super.setEnabled(false);
+            return;
+        }
+    }
+
+    @Subscribe
+    public void onTick(EventTick event) {
         if (mc.world == null || mc.player == null) {onDisable(); return;}
         for (int i = 0; i < 9; i++) {if (mc.player.inventory.getStack(i).getItem() instanceof BedItem) {bedSlot = i;}}
         if (bedSlot == -1) {onDisable(); return;}
-        if (ticks != delay.getValue()) {ticks++; return;}
+        if (ticks != getSetting(0).asSlider().getValue()) {ticks++; return;}
         else ticks = 0;
         if (mc.player == null || mc.world == null) {onDisable(); return;}
-        List<Entity> players = Streams.stream(mc.world.getEntities()).filter(e ->  e instanceof PlayerEntity && mc.player.distanceTo(e) && e != mc.player).collect(Collectors.toList());
+        List<Entity> players = Streams.stream(mc.world.getEntities()).filter(e -> e instanceof PlayerEntity && mc.player.distanceTo(e) <= getSetting(1).asSlider().getValue() && e != mc.player).collect(Collectors.toList());
         if (players.isEmpty()) {return;}
         PlayerEntity player = (PlayerEntity)players.get(0);
         ArrayList<Pair<BlockPos, Direction>> positions = new ArrayList<>();
@@ -81,20 +88,12 @@ public class NewBedAura extends Module {
                 if (direction == Direction.WEST) mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.LookOnly(90f, mc.player.pitch, true));
                 mc.interactionManager.interactBlock(mc.player, mc.world, Hand.MAIN_HAND, new BlockHitResult(Vec3d.of(blockPos), Direction.DOWN, blockPos, false));
             }
-
-            if (bed == -1) {
-                BleachLogger.infoMessage("Out of beds!");
-                this.setEnabled(false);
-                return;
-            }
-
             //todo maybe do it on another tick
             if (mc.world.getBlockState(blockPos).getBlock() instanceof BedBlock) mc.interactionManager.interactBlock(mc.player, mc.world, Hand.MAIN_HAND, new BlockHitResult(Vec3d.of(blockPos), Direction.DOWN, blockPos, true));
             mc.player.inventory.selectedSlot = oldSlot;
             break;
         }
-
-        }
+    }
 
     @Override
     public void onDisable() {
@@ -102,5 +101,5 @@ public class NewBedAura extends Module {
         targetPlayer = null;
         ticksPassed = 0;
     }
+
 }
- */
