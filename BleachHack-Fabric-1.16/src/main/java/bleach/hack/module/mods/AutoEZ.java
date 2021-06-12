@@ -41,7 +41,9 @@ public class AutoEZ extends Module {
     public void onPacketRead(EventReadPacket event) {
         if (event.getPacket() instanceof GameMessageS2CPacket) {
             String msg = ((GameMessageS2CPacket) event.getPacket()).getMessage().getString();
+            assert mc.player != null;
             if (msg.contains(mc.player.getName().getString()) && msg.contains("by")) {
+                assert mc.world != null;
                 for (PlayerEntity e : mc.world.getPlayers()) {
                     if (e == mc.player)
                         continue;

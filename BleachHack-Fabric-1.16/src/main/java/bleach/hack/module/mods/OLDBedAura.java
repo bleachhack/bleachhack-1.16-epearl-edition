@@ -1,4 +1,3 @@
-/*
 package bleach.hack.module.mods;
 
 import bleach.hack.BleachHack;
@@ -11,11 +10,14 @@ import bleach.hack.util.CrystalUtils;
 import bleach.hack.util.world.WorldUtils;
 import com.google.common.collect.Streams;
 import com.google.common.eventbus.Subscribe;
+import net.minecraft.block.BedBlock;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BedItem;
+import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Pair;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -29,7 +31,7 @@ public class OLDBedAura extends Module {
     int currentSlot;
 
     public OLDBedAura() {
-        super("AutoBedBomb", KEY_UNBOUND, ModuleCategory.COMBAT, "Automatically places beds on targets",
+        super("BedAuraOLD", KEY_UNBOUND, ModuleCategory.COMBAT, "Outdated version of bedaura (idk even why would anyone use this)",
                 new SettingSlider("Delay", 0, 20, 10, 0),
                 new SettingSlider("Range", 0, 10, 5, 2)
         );
@@ -139,4 +141,3 @@ public class OLDBedAura extends Module {
         ticksPassed = 0;
     }
 }
- */

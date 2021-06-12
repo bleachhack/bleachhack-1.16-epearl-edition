@@ -1,25 +1,24 @@
 package bleach.hack.module.mods;
 
+import net.minecraft.item.Items;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.eventbus.Subscribe;
 import com.google.gson.JsonElement;
 
+import bleach.hack.module.ModuleCategory;
 import bleach.hack.BleachHack;
 import bleach.hack.event.events.EventTick;
-import bleach.hack.module.ModuleCategory;
 import bleach.hack.module.Module;
 import bleach.hack.setting.base.SettingMode;
 import bleach.hack.setting.base.SettingToggle;
-import bleach.hack.util.DiscordRPCManager;
 import bleach.hack.util.file.BleachFileHelper;
-import net.arikia.dev.drpc.DiscordRPC;
-import net.arikia.dev.drpc.DiscordRichPresence;
+import bleach.hack.util.rpc.DiscordEventHandlers;
+import bleach.hack.util.rpc.DiscordRPCManager;
+import bleach.hack.util.rpc.DiscordRichPresence;
 import net.minecraft.SharedConstants;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-
 public class DiscordRPCMod extends Module {
 
 	private String customText1 = "top text";
@@ -52,13 +51,18 @@ public class DiscordRPCMod extends Module {
 		silent = getSetting(3).asToggle().state;
 
 		tick = 0;
-		DiscordRPCManager.start(silent ? "827588916462747648" : "827588916462747648");  //740928841433743370
+
+		BleachHack.logger.info("Initing Discord RPC...");
+		DiscordRPCManager.initialize(silent ? "827588916462747648" : "827588916462747648",  //740928841433743370
+		new DiscordEventHandlers.Builder()
+				.withReadyEventHandler(user -> BleachHack.logger.info(user.username + "#" + user.discriminator + " is big gay"))
+				.build());
 
 		super.onEnable();
 	}
 
 	public void onDisable() {
-		DiscordRPCManager.stop();
+		DiscordRPCManager.shutdown();
 
 		super.onDisable();
 	}
@@ -141,14 +145,15 @@ public class DiscordRPCMod extends Module {
 					break;
 			}
 
-			DiscordRPC.discordUpdatePresence(
+			DiscordRPCManager.updatePresence(
 					new DiscordRichPresence.Builder(text2)
-					.setBigImage(silent ? "mc" : "bhvp", silent ? "Minecraft " + SharedConstants.getGameVersion().getName() : " BleachHack-VpEdition " + BleachHack.VERSION)
-					.setDetails(text1).setStartTimestamps(start).build());
+							.setBigImage(silent ? "mc" : "bhvp", silent ? "Minecraft " + SharedConstants.getGameVersion().getName() : "BleachHack VpEdition " + BleachHack.VERSION)
+							.setDetails(text1).setStartTimestamps(start).build());
 		}
 
+
 		if (tick % 200 == 0) {
-			DiscordRPC.discordRunCallbacks();
+			DiscordRPCManager.runCallbacks();
 		}
 
 		tick++;

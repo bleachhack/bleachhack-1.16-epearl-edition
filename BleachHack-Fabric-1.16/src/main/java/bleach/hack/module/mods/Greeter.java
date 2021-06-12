@@ -42,6 +42,7 @@ public class Greeter extends Module {
     @Subscribe
     public void onTick(EventTick event)
     {
+        assert mc.player != null;
         if (mc.player.age % (this.getSettings().get(1).asSlider().getValue()*20) == 0 && this.isEnabled())
         {
             if(message_queue.size() > 0) {

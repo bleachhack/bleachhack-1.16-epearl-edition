@@ -214,7 +214,11 @@ public class UI extends Module {
 
 				lines.add(0, text1.append(text2).append(text3));
 			} else {
-				lines.add(0, new LiteralText("Welcome, " + mc.player.getName().asString() + "! ;^)").styled(style -> style.withColor(TextColor.fromRgb(0x5aa6e8))));
+				MutableText text1 = new LiteralText("Welcome, ").styled(style -> style.withColor(TextColor.fromRgb(0x345aad)));
+                MutableText text2 = new LiteralText(mc.player.getName().asString()).styled(style -> style.withColor(TextColor.fromRgb(0xf0f0f0)));
+				MutableText text3 = new LiteralText("! ;^)").styled(style -> style.withColor(TextColor.fromRgb(0x4f82f0)));
+
+				lines.add(0, text1.append(text2).append(text3));
 			}
 
 		}

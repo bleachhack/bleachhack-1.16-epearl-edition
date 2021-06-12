@@ -38,7 +38,7 @@ public class BleachHack implements ModInitializer {
 	private static BleachHack instance = null;
 	public static Logger logger;
 
-	public static final String VERSION = "1.3.1 DevBuild-0.4";
+	public static final String VERSION = "1.3.1";
 	public static final int INTVERSION = 30;
 
 	public static final EventBus eventBus = new EventBus();
@@ -81,7 +81,9 @@ public class BleachHack implements ModInitializer {
 		BleachFileHelper.readUI();
 
 		CommandManager.readPrefix();
-		CommandSuggestor.init();
+		CommandManager.loadCommands(this.getClass().getClassLoader().getResourceAsStream("bleachhack.commands.json"));
+		CommandSuggestor.start();
+
 
 		JsonElement mainMenu = BleachFileHelper.readMiscSetting("customTitleScreen");
 		if (mainMenu != null && !mainMenu.getAsBoolean()) {

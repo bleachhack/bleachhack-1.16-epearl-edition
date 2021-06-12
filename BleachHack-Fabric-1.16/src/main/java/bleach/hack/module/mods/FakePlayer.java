@@ -26,7 +26,7 @@ public class FakePlayer extends Module {
             fake.copyFrom(mc.player);
             fake.setBoundingBox(fake.getBoundingBox().expand(0.1));
             fake.spawn();
-            fake.abilities.invulnerable = true;
+            fake.abilities.invulnerable = false;
         }
         super.onEnable();
     }
