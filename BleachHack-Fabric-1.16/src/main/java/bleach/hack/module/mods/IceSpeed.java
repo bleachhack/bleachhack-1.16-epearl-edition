@@ -1,8 +1,8 @@
 package bleach.hack.module.mods;
 
 import bleach.hack.event.events.EventTick;
-import bleach.hack.module.Module;
 import bleach.hack.module.ModuleCategory;
+import bleach.hack.module.Module;
 import bleach.hack.setting.base.SettingSlider;
 import bleach.hack.util.FabricReflect;
 import com.google.common.collect.Sets;
