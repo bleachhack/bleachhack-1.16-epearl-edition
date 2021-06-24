@@ -20,8 +20,8 @@ I will only focus on the 1.17 version of the client now.
 
 
 ## Images (taken on 1.3)
-![Gui](https://cdn.discordapp.com/attachments/817858592153010176/850085775458304060/java_nHiPKdHqI3.png)
-![Gui2](https://cdn.discordapp.com/attachments/817858592153010176/850085771423776778/java_hM8mqZHNRK.png)
+![Gui](https://cdn.discordapp.com/attachments/817859390882709515/857637562055131166/java_19YZGCnIud.png)
+
 
 
 ## Installation
