@@ -1,0 +1,117 @@
+package bleach.hack.gui.clickgui;
+
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Set;
+
+import bleach.hack.BleachHack;
+import bleach.hack.command.Command;
+import bleach.hack.gui.clickgui.window.ModuleWindow;
+import bleach.hack.gui.window.Window;
+import bleach.hack.module.ModuleCategory;
+import bleach.hack.module.Module;
+import bleach.hack.module.ModuleManager;
+import bleach.hack.util.io.BleachFileHelper;
+import net.minecraft.SharedConstants;
+import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.text.LiteralText;
+
+public class ModuleClickGuiScreen extends ClickGuiScreen {
+
+    private TextFieldWidget searchField;
+
+    public ModuleClickGuiScreen() {
+        super(new LiteralText("ClickGui"));
+    }
+
+    public void init() {
+        super.init();
+
+        searchField = new TextFieldWidget(textRenderer, 2, 14, 100, 12, LiteralText.EMPTY /* @LasnikProgram is author lol */);
+        searchField.visible = false;
+        searchField.setMaxLength(20);
+        searchField.setSuggestion("Search here");
+        addDrawableChild(searchField);
+    }
+
+    public void initWindows() {
+        int len = (int) ModuleManager.getModule("ClickGui").getSetting(0).asSlider().getValue();
+
+        int startX = 10;
+        addWindow(new ModuleWindow(ModuleManager.getModulesInCat(ModuleCategory.PLAYER),
+                startX, 35, len, "Player", new ItemStack(Items.ARMOR_STAND)));
+
+        addWindow(new ModuleWindow(ModuleManager.getModulesInCat(ModuleCategory.RENDER),
+                startX + len + 5, 35, len, "Render", new ItemStack(Items.YELLOW_STAINED_GLASS)));
+
+        addWindow(new ModuleWindow(ModuleManager.getModulesInCat(ModuleCategory.COMBAT),
+                startX + len * 2 + 10, 35, len, "Combat", new ItemStack(Items.TOTEM_OF_UNDYING)));
+
+        addWindow(new ModuleWindow(ModuleManager.getModulesInCat(ModuleCategory.MOVEMENT),
+                startX + len * 3 + 15, 35, len, "Movement", new ItemStack(Items.DIAMOND_BOOTS)));
+
+        addWindow(new ModuleWindow(ModuleManager.getModulesInCat(ModuleCategory.EXPLOITS),
+                startX + len * 4 + 20, 35, len, "Exploits", new ItemStack(Items.REPEATING_COMMAND_BLOCK)));
+
+        addWindow(new ModuleWindow(ModuleManager.getModulesInCat(ModuleCategory.MISC),
+                startX + len * 5 + 25, 35, len, "Misc", new ItemStack(Items.NAUTILUS_SHELL)));
+
+        addWindow(new ModuleWindow(ModuleManager.getModulesInCat(ModuleCategory.WORLD),
+                startX + len * 6 + 30, 35, len, "World", new ItemStack(Items.GRASS_BLOCK)));
+
+        addWindow(new ModuleWindow(ModuleManager.getModulesInCat(ModuleCategory.CHAT),
+                startX + len * 6 + 35, 35, len, "Chat", new ItemStack(Items.PLAYER_HEAD)));
+
+        addWindow(new ModuleWindow(ModuleManager.getModulesInCat(ModuleCategory.FUN),
+                startX + len * 6 + 35, 40, len, "Fun", new ItemStack(Items.TNT)));
+    }
+
+    public void onClose() {
+        ModuleManager.getModule("ClickGui").setEnabled(false);
+    }
+
+    public void render(MatrixStack matrix, int mouseX, int mouseY, float delta) {
+        BleachFileHelper.SCHEDULE_SAVE_CLICKGUI = true;
+
+        searchField.visible = ModuleManager.getModule("ClickGui").getSetting(1).asToggle().state;
+
+        if (ModuleManager.getModule("ClickGui").getSetting(1).asToggle().state) {
+            searchField.setSuggestion(searchField.getText().isEmpty() ? "Search here" : "");
+
+            Set<Module> seachMods = new HashSet<>();
+            if (!searchField.getText().isEmpty()) {
+                for (Module m : ModuleManager.getModules()) {
+                    if (m.getName().toLowerCase(Locale.ENGLISH).contains(searchField.getText().toLowerCase(Locale.ENGLISH).replace(" ", ""))) {
+                        seachMods.add(m);
+                    }
+                }
+            }
+
+            for (Window w : getWindows()) {
+                if (w instanceof ModuleWindow) {
+                    ((ModuleWindow) w).setSearchedModule(seachMods);
+                }
+            }
+        }
+
+        int len = (int) ModuleManager.getModule("ClickGui").getSetting(0).asSlider().getValue();
+        for (Window w : getWindows()) {
+            if (w instanceof ModuleWindow) {
+                ((ModuleWindow) w).setLen(len);
+            }
+        }
+
+        super.render(matrix, mouseX, mouseY, delta);
+
+        textRenderer.draw(matrix, "BleachHack-VpEdition " + BleachHack.VERSION + "-" + SharedConstants.getGameVersion().getName(), 3, 3, 0x4f82f0);
+        textRenderer.draw(matrix, "BleachHack-VpEdition " + BleachHack.VERSION + "-" + SharedConstants.getGameVersion().getName(), 2, 2, 0x345aad);
+
+        if (ModuleManager.getModule("ClickGui").getSetting(2).asToggle().state) {
+            textRenderer.drawWithShadow(matrix, "Current prefix is: \"" + Command.PREFIX + "\" (" + Command.PREFIX + "help)", 2, height - 20, 0x99ff99);
+            textRenderer.drawWithShadow(matrix, "Use " + Command.PREFIX + "clickgui to reset the clickgui", 2, height - 10, 0x17e317);
+        }
+    }
+}
