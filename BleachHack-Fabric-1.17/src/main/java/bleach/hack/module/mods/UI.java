@@ -17,13 +17,13 @@ import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 import java.util.zip.DeflaterOutputStream;
 
-import bleach.hack.eventbus.BleachSubscribe;
+import bleach.hack.event.events.EventRenderInGameHud;
 import org.apache.commons.lang3.tuple.Pair;
 
+import bleach.hack.eventbus.BleachSubscribe;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import bleach.hack.BleachHack;
-import bleach.hack.event.events.EventDrawOverlay;
 import bleach.hack.event.events.EventReadPacket;
 import bleach.hack.gui.clickgui.UIClickGuiScreen;
 import bleach.hack.module.ModuleCategory;
@@ -113,7 +113,7 @@ public class UI extends Module {
 	}
 
 	@BleachSubscribe
-	public void onDrawOverlay(EventDrawOverlay event) {
+	public void onDrawOverlay(EventRenderInGameHud event) {
 		if (mc.currentScreen instanceof UIClickGuiScreen) {
 			return;
 		}
@@ -123,9 +123,8 @@ public class UI extends Module {
 
 		uiScreen.uiWindows.values().forEach(window -> {
 			if (!window.shouldClose(this)) {
-				window.renderUI(event.matrix);
-		   }
-
+				window.renderUI(event.getMatrix());
+			}
 		});
 	}
 
