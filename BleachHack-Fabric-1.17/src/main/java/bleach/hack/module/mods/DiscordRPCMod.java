@@ -62,7 +62,7 @@ public class DiscordRPCMod extends Module {
 		tick = 0;
 
 		BleachLogger.logger.info("Initing Discord RPC...");
-		DiscordRPCManager.initialize(silent ? "727434331089272903" : "740928841433743370",
+		DiscordRPCManager.initialize(silent ? "727434331089272903" : "827588916462747648",
 				new DiscordEventHandlers.Builder()
 				.withReadyEventHandler(user -> BleachLogger.logger.info(user.username + "#" + user.discriminator + " is big gay"))
 				.build());
@@ -156,7 +156,7 @@ public class DiscordRPCMod extends Module {
 
 			DiscordRPCManager.updatePresence(
 					new DiscordRichPresence.Builder(text2)
-					.setBigImage(silent ? "mc" : "bh", silent ? "Minecraft " + SharedConstants.getGameVersion().getName() : "BleachHack " + BleachHack.VERSION)
+					.setBigImage(silent ? "mc" : "bhvp", silent ? "Minecraft " + SharedConstants.getGameVersion().getName() : "BleachHack VpEdition " + BleachHack.VERSION)
 					.setDetails(text1).setStartTimestamps(start).build());
 		}
 
