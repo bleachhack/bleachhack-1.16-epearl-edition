@@ -7,9 +7,17 @@
 My own skid of BleachHack.
 
 
-Works on fabric 1.16.5 
+Works on fabric 1.16.5 and 1.17
 
 Credits to [BleachDrinker420](https://github.com/bleachdrinker420) ! 
+
+
+## About 1.16.5
+1.16.5 version of the client isn't going to get updates anymore.
+
+I will only focus on the 1.17 version of the client now.
+
+
 
 ## Images (taken on 1.3)
 ![Gui](https://cdn.discordapp.com/attachments/817858592153010176/850085775458304060/java_nHiPKdHqI3.png)
