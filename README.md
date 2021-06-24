@@ -12,16 +12,8 @@ Works on fabric 1.16.5 and 1.17
 Credits to [BleachDrinker420](https://github.com/bleachdrinker420) ! 
 
 
-## About 1.16.5
-1.16.5 version of the client isn't going to get updates anymore.
-
-I will only focus on the 1.17 version of the client now.
-
-
-
 ## Images (taken on 1.3.1 - 1.17)
 ![Gui](https://cdn.discordapp.com/attachments/817859390882709515/857637562055131166/java_19YZGCnIud.png)
-
 
 
 ## Installation
