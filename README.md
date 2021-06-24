@@ -19,7 +19,7 @@ I will only focus on the 1.17 version of the client now.
 
 
 
-## Images (taken on 1.3)
+## Images (taken on 1.3.1 - 1.17)
 ![Gui](https://cdn.discordapp.com/attachments/817859390882709515/857637562055131166/java_19YZGCnIud.png)
 
 
