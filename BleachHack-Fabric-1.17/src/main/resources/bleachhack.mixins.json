@@ -54,6 +54,7 @@
     "MixinSharedConstants",
     "MixinSkyProperties",
     "MixinSoundSystem",
+    "MixinTextRenderer",
     "MixinTitleScreen",
     "MixinWorldRenderer"
   ],
