@@ -1,0 +1,32 @@
+name: bleachhack vp skid bruh moments 1.17
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 16
+      uses: actions/setup-java@v1
+      with:
+        java-version: 16
+ 
+    - name: Build 1.17 bruh time
+      run: |
+        cd BleachHack-Fabric-1.16
+        chmod +x gradlew
+        ./gradlew build
+        cd ..
+        
+    - name: Upload 1.17 bruh bruh
+      uses: actions/upload-artifact@v2
+      with:
+        name: BleachHack-VpEdtion-1.17
+        path: BleachHack-Fabric-1.16/build/libs/bleachhack-vpedition-1.17.jar
