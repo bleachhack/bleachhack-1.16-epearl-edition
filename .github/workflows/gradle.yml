@@ -20,7 +20,7 @@ jobs:
  
     - name: Build 1.17 bruh time
       run: |
-        cd BleachHack-Fabric-1.16
+        cd BleachHack-Fabric-1.17
         chmod +x gradlew
         ./gradlew build
         cd ..
