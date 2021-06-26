@@ -63,10 +63,13 @@ public class ModuleClickGuiScreen extends ClickGuiScreen {
                 startX + len * 6 + 30, 35, len, "World", new ItemStack(Items.GRASS_BLOCK)));
 
         addWindow(new ModuleWindow(ModuleManager.getModulesInCat(ModuleCategory.CHAT),
-                startX + len * 6 + 35, 35, len, "Chat", new ItemStack(Items.PLAYER_HEAD)));
+                startX + len * 7 + 35, 35, len, "Chat", new ItemStack(Items.PLAYER_HEAD)));
 
         addWindow(new ModuleWindow(ModuleManager.getModulesInCat(ModuleCategory.FUN),
-                startX + len * 6 + 35, 40, len, "Fun", new ItemStack(Items.TNT)));
+                startX + len * 8 + 35, 40, len, "Fun", new ItemStack(Items.TNT)));
+
+        addWindow(new ModuleWindow(ModuleManager.getModulesInCat(ModuleCategory.CLIENT),
+                startX + len * 9 + 40, 40, len, "Fun", new ItemStack(Items.ANVIL)));
     }
 
     public void onClose() {
