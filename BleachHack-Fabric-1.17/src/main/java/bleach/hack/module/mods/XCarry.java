@@ -27,6 +27,7 @@ public class XCarry extends Module {
     @Override
     public void onDisable() {
         if (invOpened) {
+            assert mc.player != null;
             mc.player.networkHandler.sendPacket(new CloseHandledScreenC2SPacket(mc.player.playerScreenHandler.syncId));
         }
     }
@@ -35,12 +36,11 @@ public class XCarry extends Module {
     private void onEventSend(EventSendPacket event){
         if (!(event.getPacket() instanceof CloseHandledScreenC2SPacket))
             return;
-
+        assert mc.player != null;
         if (((CloseHandledScreenC2SPacketAccessor) event.getPacket()).getSyncId() == mc.player.playerScreenHandler.syncId) {
             invOpened = true;
-            event.isCancelled();
+            event.setCancelled(true);
         }
-
     }
 }
 

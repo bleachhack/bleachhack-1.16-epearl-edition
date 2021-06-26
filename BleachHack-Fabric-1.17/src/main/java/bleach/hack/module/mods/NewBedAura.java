@@ -8,7 +8,6 @@ import bleach.hack.module.ModuleCategory;
 import bleach.hack.setting.base.SettingSlider;
 import bleach.hack.util.BleachLogger;
 import com.google.common.collect.Streams;
-import com.google.common.eventbus.Subscribe;
 import net.minecraft.block.BedBlock;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
