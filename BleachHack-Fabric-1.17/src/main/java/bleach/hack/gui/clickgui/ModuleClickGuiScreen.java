@@ -69,7 +69,7 @@ public class ModuleClickGuiScreen extends ClickGuiScreen {
                 startX + len * 8 + 35, 40, len, "Fun", new ItemStack(Items.TNT)));
 
         addWindow(new ModuleWindow(ModuleManager.getModulesInCat(ModuleCategory.CLIENT),
-                startX + len * 9 + 40, 40, len, "Fun", new ItemStack(Items.ANVIL)));
+                startX + len * 9 + 40, 40, len, "Client", new ItemStack(Items.ANVIL)));
     }
 
     public void onClose() {
