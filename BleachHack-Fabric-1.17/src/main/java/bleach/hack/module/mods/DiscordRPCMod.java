@@ -38,7 +38,7 @@ public class DiscordRPCMod extends Module {
 	private boolean silent;
 
 	public DiscordRPCMod() {
-		super("DiscordRPC", KEY_UNBOUND, ModuleCategory.MISC, true, "Dicord RPC, use the \"rpc\" command to set a custom status",
+		super("DiscordRPC", KEY_UNBOUND, ModuleCategory.CLIENT, true, "Dicord RPC, use the \"rpc\" command to set a custom status",
 				new SettingMode("Text 1", "Playing %server%", "%server%", "%type%", "%username% ontop", "Minecraft %mcver%", "%username%", "<- bad client", "%custom%").withDesc("Line 1"),
 				new SettingMode("Text 2", "%hp% hp - Holding %item%", "%username% - %hp% hp", "Holding %item%", "%hp% hp - At %coords%", "At %coords%", "%custom%").withDesc("Line 2"),
 				new SettingMode("Elapsed", "Normal", "Random", "Backwards", "None").withDesc("How to show elapsed time"),
@@ -157,6 +157,7 @@ public class DiscordRPCMod extends Module {
 			DiscordRPCManager.updatePresence(
 					new DiscordRichPresence.Builder(text2)
 					.setBigImage(silent ? "mc" : "bhvp", silent ? "Minecraft " + SharedConstants.getGameVersion().getName() : "BleachHack VpEdition " + BleachHack.VERSION)
+					.setSmallImage("vp", "Powered by Vp's bad coding skills")
 					.setDetails(text1).setStartTimestamps(start).build());
 		}
 

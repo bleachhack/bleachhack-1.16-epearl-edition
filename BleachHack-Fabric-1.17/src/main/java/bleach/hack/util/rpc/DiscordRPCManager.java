@@ -18,7 +18,7 @@ import org.apache.commons.lang3.SystemUtils;
 
 import com.sun.jna.Library;
 import com.sun.jna.Native;
-import bleach.hack.BleachHack;
+import bleach.hack.util.BleachLogger;
 
 /**
  * Baked in discord rpc because MC 1.17-pre1 decided to not launch with it as a library.
@@ -50,12 +50,12 @@ public class DiscordRPCManager {
             Files.copy(is, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
             is.close();
 
-            DiscordLib lib = Native.loadLibrary(file.getAbsolutePath(), DiscordLib.class);
+            DiscordLib lib = Native.load(file.getAbsolutePath(), DiscordLib.class);
 
-            BleachHack.logger.info("Successfully loaded native discord library (/assets/bleachhack/rpc/" + libName + " -> " + file.getAbsolutePath() + ")");
+            BleachLogger.logger.info("Successfully loaded native discord library (/assets/bleachhack/rpc/" + libName + " -> " + file.getAbsolutePath() + ")");
             return lib;
         } catch (IOException e) {
-            BleachHack.logger.error("Discord RPC could not be initialized", e);
+            BleachLogger.logger.error("Discord RPC could not be initialized", e);
             return new EmptyDiscordLib();
         }
     }
