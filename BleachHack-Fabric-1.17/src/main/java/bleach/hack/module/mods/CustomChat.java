@@ -67,13 +67,14 @@ public class CustomChat extends Module {
 					CharMap.single('X', '\u03c7'), CharMap.single('Y', '\u0443')));
 
 	public String prefix = "";
-	public String suffix = "ʙʟᴇᴀᴄʜʜᴀᴄᴋ ᴠᴘᴇᴅɪᴛɪᴏɴ";
+	public String suffix = " ʙʟᴇᴀᴄʜʜᴀᴄᴋ ᴠᴘᴇᴅɪᴛɪᴏɴ";
 
 	public CustomChat() {
 		super("CustomChat", KEY_UNBOUND, ModuleCategory.CHAT, "Customizes your chat messages, use the \"customchat\" command to edit the stuff",
 				new SettingToggle("CustomFont", true).withDesc("Adds a custom font in your messages"),
 				new SettingMode("Font", "\uff41\uff42\uff43\uff44\uff45", "\u1D00\u0299\u1d04\u1d05\u1d07",
 						"\u24d0\u24d1\u24d2\u24d3\u24d4", "\u039bb\u1455d\u03A3", "\u03b1\u0432c\u2202\u0454").withDesc("Custom font to use"),
+				new SettingToggle(">", false).withDesc("Automatically puts > in front of ur message"),
 				new SettingToggle("Prefix", false).withDesc("Message prepended to the message, set with \"customchat prefix [message]\""),
 				new SettingToggle("Suffix", false).withDesc("Message appended to the message, set with \"customchat suffix [message]\""));
 		
@@ -97,10 +98,14 @@ public class CustomChat extends Module {
 			}
 
 			if (getSetting(2).asToggle().state) {
-				text = prefix + text;
+				text = ">" + text;
 			}
 
 			if (getSetting(3).asToggle().state) {
+				text = prefix + text;
+			}
+
+			if (getSetting(4).asToggle().state) {
 				text = text + suffix;
 			}
 
