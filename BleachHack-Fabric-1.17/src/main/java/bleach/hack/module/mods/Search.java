@@ -1,11 +1,3 @@
-/*
- * This file is part of the BleachHack distribution (https://github.com/BleachDrinker420/BleachHack/).
- * Copyright (c) 2021 Bleach and contributors.
- *
- * This source code is subject to the terms of the GNU General Public
- * License, version 3. If a copy of the GPL was not distributed with this
- * file, You can obtain one at: https://www.gnu.org/licenses/gpl-3.0.txt
- */
 package bleach.hack.module.mods;
 
 import java.util.ArrayDeque;
@@ -181,7 +173,9 @@ public class Search extends Module {
 		} else if (event.getPacket() instanceof ChunkDataS2CPacket) {
 			ChunkDataS2CPacket packet = (ChunkDataS2CPacket) event.getPacket();
 
-			queuedChunks.add(new ChunkPos(packet.getX(), packet.getZ()));
+			ChunkPos cp = new ChunkPos(packet.getX(), packet.getZ());
+			queuedChunks.add(cp);
+			queuedUnloads.remove(cp);
 		} else if (event.getPacket() instanceof UnloadChunkS2CPacket) {
 			UnloadChunkS2CPacket packet = (UnloadChunkS2CPacket) event.getPacket();
 
@@ -264,12 +258,12 @@ public class Search extends Module {
 			}
 		}));
 	}
-	
+
 	public float[] getColorForBlock(BlockState state, BlockPos pos) {
 		if (state.getBlock() == Blocks.NETHER_PORTAL) {
 			return new float[] { 0.42f, 0f, 0.82f };
 		}
-		
+
 		int color = state.getMapColor(mc.world, pos).color;
 		return new float[] { ((color & 0xff0000) >> 16) / 255f, ((color & 0xff00) >> 8) / 255f, (color & 0xff) / 255f };
 	}
