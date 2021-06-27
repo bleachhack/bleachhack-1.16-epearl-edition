@@ -3,7 +3,6 @@ package bleach.hack.module.mods;
 import java.util.Random;
 
 import bleach.hack.eventbus.BleachSubscribe;
-import com.google.common.eventbus.Subscribe;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import bleach.hack.module.ModuleCategory;
 import bleach.hack.module.Module;
@@ -14,7 +13,7 @@ import bleach.hack.event.events.EventTick;
  */
 
 public class Derp extends Module {
-    public Derp(){ super("Derp", KEY_UNBOUND, ModuleCategory.FUN, "Randomly moves ur head around (Only other players can see it)");
+    public Derp(){ super("Derp", KEY_UNBOUND, ModuleCategory.FUN, "Randomly moves ur head around server side");
     }
 
     private final Random random = new Random();
