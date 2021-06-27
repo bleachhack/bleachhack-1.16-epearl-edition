@@ -201,7 +201,7 @@ public class BleachTitleScreen extends WindowScreen {
 
 						File installerFile = new File(System.getProperty("java.io.tmpdir"), name);
 
-						BleachHack.logger.info(
+						BleachLogger.logger.info(
 								"\n> Installer path: " + installerFile
 										+ "\n> Installer URL: " + link
 										+ "\n> Installer file name: " + name

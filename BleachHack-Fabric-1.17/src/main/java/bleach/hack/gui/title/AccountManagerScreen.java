@@ -32,6 +32,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import bleach.hack.util.BleachLogger;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -157,7 +158,7 @@ public class AccountManagerScreen extends WindowScreen {
 						accountQueue.add(new Account(split[0], crypter.decrypt(split[3]), split[1], split[2]));
 					}
 				} catch (Exception e) {
-					BleachHack.logger.info("Error decrypting accout: " + split[0]);
+					BleachLogger.logger.info("Error decrypting accout: " + split[0]);
 				}
 			}
 		}
