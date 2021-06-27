@@ -9,8 +9,10 @@ import bleach.hack.setting.base.SettingSlider;
 import bleach.hack.util.BleachLogger;
 import com.google.common.collect.Streams;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.RespawnAnchorBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BedItem;
 import net.minecraft.item.Items;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -28,6 +30,7 @@ public class AutoAnchor extends Module {
     int anchorSlot = -1;
     int glowStoneSlot = -1;
     int oldSlot = -1;
+    int anchor;
 
     public AutoAnchor() {
         super("AutoAnchor", KEY_UNBOUND, ModuleCategory.COMBAT, "Automatically place and explodes respawn anchors",
@@ -42,6 +45,20 @@ public class AutoAnchor extends Module {
         ticksPassed = 0;
         if (mc.player == null) {
             super.setEnabled(false);
+            return;
+        }
+
+        anchor = -1;
+        for (int i = 0; i < 9; i++) {
+            if (mc.player.getInventory().getStack(i).getItem().equals(Items.RESPAWN_ANCHOR)) {
+                anchor = i;
+                break;
+            }
+        }
+
+        if (anchor == -1) {
+            BleachLogger.infoMessage("No anchors in hotbar!");
+            this.setEnabled(false);
             return;
         }
     }

@@ -54,6 +54,20 @@ public class NewBedAura extends Module {
             super.setEnabled(false);
             return;
         }
+
+        bed = -1;
+        for (int i = 0; i < 9; i++) {
+            if (mc.player.getInventory().getStack(i).getItem() instanceof BedItem) {
+                bed = i;
+                break;
+            }
+        }
+
+        if (bed == -1) {
+            BleachLogger.infoMessage("No beds in hotbar!");
+            this.setEnabled(false);
+            return;
+        }
     }
 
     @BleachSubscribe
@@ -81,20 +95,6 @@ public class NewBedAura extends Module {
             return;
         }
 
-        
-        bed = -1;
-        for (int i = 0; i < 9; i++) {
-            if (mc.player.getInventory().getStack(i).getItem() instanceof BedItem) {
-                bed = i;
-                break;
-            }
-        }
-
-        if (bed == -1) {
-            BleachLogger.infoMessage("Out of beds!");
-            this.setEnabled(false);
-            return;
-        }
         currentSlot = mc.player.getInventory().selectedSlot;
 
 
