@@ -17,6 +17,8 @@
  */
 package bleach.hack;
 
+import bleach.hack.eventbus.BleachEventBus;
+import bleach.hack.util.BleachLogger;
 import com.google.common.eventbus.EventBus;
 import com.google.gson.JsonElement;
 
@@ -29,14 +31,13 @@ import bleach.hack.util.FriendManager;
 import bleach.hack.util.file.BleachFileHelper;
 import bleach.hack.util.file.BleachFileMang;
 import net.fabricmc.api.ModInitializer;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import java.util.logging.LogManager;
 
 public class BleachHack implements ModInitializer {
 
 	private static BleachHack instance = null;
-	public static Logger logger;
+	public static BleachLogger logger;
 
 	public static final String VERSION = "1.3.1";
 	public static final int INTVERSION = 30;
@@ -66,7 +67,7 @@ public class BleachHack implements ModInitializer {
 		}
 
 		instance = this;
-		logger = LogManager.getFormatterLogger("BleachHack-VpEdition");
+		eventBus = new BleachEventBus(BleachLogger.logger);
 
 		//TODO base-rewrite
 		//this.eventBus = new EventBus();
@@ -84,12 +85,11 @@ public class BleachHack implements ModInitializer {
 		CommandManager.loadCommands(this.getClass().getClassLoader().getResourceAsStream("bleachhack.commands.json"));
 		CommandSuggestor.start();
 
-
 		JsonElement mainMenu = BleachFileHelper.readMiscSetting("customTitleScreen");
 		if (mainMenu != null && !mainMenu.getAsBoolean()) {
 			BleachTitleScreen.customTitleScreen = false;
 		}
 
-		logger.log(Level.INFO, "Loaded BleachHack-VpEdition in %d ms.", System.currentTimeMillis() - initStartTime);
+		BleachLogger.logger.log(Level.INFO, "Loaded BleachHack-VpEdition in %d ms.", System.currentTimeMillis() - initStartTime);
 	}
 }

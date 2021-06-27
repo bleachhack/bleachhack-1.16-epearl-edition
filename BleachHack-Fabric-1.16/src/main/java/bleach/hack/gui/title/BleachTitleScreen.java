@@ -21,10 +21,11 @@ import java.io.File;
 import java.net.URI;
 import java.net.URL;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.Random;
 
+import bleach.hack.util.io.BleachFileHelper;
+import bleach.hack.util.io.BleachGithubReader;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.SystemUtils;
 
@@ -38,18 +39,16 @@ import bleach.hack.gui.window.widget.WindowButtonWidget;
 import bleach.hack.gui.window.widget.WindowTextWidget;
 import bleach.hack.gui.window.Window;
 import bleach.hack.module.mods.UI;
-import bleach.hack.util.file.BleachFileHelper;
-import bleach.hack.util.file.BleachFileMang;
-import bleach.hack.util.file.BleachGithubReader;
+import bleach.hack.util.BleachLogger;
 import net.fabricmc.loader.ModContainer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
-import net.minecraft.client.gui.screen.options.OptionsScreen;
+import net.minecraft.client.gui.screen.option.OptionsScreen;
 import net.minecraft.client.gui.screen.world.SelectWorldScreen;
-import net.minecraft.client.realms.gui.screen.RealmsBridgeScreen;
+import net.minecraft.client.realms.gui.screen.RealmsMainScreen;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
@@ -110,8 +109,7 @@ public class BleachTitleScreen extends WindowScreen {
 		}));
 
 		getWindow(0).addWidget(new WindowButtonWidget(w / 2 - 100, h / 4 + 86, w / 2 + 100, h / 4 + 106, I18n.translate("menu.online"), () -> {
-			RealmsBridgeScreen realmsBridgeScreen = new RealmsBridgeScreen();
-			realmsBridgeScreen.switchToRealms(client.currentScreen);
+			client.openScreen(new RealmsMainScreen(this));
 		}));
 
 		getWindow(0).addWidget(new WindowButtonWidget(w / 2 - 124, h / 4 + 86, w / 2 - 104, h / 4 + 106, "MC", () -> {

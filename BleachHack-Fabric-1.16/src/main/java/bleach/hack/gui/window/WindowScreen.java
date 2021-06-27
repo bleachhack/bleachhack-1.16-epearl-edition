@@ -1,19 +1,10 @@
 /*
- * This file is part of the BleachHack distribution (https://github.com/BleachDrinker420/bleachhack-1.14/).
- * Copyright (c) 2019 Bleach.
+ * This file is part of the BleachHack distribution (https://github.com/BleachDrinker420/BleachHack/).
+ * Copyright (c) 2021 Bleach and contributors.
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * This source code is subject to the terms of the GNU General Public
+ * License, version 3. If a copy of the GPL was not distributed with this
+ * file, You can obtain one at: https://www.gnu.org/licenses/gpl-3.0.txt
  */
 package bleach.hack.gui.window;
 
@@ -25,12 +16,13 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
-import org.lwjgl.opengl.GL11;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.render.Tessellator;
+import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
@@ -40,16 +32,15 @@ public abstract class WindowScreen extends Screen {
 	private List<Window> windows = new ArrayList<>();
 
 	/* [Layer, Window Index] */
-	private SortedMap<Integer, Integer> windowOrder = new TreeMap<>();
+	private SortedMap<Integer, Integer> windowOrder = new TreeMap<>(); 
 
 	public WindowScreen(Text title) {
 		super(title);
 	}
 
-	public <T extends Window> T addWindow(T window) {
+	public void addWindow(Window window) {
 		windows.add(window);
 		windowOrder.put(windows.size() - 1, windows.size() - 1);
-		return window;
 	}
 
 	public Window getWindow(int i) {
@@ -89,7 +80,7 @@ public abstract class WindowScreen extends Screen {
 		super.init();
 	}
 
-	public void render(MatrixStack matrix, int mouseX, int mouseY, float delta) {
+	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
 		int sel = getSelectedWindow();
 
 		if (sel == -1) {
@@ -106,18 +97,18 @@ public abstract class WindowScreen extends Screen {
 		for (int w: getWindowsBackToFront()) {
 			if (!getWindow(w).closed) {
 				close = false;
-				onRenderWindow(matrix, w, mouseX, mouseY);
+				onRenderWindow(matrices, w, mouseX, mouseY);
 			}
 		}
 
 		if (close) this.onClose();
 
-		super.render(matrix, mouseX, mouseY, delta);
+		super.render(matrices, mouseX, mouseY, delta);
 	}
 
-	public void onRenderWindow(MatrixStack matrix, int window, int mouseX, int mouseY) {
+	public void onRenderWindow(MatrixStack matrices, int window, int mouseX, int mouseY) {
 		if (!windows.get(window).closed) {
-			windows.get(window).render(matrix, mouseX, mouseY);
+			windows.get(window).render(matrices, mouseX, mouseY);
 		}
 	}
 
@@ -181,7 +172,7 @@ public abstract class WindowScreen extends Screen {
 
 		return super.mouseReleased(mouseX, mouseY, button);
 	}
-
+	
 	public void tick() {
 		for (Window w : windows) {
 			w.tick();
@@ -207,22 +198,21 @@ public abstract class WindowScreen extends Screen {
 	}
 
 	public void renderBackgroundTexture(int vOffset) {
-		RenderSystem.enableTexture();
+		RenderSystem.disableTexture();
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
-		RenderSystem.shadeModel(GL11.GL_SMOOTH);
+		RenderSystem.setShader(GameRenderer::getPositionColorShader);
 
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
-		bufferBuilder.begin(7, VertexFormats.POSITION_COLOR);
+		bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
 		bufferBuilder.vertex(width, 0, 0).color(70, 20, 120, 255).next();
 		bufferBuilder.vertex(0, 0, 0).color(100, 0, 120, 255).next();
 		bufferBuilder.vertex(0, height + 14, 0).color(60, 0, 160, 255).next();
 		bufferBuilder.vertex(width, height + 14, 0).color(60, 60, 200, 255).next();
 		tessellator.draw();
 
-		RenderSystem.shadeModel(GL11.GL_FLAT);
 		RenderSystem.disableBlend();
-		RenderSystem.disableTexture();
+		RenderSystem.enableTexture();
 	}
 }

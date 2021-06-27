@@ -13,7 +13,7 @@ import bleach.hack.gui.clickgui.window.UIWindow;
 import bleach.hack.gui.clickgui.window.UIWindow.Position;
 import bleach.hack.module.ModuleManager;
 import bleach.hack.module.mods.UI;
-import bleach.hack.util.file.BleachFileHelper;
+import bleach.hack.util.io.BleachFileHelper;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
