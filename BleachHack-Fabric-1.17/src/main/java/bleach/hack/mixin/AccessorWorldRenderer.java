@@ -8,6 +8,7 @@
  */
 package bleach.hack.mixin;
 
+import net.minecraft.client.render.Frustum;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
@@ -29,4 +30,10 @@ public interface AccessorWorldRenderer {
 	
 	@Accessor
 	public abstract void setEntityOutlineShader(ShaderEffect shaderEffect);
+
+	@Accessor
+	public abstract Frustum getFrustum();
+
+	@Accessor
+	public abstract void setFrustum(Frustum frustum);
 }
