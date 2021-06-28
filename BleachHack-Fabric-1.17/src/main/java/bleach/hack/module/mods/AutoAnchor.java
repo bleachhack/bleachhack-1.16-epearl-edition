@@ -1,11 +1,13 @@
 package bleach.hack.module.mods;
 
+import bleach.hack.BleachHack;
 import bleach.hack.event.events.EventTick;
 import bleach.hack.eventbus.BleachSubscribe;
 import bleach.hack.module.Module;
 import bleach.hack.module.ModuleCategory;
 import bleach.hack.setting.base.SettingSlider;
 import bleach.hack.util.BleachLogger;
+import bleach.hack.util.io.BleachFileMang;
 import com.google.common.collect.Streams;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
@@ -80,10 +82,24 @@ public class AutoAnchor extends Module {
         if (!mc.player.isAlive()) {
             return;
         }
+
         if (mc.world == null || mc.player == null) {
             onDisable();
             return;
         }
+
+        targetPlayer = Streams.stream(mc.world.getEntities())
+                .filter(e -> e instanceof PlayerEntity)
+                .filter(e -> !(BleachHack.friendMang.has(e.getName().asString())) && e != mc.player)
+                .filter(e -> e.getBlockPos() != mc.player.getBlockPos())
+                .filter(e -> mc.player.distanceTo(e) < getSetting(1).asSlider().getValue())
+                .filter(e -> !((PlayerEntity) e).isDead())
+                .filter(e -> (mc.world.getBlockState(((PlayerEntity) e).getBlockPos()).getBlock() == Blocks.AIR||mc.world.getBlockState(((PlayerEntity) e).getBlockPos()).getBlock() == Blocks.LAVA))
+                .sorted((a, b) -> Float.compare(a.distanceTo(mc.player), b.distanceTo(mc.player)))
+                .findFirst()
+                .orElse(null);
+        if(targetPlayer == null)
+            return;
 
         for (int i = 0; i < 9; i++) {
             if (mc.player.getInventory().getStack(i).getItem().equals(Items.RESPAWN_ANCHOR)) {
