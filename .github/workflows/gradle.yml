@@ -24,7 +24,7 @@ jobs:
         chmod +x gradlew
         ./gradlew build
         cd ..
-           
+              
     - name: Upload 1.17 bruh bruh
       uses: actions/upload-artifact@v2
       with:
