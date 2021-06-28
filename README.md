@@ -1,8 +1,8 @@
 
 # BleachHack VpEdition 1.3.1
-![](https://img.shields.io/tokei/lines/github/HerraVp/bleachhack-VpEdition?style=flat-square)
-![](https://img.shields.io/github/last-commit/HerraVp/bleachhack-VpEdition?style=flat-square)
-![](https://img.shields.io/badge/daily%20commit-maybeKEKW-red?style=flat-square)
+![](https://img.shields.io/tokei/lines/github/HerraVp/bleachhack-VpEdition?style=square)
+![](https://img.shields.io/github/last-commit/HerraVp/bleachhack-VpEdition?style=square)
+![](https://img.shields.io/badge/daily%20commit-maybeKEKW-red?style=square)
 
 My own skid of BleachHack.
 
