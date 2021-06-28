@@ -12,6 +12,13 @@ Works on fabric 1.16.5 and 1.17
 Credits to [BleachDrinker420](https://github.com/bleachdrinker420) ! 
 
 
+## About 1.16 version of the client
+1.16.5 version of the client isn't going to be updated anymore.
+
+I will only focus on the 1.17 version of the client now.
+
+U can use [viaFabric](https://www.curseforge.com/minecraft/mc-mods/viafabric) to use the 1.17 version on 1.16.
+
 ## Images (taken on 1.3.1 - 1.17)
 ![Gui](https://cdn.discordapp.com/attachments/817859390882709515/857637562055131166/java_19YZGCnIud.png)
 
