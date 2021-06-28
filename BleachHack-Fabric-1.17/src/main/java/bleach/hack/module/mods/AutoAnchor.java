@@ -1,6 +1,5 @@
 package bleach.hack.module.mods;
 
-import bleach.hack.BleachHack;
 import bleach.hack.event.events.EventTick;
 import bleach.hack.eventbus.BleachSubscribe;
 import bleach.hack.module.Module;
@@ -9,10 +8,8 @@ import bleach.hack.setting.base.SettingSlider;
 import bleach.hack.util.BleachLogger;
 import com.google.common.collect.Streams;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.RespawnAnchorBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BedItem;
 import net.minecraft.item.Items;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -22,7 +19,6 @@ import net.minecraft.util.math.Vec3d;
 
 import java.util.stream.Collectors;
 
-//Modified version of FrostBurn AnchorAura
 
 public class AutoAnchor extends Module {
     int ticksPassed;
@@ -31,6 +27,7 @@ public class AutoAnchor extends Module {
     int glowStoneSlot = -1;
     int oldSlot = -1;
     int anchor;
+    int glowstone;
 
     public AutoAnchor() {
         super("AutoAnchor", KEY_UNBOUND, ModuleCategory.COMBAT, "Automatically place and explodes respawn anchors",
@@ -56,8 +53,22 @@ public class AutoAnchor extends Module {
             }
         }
 
+        glowstone = -1;
+        for (int i = 0; i < 9; i++) {
+            if (mc.player.getInventory().getStack(i).getItem().equals(Items.GLOWSTONE)) {
+                glowstone = i;
+                break;
+            }
+        }
+
         if (anchor == -1) {
             BleachLogger.infoMessage("No anchors in hotbar!");
+            this.setEnabled(false);
+            return;
+        }
+
+        if (glowstone == -1) {
+            BleachLogger.infoMessage("No glowstone in hotbar!");
             this.setEnabled(false);
             return;
         }
@@ -68,25 +79,6 @@ public class AutoAnchor extends Module {
     public void onTick(EventTick event) {
         if (mc.world == null || mc.player == null) {
             onDisable();
-            return;
-        }
-
-        targetPlayer = Streams.stream(mc.world.getEntities())
-                .filter(e -> e instanceof PlayerEntity)
-                .filter(e -> !(BleachHack.friendMang.has(e.getName().asString())) && e != mc.player)
-                .filter(e -> e.getBlockPos() != mc.player.getBlockPos())
-                .filter(e -> mc.player.distanceTo(e) < getSetting(1).asSlider().getValue())
-                .filter(e -> !((PlayerEntity) e).isDead())
-                .filter(e -> (mc.world.getBlockState(((PlayerEntity) e).getBlockPos()).getBlock() == Blocks.AIR||mc.world.getBlockState(((PlayerEntity) e).getBlockPos()).getBlock() == Blocks.LAVA))
-                .sorted((a, b) -> Float.compare(a.distanceTo(mc.player), b.distanceTo(mc.player)))
-                .findFirst()
-                .orElse(null);
-
-        if(targetPlayer == null)
-            return;
-
-        if(targetPlayer.isInvulnerable()) {
-            BleachLogger.infoMessage(targetPlayer.getDisplayName().asString()+" target is invulnerable");
             return;
         }
 
