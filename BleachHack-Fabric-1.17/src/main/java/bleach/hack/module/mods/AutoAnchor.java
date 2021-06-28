@@ -77,6 +77,9 @@ public class AutoAnchor extends Module {
 
     @BleachSubscribe
     public void onTick(EventTick event) {
+        if (!mc.player.isAlive()) {
+            return;
+        }
         if (mc.world == null || mc.player == null) {
             onDisable();
             return;

@@ -72,6 +72,9 @@ public class NewBedAura extends Module {
 
     @BleachSubscribe
     public void onTick(EventTick event) {
+        if (!mc.player.isAlive()) {
+            return;
+        }
         if (!this.isEnabled()) {return;}
         ticksPassed++;
         if(ticksPassed < getSetting(0).asSlider().getValue())
