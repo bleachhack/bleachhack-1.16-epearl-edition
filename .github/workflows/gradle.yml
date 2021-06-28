@@ -17,6 +17,13 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 16
+        
+    - name: Build 1.16 bruh time
+      run: |
+        cd BleachHack-Fabric-1.16
+        chmod +x gradlew
+        ./gradlew build
+        cd ..   
          
     - name: Build 1.17 bruh time
       run: |
@@ -24,6 +31,12 @@ jobs:
         chmod +x gradlew
         ./gradlew build
         cd ..
+        
+    - name: Upload 1.16 bruh bruh
+      uses: actions/upload-artifact@v2
+      with:
+        name: BleachHack-VpEdtion-1.16
+        path: BleachHack-Fabric-1.16/build/libs/bleachhack-vpedition-1.16.jar    
            
     - name: Upload 1.17 bruh bruh
       uses: actions/upload-artifact@v2
