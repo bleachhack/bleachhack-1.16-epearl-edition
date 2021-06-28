@@ -22,7 +22,6 @@ import net.minecraft.util.math.Vec3d;
 
 import java.util.stream.Collectors;
 
-//Modified version of FrostBurn AnchorAura
 
 public class AutoAnchor extends Module {
     int ticksPassed;
