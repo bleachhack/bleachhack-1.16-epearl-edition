@@ -7,28 +7,25 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.GameOptions;
 
 public class CustomFOV extends Module {
+    public double prevFov;
 
     public CustomFOV() {
-        super ("CustomFOV", KEY_UNBOUND, ModuleCategory.RENDER, "Changes ur fov (This is kinda broken)",
-                new SettingSlider("Scale", 0, 1, 0.3, 1));
-    }
-
-    public void toggleNoSave() {
-
+        super ("CustomFOV", KEY_UNBOUND, ModuleCategory.RENDER, "Gamer fov",
+                new SettingSlider("FOV", 0, 150, 100, 0));
     }
 
     public void onEnable() {
+        prevFov = mc.options.fov;
         MinecraftClient mc = MinecraftClient.getInstance();
         GameOptions options = mc.options;
         if (mc.world != null) {
-            options.fov = options.fov * (1 + getSetting(0).asSlider().getValue());
+            options.fov = (0 + getSetting(0).asSlider().getValue());
         }
     }
 
     public void onDisable() {
         MinecraftClient mc = MinecraftClient.getInstance();
         GameOptions options = mc.options;
-        options.fov = options.fov / (1 + getSetting(0).asSlider().getValue());
+        options.fov = prevFov;
     }
-
 }
