@@ -1,11 +1,3 @@
-/*
- * This file is part of the BleachHack distribution (https://github.com/BleachDrinker420/BleachHack/).
- * Copyright (c) 2021 Bleach and contributors.
- *
- * This source code is subject to the terms of the GNU General Public
- * License, version 3. If a copy of the GPL was not distributed with this
- * file, You can obtain one at: https://www.gnu.org/licenses/gpl-3.0.txt
- */
 package bleach.hack.module.mods;
 
 import bleach.hack.eventbus.BleachSubscribe;
@@ -23,7 +15,6 @@ import bleach.hack.util.world.WorldUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemSteerable;
 import net.minecraft.entity.passive.LlamaEntity;
-import net.minecraft.entity.vehicle.MinecartEntity;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.network.packet.c2s.play.VehicleMoveC2SPacket;
 import net.minecraft.network.packet.s2c.play.EntityPassengersSetS2CPacket;
@@ -89,16 +80,10 @@ public class EntityControl extends Module {
 
 				strafe = 0.0D;
 			}
+
 			e.setVelocity(forward * speed * Math.cos(Math.toRadians(yaw + 90.0F)) + strafe * speed * Math.sin(Math.toRadians(yaw + 90.0F)),
 					e.getVelocity().y,
 					forward * speed * Math.sin(Math.toRadians(yaw + 90.0F)) - strafe * speed * Math.cos(Math.toRadians(yaw + 90.0F)));
-
-			if (e instanceof MinecartEntity) {
-				MinecartEntity em = (MinecartEntity) e;
-				em.setVelocity(forward * speed * Math.cos(Math.toRadians(yaw + 90.0F)) + strafe * speed * Math.sin(Math.toRadians(yaw + 90.0F)),
-						em.getVelocity().y,
-						forward * speed * Math.sin(Math.toRadians(yaw + 90.0F)) - strafe * speed * Math.cos(Math.toRadians(yaw + 90.0F)));
-			}
 		}
 
 		if (getSetting(1).asToggle().state) {
@@ -118,9 +103,9 @@ public class EntityControl extends Module {
 
 		if (getSetting(4).asToggle().state) {
 			Vec3d vel = e.getVelocity().multiply(2);
-			if (!WorldUtils.isBoxEmpty(e.getBoundingBox().offset(vel.x, 0, vel.z))) {
+			if (WorldUtils.doesBoxCollide(e.getBoundingBox().offset(vel.x, 0, vel.z))) {
 				for (int i = 2; i < 10; i++) {
-					if (WorldUtils.isBoxEmpty(e.getBoundingBox().offset(vel.x / i, 0, vel.z / i))) {
+					if (!WorldUtils.doesBoxCollide(e.getBoundingBox().offset(vel.x / i, 0, vel.z / i))) {
 						e.setVelocity(vel.x / i / 2, vel.y, vel.z / i / 2);
 						break;
 					}

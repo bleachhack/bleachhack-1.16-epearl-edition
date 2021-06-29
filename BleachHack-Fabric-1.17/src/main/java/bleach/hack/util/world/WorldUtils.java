@@ -1,11 +1,3 @@
-/*
- * This file is part of the BleachHack distribution (https://github.com/BleachDrinker420/BleachHack/).
- * Copyright (c) 2021 Bleach and contributors.
- *
- * This source code is subject to the terms of the GNU General Public
- * License, version 3. If a copy of the GPL was not distributed with this
- * file, You can obtain one at: https://www.gnu.org/licenses/gpl-3.0.txt
- */
 package bleach.hack.util.world;
 
 import java.util.ArrayList;
@@ -126,18 +118,20 @@ public class WorldUtils {
 		return false;
 	}
 
-	public static boolean isBoxEmpty(Box box) {
+	public static boolean doesBoxCollide(Box box) {
 		for (int x = (int) Math.floor(box.minX); x < Math.ceil(box.maxX); x++) {
 			for (int y = (int) Math.floor(box.minY); y < Math.ceil(box.maxY); y++) {
 				for (int z = (int) Math.floor(box.minZ); z < Math.ceil(box.maxZ); z++) {
-					if (!mc.world.getBlockState(new BlockPos(x, y, z)).getMaterial().isReplaceable()) {
-						return false;
+					int fx = x, fy = y, fz = z;
+					if (mc.world.getBlockState(new BlockPos(x, y, z)).getCollisionShape(mc.world, new BlockPos(x, y, z)).getBoundingBoxes().stream()
+							.anyMatch(b -> b.offset(fx, fy, fz).intersects(box))) {
+						return true;
 					}
 				}
 			}
 		}
 
-		return true;
+		return false;
 	}
 
 	public static boolean placeBlock(BlockPos pos, int slot, SettingRotate sr, boolean forceLegit, boolean airPlace, boolean swingHand) {
@@ -266,9 +260,9 @@ public class WorldUtils {
 			if ((d == Direction.DOWN && pos.getY() == 0) || (d == Direction.UP && pos.getY() == 255)
 					|| mc.world.getBlockState(pos.offset(d)).getMaterial().isReplaceable()
 					|| mc.player.getPos().add(0, mc.player.getEyeHeight(mc.player.getPose()), 0).distanceTo(
-							new Vec3d(pos.getX() + 0.5 + d.getOffsetX() * 0.5,
-									pos.getY() + 0.5 + d.getOffsetY() * 0.5,
-									pos.getZ() + 0.5 + d.getOffsetZ() * 0.5)) > 4.55)
+					new Vec3d(pos.getX() + 0.5 + d.getOffsetX() * 0.5,
+							pos.getY() + 0.5 + d.getOffsetY() * 0.5,
+							pos.getZ() + 0.5 + d.getOffsetZ() * 0.5)) > 4.55)
 				continue;
 
 			return true;
