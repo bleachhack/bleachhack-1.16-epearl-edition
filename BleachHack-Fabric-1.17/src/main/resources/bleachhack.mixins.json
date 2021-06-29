@@ -18,6 +18,7 @@
     "MixinBeaconScreen",
     "MixinBiomeColors",
     "MixinBlock",
+    "MixinBlockCollisionSpliterator",
     "MixinBlockEntityRenderDispatcher",
     "MixinBlockRenderManager",
     "MixinBossBarHud",
@@ -57,6 +58,7 @@
     "MixinSoundSystem",
     "MixinTextRenderer",
     "MixinTitleScreen",
+    "MixinVoxelShapes",
     "MixinWorldRenderer"
   ],
   "injectors": {
