@@ -39,6 +39,12 @@ public class WorldUtils {
 
 	protected static final MinecraftClient mc = MinecraftClient.getInstance();
 
+	public static final Set<Block> NONSOLID_BLOCKS = Sets.newHashSet(
+			Blocks.AIR, Blocks.LAVA, Blocks.WATER, Blocks.GRASS,
+			Blocks.VINE, Blocks.SEAGRASS, Blocks.TALL_SEAGRASS,
+			Blocks.SNOW, Blocks.TALL_GRASS, Blocks.FIRE, Blocks.VOID_AIR,
+			Blocks.CAVE_AIR);
+
 	public static final Set<Block> RIGHTCLICKABLE_BLOCKS = Sets.newHashSet(
 			Blocks.CHEST, Blocks.TRAPPED_CHEST, Blocks.ENDER_CHEST,
 			Blocks.WHITE_SHULKER_BOX, Blocks.ORANGE_SHULKER_BOX, Blocks.MAGENTA_SHULKER_BOX,
@@ -102,6 +108,19 @@ public class WorldUtils {
 
 	public static boolean isFluid(BlockPos pos) {
 		return FLUIDS.contains(mc.world.getBlockState(pos).getMaterial());
+	}
+
+	public static boolean isBoxEmpty(Box box) {
+		for (int x = (int) Math.floor(box.minX); x < Math.ceil(box.maxX); x++) {
+			for (int y = (int) Math.floor(box.minY); y < Math.ceil(box.maxY); y++) {
+				for (int z = (int) Math.floor(box.minZ); z < Math.ceil(box.maxZ); z++) {
+					if (!NONSOLID_BLOCKS.contains(mc.world.getBlockState(new BlockPos(x, y, z)).getBlock())) {
+						return false;
+					}
+				}
+			}
+		}
+		return true;
 	}
 
 	public static boolean doesBoxTouchBlock(Box box, Block block) {
