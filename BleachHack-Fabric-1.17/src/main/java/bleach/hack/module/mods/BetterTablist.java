@@ -2,10 +2,10 @@ package bleach.hack.module.mods;
 
 import bleach.hack.BleachHack;
 import bleach.hack.event.events.EventTick;
+import bleach.hack.eventbus.BleachSubscribe;
 import bleach.hack.module.ModuleCategory;
 import bleach.hack.module.Module;
 import bleach.hack.setting.base.SettingToggle;
-import com.google.common.eventbus.Subscribe;
 import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.text.Text;
 
@@ -19,7 +19,7 @@ public class BetterTablist extends Module {
                 new SettingToggle("TabPing", false).withDesc("Adds player ping to the tablist"));
     }
 
-    @Subscribe
+    @BleachSubscribe
     public void tick(EventTick event) {
         assert mc.player != null;
         if (mc.player.age % 10 == 0) {
