@@ -33,21 +33,6 @@ public class AutoBreed extends Module {
             }
         }
     }
-        /*
-        if (ticksPassed != getSetting(0).asSlider().getValue()) {
-            ticksPassed++;
-            return;
-        } else ticksPassed = 0;
-        try {
-            AnimalEntity animal = (AnimalEntity) Streams.stream(mc.world.getEntities()).filter(e -> e instanceof AnimalEntity && mc.player.distanceTo(e) <= getSetting(1).asSlider().getValue() && e != mc.player).collect(Collectors.toList()).get(0);
-            if (!animal.isBaby() && !animal.isInLove()) {
-                assert mc.player != null;
-                if (animal.isBreedingItem(mc.player.getInventory().getMainHandStack())) {
-                    mc.player.interact(animal, Hand.MAIN_HAND);
-                }
-            }
-        } catch (Exception ignored) {}
-    }*/
 }
 
 
