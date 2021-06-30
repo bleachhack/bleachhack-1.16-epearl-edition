@@ -1,5 +1,5 @@
 
-# BleachHack VpEdition 1.3.1
+# BleachHack VpEdition 1.3.2
 ![](https://img.shields.io/tokei/lines/github/HerraVp/bleachhack-VpEdition?style=square)
 ![](https://img.shields.io/github/last-commit/HerraVp/bleachhack-VpEdition?style=square)
 ![](https://img.shields.io/badge/daily%20commit-maybeKEKW-red?style=square)
@@ -19,8 +19,9 @@ I will only focus on the 1.17 version of the client now.
 
 U can use [viaFabric](https://www.curseforge.com/minecraft/mc-mods/viafabric) to use the 1.17 version of the client on 1.16.
 
-## Images (taken on 1.3.1 - 1.17)
-![Gui](https://cdn.discordapp.com/attachments/817859390882709515/857637562055131166/java_19YZGCnIud.png)
+## Images (taken on 1.3.2 - 1.17)
+![Gui1](https://cdn.upload.systems/uploads/po78m4Sa.png)
+![Gui2](https://cdn.upload.systems/uploads/XwB5Nxzo.png)
 
 
 ## Installation
