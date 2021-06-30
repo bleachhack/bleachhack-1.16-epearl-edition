@@ -2,6 +2,7 @@ package bleach.hack.module.mods;
 
 import bleach.hack.event.events.EventReadPacket;
 import bleach.hack.event.events.EventTick;
+import bleach.hack.eventbus.BleachSubscribe;
 import bleach.hack.module.ModuleCategory;
 import bleach.hack.module.Module;
 import bleach.hack.setting.base.SettingMode;
@@ -39,7 +40,7 @@ public class Greeter extends Module {
                 new SettingToggle("Goodbye", true));
     }
 
-    @Subscribe
+    @BleachSubscribe
     public void onTick(EventTick event)
     {
         assert mc.player != null;
@@ -72,8 +73,8 @@ public class Greeter extends Module {
         lineCount2 = 0;
     }
 
-    @Subscribe
-    public void ilovewomen(EventReadPacket event) {
+    @BleachSubscribe
+    public void onReadPacket(EventReadPacket event) {
         if ((event.getPacket() instanceof PlayerListS2CPacket) && (((PlayerListS2CPacket) event.getPacket()).getAction().name().equals("ADD_PLAYER")) && (getSettings().get(2).asToggle().state)) {
             player = ((PlayerListS2CPacket) event.getPacket()).getEntries().get(0).getProfile().getName();
             if (lines.isEmpty()) return;
