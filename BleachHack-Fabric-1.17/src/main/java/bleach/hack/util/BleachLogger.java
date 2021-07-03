@@ -81,6 +81,6 @@ public class BleachLogger {
 	}
 
 	private static String getBHText(Formatting color) {
-		return color + "\u00a7l[\u00a76B\u00a7dH" + color + "\u00a7l] ";
+		return color + "\u00a7l[\u00a76V\u00a7dP" + color + "\u00a7l] ";
 	}
 }
