@@ -9,7 +9,6 @@ import bleach.hack.setting.base.SettingMode;
 import bleach.hack.setting.base.SettingSlider;
 import bleach.hack.setting.base.SettingToggle;
 import bleach.hack.util.io.BleachFileMang;
-import com.google.common.eventbus.Subscribe;
 import net.minecraft.network.packet.s2c.play.PlayerListS2CPacket;
 
 import java.util.ArrayList;
@@ -36,8 +35,7 @@ public class Greeter extends Module {
         super("Greeter", KEY_UNBOUND, ModuleCategory.CHAT, "Welcomes and says goodbyes to players (edit in greeter.txt & goodbye.txt)",
                 new SettingMode("Read", "Order", "Random"),
                 new SettingSlider("Delay", 0, 20, 3, 0).withDesc("Second delay between messages to avoid spam kicks"),
-                new SettingToggle("Welcome", true),
-                new SettingToggle("Goodbye", true));
+                new SettingToggle("GoodBye", true).withDesc("Says goodbyes when a player logs off"));
     }
 
     @BleachSubscribe
@@ -74,8 +72,8 @@ public class Greeter extends Module {
     }
 
     @BleachSubscribe
-    public void onReadPacket(EventReadPacket event) {
-        if ((event.getPacket() instanceof PlayerListS2CPacket) && (((PlayerListS2CPacket) event.getPacket()).getAction().name().equals("ADD_PLAYER")) && (getSettings().get(2).asToggle().state)) {
+    public void onPacketRead(EventReadPacket event) {
+        if ((event.getPacket() instanceof PlayerListS2CPacket) && (((PlayerListS2CPacket) event.getPacket()).getAction().name().equals("ADD_PLAYER"))) {
             player = ((PlayerListS2CPacket) event.getPacket()).getEntries().get(0).getProfile().getName();
             if (lines.isEmpty()) return;
             if (player == null) return;
@@ -90,7 +88,7 @@ public class Greeter extends Module {
             else lineCount++;
             player = null;
         }
-        else if ((event.getPacket() instanceof PlayerListS2CPacket) && (((PlayerListS2CPacket) event.getPacket()).getAction().name().equals("REMOVE_PLAYER")) && (getSettings().get(3).asToggle().state)) {
+        else if ((event.getPacket() instanceof PlayerListS2CPacket) && (((PlayerListS2CPacket) event.getPacket()).getAction().name().equals("REMOVE_PLAYER")) && getSetting(2).asToggle().state)  {
             player = ((PlayerListS2CPacket) event.getPacket()).getEntries().get(0).getProfile().getName();
             if (lines2.isEmpty()) return;
             if (player == null) return;
@@ -104,9 +102,6 @@ public class Greeter extends Module {
             if (lineCount2 >= lines2.size() - 1) lineCount2 = 0;
             else lineCount2++;
             player = null;
-
         }
-
     }
-
 }
