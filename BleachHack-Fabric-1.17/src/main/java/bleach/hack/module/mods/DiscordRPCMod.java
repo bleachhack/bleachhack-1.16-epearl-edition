@@ -8,8 +8,6 @@
  */
 package bleach.hack.module.mods;
 
-import ca.weblite.objc.Client;
-import net.minecraft.client.gui.screen.TitleScreen;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -89,9 +87,6 @@ public class DiscordRPCMod extends Module {
 			String text1 = customText1;
 			String text2 = customText2;
 			long start = 0;
-
-			//MainMenu
-			if Client.getInstance().getClass().getName().equals(TitleScreen.class) = text1 "Idle, Main Menu";
 
 			switch (getSetting(0).asMode().mode) {
 				case 0:
