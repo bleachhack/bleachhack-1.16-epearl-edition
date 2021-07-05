@@ -1,29 +1,19 @@
-/*
- * This file is part of the BleachHack distribution (https://github.com/BleachDrinker420/BleachHack/).
- * Copyright (c) 2021 Bleach and contributors.
- *
- * This source code is subject to the terms of the GNU General Public
- * License, version 3. If a copy of the GPL was not distributed with this
- * file, You can obtain one at: https://www.gnu.org/licenses/gpl-3.0.txt
- */
 package bleach.hack.module.mods;
 
-import ca.weblite.objc.Client;
-import net.minecraft.client.gui.screen.TitleScreen;
+import bleach.hack.module.Category;
+import bleach.hack.util.file.BleachFileHelper;
+import com.google.common.eventbus.Subscribe;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import bleach.hack.eventbus.BleachSubscribe;
 import com.google.gson.JsonElement;
 
-import bleach.hack.module.ModuleCategory;
 import bleach.hack.BleachHack;
 import bleach.hack.event.events.EventTick;
 import bleach.hack.module.Module;
 import bleach.hack.setting.base.SettingMode;
 import bleach.hack.setting.base.SettingToggle;
 import bleach.hack.util.BleachLogger;
-import bleach.hack.util.io.BleachFileHelper;
 import bleach.hack.util.rpc.DiscordEventHandlers;
 import bleach.hack.util.rpc.DiscordRPCManager;
 import bleach.hack.util.rpc.DiscordRichPresence;
@@ -40,7 +30,7 @@ public class DiscordRPCMod extends Module {
 	private boolean silent;
 
 	public DiscordRPCMod() {
-		super("DiscordRPC", KEY_UNBOUND, ModuleCategory.CLIENT, true, "Dicord RPC, use the \"rpc\" command to set a custom status",
+		super("DiscordRPC", KEY_UNBOUND, Category.MISC, true, "Dicord RPC, use the \"rpc\" command to set a custom status",
 				new SettingMode("Text 1", "Playing %server%", "%server%", "%type%", "%username% ontop", "Minecraft %mcver%", "%username%", "<- bad client", "%custom%").withDesc("Line 1"),
 				new SettingMode("Text 2", "%hp% hp - Holding %item%", "%username% - %hp% hp", "Holding %item%", "%hp% hp - At %coords%", "At %coords%", "%custom%").withDesc("Line 2"),
 				new SettingMode("Elapsed", "Normal", "Random", "Backwards", "None").withDesc("How to show elapsed time"),
@@ -64,10 +54,10 @@ public class DiscordRPCMod extends Module {
 		tick = 0;
 
 		BleachLogger.logger.info("Initing Discord RPC...");
-		DiscordRPCManager.initialize(silent ? "727434331089272903" : "827588916462747648",
+		DiscordRPCManager.initialize(silent ? "727434331089272903" : "839582070174515200",
 				new DiscordEventHandlers.Builder()
-				.withReadyEventHandler(user -> BleachLogger.logger.info(user.username + "#" + user.discriminator + " is sexy ;^)"))
-				.build());
+						.withReadyEventHandler(user -> BleachLogger.logger.info(user.username + "#" + user.discriminator + " is big gay"))
+						.build());
 
 		super.onEnable();
 	}
@@ -78,7 +68,7 @@ public class DiscordRPCMod extends Module {
 		super.onDisable();
 	}
 
-	@BleachSubscribe
+	@Subscribe
 	public void onTick(EventTick event) {
 		if (silent != getSetting(3).asToggle().state) {
 			onDisable();
@@ -89,9 +79,6 @@ public class DiscordRPCMod extends Module {
 			String text1 = customText1;
 			String text2 = customText2;
 			long start = 0;
-
-			//MainMenu
-			if Client.getInstance().getClass().getName().equals(TitleScreen.class) = text1 "Idle, Main Menu";
 
 			switch (getSetting(0).asMode().mode) {
 				case 0:
@@ -161,9 +148,8 @@ public class DiscordRPCMod extends Module {
 
 			DiscordRPCManager.updatePresence(
 					new DiscordRichPresence.Builder(text2)
-					.setBigImage(silent ? "mc" : "bhvp", silent ? "Minecraft " + SharedConstants.getGameVersion().getName() : "BleachHack VpEdition " + BleachHack.VERSION)
-					.setSmallImage("vp", "Powered by Vp's bad coding skills")
-					.setDetails(text1).setStartTimestamps(start).build());
+							.setBigImage(silent ? "mc" : "bh", silent ? "Minecraft " + SharedConstants.getGameVersion().getName() : "BleachHack " + BleachHack.VERSION)
+							.setDetails(text1).setStartTimestamps(start).build());
 		}
 
 		if (tick % 200 == 0) {
