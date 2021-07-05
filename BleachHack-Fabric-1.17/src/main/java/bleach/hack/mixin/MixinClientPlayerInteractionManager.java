@@ -102,11 +102,9 @@ public class MixinClientPlayerInteractionManager {
 		}
 	}
 
-	float getReach = (float) ModuleManager.getModule("Reach").getSetting(0).asSlider().getValue();
-
 	@Inject(method = "getReachDistance", at = @At("HEAD"), cancellable = true)
 	private void onGetReachDistance(CallbackInfoReturnable<Float> info) {
-		info.setReturnValue((float) getReach);
+		float getReach = (float) ModuleManager.getModule("Reach").getSetting(0).asSlider().getValue();
+		info.setReturnValue(getReach);
 	}
-
 }

@@ -11,4 +11,4 @@ public class Reach extends Module {
     }
 }
 
-//See code at MixinPlayerInteractionManager
+//See code at MixinClientPlayerInteractionManager
