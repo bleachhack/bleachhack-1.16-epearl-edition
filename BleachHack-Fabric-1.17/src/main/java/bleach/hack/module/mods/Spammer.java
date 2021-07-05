@@ -1,11 +1,3 @@
-/*
- * This file is part of the BleachHack distribution (https://github.com/BleachDrinker420/BleachHack/).
- * Copyright (c) 2021 Bleach and contributors.
- *
- * This source code is subject to the terms of the GNU General Public
- * License, version 3. If a copy of the GPL was not distributed with this
- * file, You can obtain one at: https://www.gnu.org/licenses/gpl-3.0.txt
- */
 package bleach.hack.module.mods;
 
 import java.util.ArrayList;
@@ -32,7 +24,7 @@ public class Spammer extends Module {
 	public Spammer() {
 		super("Spammer", KEY_UNBOUND, ModuleCategory.CHAT, "Spams chat with messages you set (edit with " + Command.PREFIX + "spammer)",
 				new SettingMode("Read", "Random", "Order").withDesc("How to read the spammer file"),
-				new SettingSlider("Delay", 1, 120, 20, 0).withDesc("Delay between messages"));
+				new SettingSlider("Delay", 1, 120, 20, 0).withDesc("Delay between messages (in seconds)"));
 	}
 
 	@Override
@@ -50,7 +42,7 @@ public class Spammer extends Module {
 		if (lines.isEmpty())
 			return;
 
-		if (tickCount % getSetting(1).asSlider().getValueInt() * 20 == 0) {
+		if (tickCount % (getSetting(1).asSlider().getValueInt() * 20) == 0) {
 			if (getSetting(0).asMode().mode == 0) {
 				mc.player.sendChatMessage(lines.get(rand.nextInt(lines.size())));
 			} else if (getSetting(0).asMode().mode == 1) {
