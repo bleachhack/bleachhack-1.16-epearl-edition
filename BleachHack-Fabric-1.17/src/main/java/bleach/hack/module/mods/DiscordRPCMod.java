@@ -39,7 +39,7 @@ public class DiscordRPCMod extends Module {
 
 	public DiscordRPCMod() {
 		super("DiscordRPC", KEY_UNBOUND, ModuleCategory.CLIENT, true, "Dicord RPC, use the \"rpc\" command to set a custom status",
-				new SettingMode("Text 1", "Playing %server%", "%server%", "%type%", "%username% ontop", "Minecraft %mcver%", "%username%", "<- bad client", "%custom%").withDesc("Line 1"),
+				new SettingMode("Text 1", "Playing %server%", "%server%", "%type%", "%username% ontop", "Minecraft %mcver%", "%username%", "<- larp client", "%custom%").withDesc("Line 1"),
 				new SettingMode("Text 2", "%hp% hp - Holding %item%", "%username% - %hp% hp", "Holding %item%", "%hp% hp - At %coords%", "At %coords%", "%custom%").withDesc("Line 2"),
 				new SettingMode("Elapsed", "Normal", "Random", "Backwards", "None").withDesc("How to show elapsed time"),
 				new SettingToggle("Silent", false).withDesc("Use a generic Minecraft title and image"));
@@ -62,7 +62,7 @@ public class DiscordRPCMod extends Module {
 		tick = 0;
 
 		BleachLogger.logger.info("Initing Discord RPC...");
-		DiscordRPCManager.initialize(silent ? "727434331089272903" : "827588916462747648",
+		DiscordRPCManager.initialize(silent ? "861925303492673576" : "827588916462747648",
 				new DiscordEventHandlers.Builder()
 				.withReadyEventHandler(user -> BleachLogger.logger.info(user.username + "#" + user.discriminator + " is sexy ;^)"))
 				.build());
@@ -108,7 +108,7 @@ public class DiscordRPCMod extends Module {
 					text1 = mc.player.getEntityName();
 					break;
 				case 6:
-					text1 = "<- bad client";
+					text1 = "<- larp client";
 					break;
 			}
 
