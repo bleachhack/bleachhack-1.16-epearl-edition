@@ -1,11 +1,3 @@
-/*
- * This file is part of the BleachHack distribution (https://github.com/BleachDrinker420/BleachHack/).
- * Copyright (c) 2021 Bleach and contributors.
- *
- * This source code is subject to the terms of the GNU General Public
- * License, version 3. If a copy of the GPL was not distributed with this
- * file, You can obtain one at: https://www.gnu.org/licenses/gpl-3.0.txt
- */
 package bleach.hack.module.mods;
 
 import java.util.Comparator;
@@ -78,7 +70,7 @@ public class AutoParkour extends Module {
 					Vec3d lookVec = mc.player.getPos().add(new Vec3d(0, 0, 3.5).rotateY(-(float) Math.toRadians(mc.player.getYaw())));
 
 					BlockPos nearestPos = BlockPos.streamOutwards(mc.player.getBlockPos().down(), 4, 1, 4)
-							.map(pos -> pos.toImmutable())
+							.map(BlockPos::toImmutable)
 							.filter(pos -> (mc.world.isTopSolid(pos, mc.player) && !mc.world.getBlockCollisions(mc.player, new Box(pos.up(), pos.add(1, 3, 1))).findAny().isPresent())
 									|| mc.world.getBlockState(pos).getBlock() instanceof LadderBlock
 									|| mc.world.getBlockState(pos.up()).getBlock() instanceof LadderBlock)
@@ -110,9 +102,9 @@ public class AutoParkour extends Module {
 		if (smartPos != null && getSetting(1).asToggle().state) {
 			if (!getSetting(1).asToggle().getChild(0).asToggle().state
 					&& (mc.player.getBoundingBox().maxX < smartPos.getX()
-						|| mc.player.getBoundingBox().minX > smartPos.getX() + 1
-						|| mc.player.getBoundingBox().maxZ < smartPos.getZ()
-						|| mc.player.getBoundingBox().minZ > smartPos.getZ() + 1)) {
+					|| mc.player.getBoundingBox().minX > smartPos.getX() + 1
+					|| mc.player.getBoundingBox().maxZ < smartPos.getZ()
+					|| mc.player.getBoundingBox().minZ > smartPos.getZ() + 1)) {
 				return;
 			}
 
