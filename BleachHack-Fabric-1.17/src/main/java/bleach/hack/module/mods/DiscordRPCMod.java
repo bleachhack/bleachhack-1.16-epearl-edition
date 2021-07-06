@@ -154,6 +154,11 @@ public class DiscordRPCMod extends Module {
 					break;
 			}
 
+			if (getSetting(3).asToggle().state) {
+				text1 = null;
+				text2 = null;
+			}
+
 			DiscordRPCManager.updatePresence(
 					new DiscordRichPresence.Builder(text2)
 					.setBigImage(silent ? "mc" : "bhvp", silent ? "Minecraft " + SharedConstants.getGameVersion().getName() : "BleachHack VpEdition " + BleachHack.VERSION)
