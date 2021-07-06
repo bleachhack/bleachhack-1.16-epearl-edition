@@ -31,14 +31,14 @@ import java.util.stream.Collectors;
  * https://github.com/HerraVp
  */
 
-public class NewBedAura extends Module {
+public class BedAura extends Module {
     int ticksPassed;
     Entity targetPlayer;
     BlockPos targetPlayerPos;
     int bed;
     int currentSlot;
 
-    public NewBedAura(){
+    public BedAura(){
         super("BedAura", KEY_UNBOUND, ModuleCategory.COMBAT, "Automatically places beds on targets and explodes em",
                 new SettingSlider("Delay", 0, 20, 10, 0),
                 new SettingSlider("Range", 0, 10, 5, 2));
