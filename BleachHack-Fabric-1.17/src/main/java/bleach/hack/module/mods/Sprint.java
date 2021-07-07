@@ -18,8 +18,8 @@ import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 public class Sprint extends Module {
 
 	public Sprint() {
-		super("Sprint", KEY_UNBOUND, ModuleCategory.MOVEMENT, "Makes the player automatically sprint.",
-				new SettingMode("Mode", "Legit", "Rage", "MultiDirect").withDesc("Mode for sprint (NOTE! Multidirect might get u banned from servers!)"));
+		super("Sprint", KEY_UNBOUND, ModuleCategory.MOVEMENT, "Makes the you automatically sprint",
+				new SettingMode("Mode", "Legit", "Rage", "MultiDirect").withDesc("Sprinting mode"));
 	}
 
 	@BleachSubscribe
@@ -40,8 +40,7 @@ public class Sprint extends Module {
 
 		else if (getSetting(0).asMode().mode == 2) {
 			if ((mc.player.input.movementForward > 0 || mc.player.input.movementSideways > 0))
-				if (!mc.player.isSneaking())
-					return;
+				mc.player.setSprinting(true);
 			mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.START_SPRINTING));
 		}
 
