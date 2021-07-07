@@ -39,9 +39,12 @@ public class AutoSprint extends Module {
 		}
 
 		else if (getSetting(0).asMode().mode == 2) {
-			if ((mc.player.input.movementForward > 0 || mc.player.input.movementSideways > 0))
+			if ((mc.player.forwardSpeed > 0 && mc.player.sidewaysSpeed > 0))
 				mc.player.setSprinting(true);
 			mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.START_SPRINTING));
+			if (mc.player.horizontalCollision) {
+				mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.STOP_SPRINTING));
+			}
 		}
 
 	}
