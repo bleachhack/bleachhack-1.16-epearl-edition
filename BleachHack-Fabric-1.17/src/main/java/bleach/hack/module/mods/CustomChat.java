@@ -67,7 +67,7 @@ public class CustomChat extends Module {
 					CharMap.single('X', '\u03c7'), CharMap.single('Y', '\u0443')));
 
 	public String prefix = "";
-	public String suffix = " ʙʟᴇᴀᴄʜʜᴀᴄᴋ ᴠᴘᴇᴅɪᴛɪᴏɴ";
+	public String suffix = " | ʙʟᴇᴀᴄʜʜᴀᴄᴋ ᴠᴘᴇᴅɪᴛɪᴏɴ";
 
 	public CustomChat() {
 		super("CustomChat", KEY_UNBOUND, ModuleCategory.CHAT, "Customizes your chat messages, use the \"customchat\" command to edit the stuff",
@@ -98,7 +98,7 @@ public class CustomChat extends Module {
 			}
 
 			if (getSetting(2).asToggle().state) {
-				text = ">" + text;
+				text = "> " + text;
 			}
 
 			if (getSetting(3).asToggle().state) {
