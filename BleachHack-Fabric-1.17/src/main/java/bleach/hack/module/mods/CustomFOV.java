@@ -14,6 +14,7 @@ public class CustomFOV extends Module {
                 new SettingSlider("FOV", 0, 150, 100, 0));
     }
 
+    @Override
     public void onEnable() {
         prevFov = mc.options.fov;
         MinecraftClient mc = MinecraftClient.getInstance();
@@ -23,6 +24,7 @@ public class CustomFOV extends Module {
         }
     }
 
+    @Override
     public void onDisable() {
         MinecraftClient mc = MinecraftClient.getInstance();
         GameOptions options = mc.options;
