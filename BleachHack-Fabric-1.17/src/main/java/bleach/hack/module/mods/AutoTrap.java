@@ -2,10 +2,10 @@ package bleach.hack.module.mods;
 
 import bleach.hack.BleachHack;
 import bleach.hack.event.events.EventTick;
+import bleach.hack.eventbus.BleachSubscribe;
 import bleach.hack.module.ModuleCategory;
 import bleach.hack.module.Module;
 import bleach.hack.setting.base.SettingMode;
-import com.google.common.eventbus.Subscribe;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Hand;
@@ -16,12 +16,12 @@ import net.minecraft.util.math.Direction;
 public class AutoTrap extends Module {
 
     public AutoTrap() {
-        super("AutoTrap", KEY_UNBOUND, ModuleCategory.COMBAT, "autotraps other players near you, does not trap friends!",
+        super("AutoTrap", KEY_UNBOUND, ModuleCategory.COMBAT, "Automatically traps other players near you",
                 new SettingMode("Mode", "Top", "Full", "Bed Aura")
         );
     }
 
-    @Subscribe
+    @BleachSubscribe
     public void onTick(EventTick event) {
         assert mc.player != null;
         assert mc.interactionManager != null;
