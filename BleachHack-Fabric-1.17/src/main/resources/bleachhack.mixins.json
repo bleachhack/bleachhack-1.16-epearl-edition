@@ -15,6 +15,7 @@
     "MixinBackgroundRenderer",
     "MixinAbstractBlock",
     "MixinAbstractBlockState",
+    "MixinBackgroundRenderer",
     "MixinBeaconScreen",
     "MixinBiomeColors",
     "MixinBlock",
