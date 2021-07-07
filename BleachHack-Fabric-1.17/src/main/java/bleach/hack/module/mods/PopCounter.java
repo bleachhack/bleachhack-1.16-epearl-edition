@@ -7,7 +7,6 @@ import bleach.hack.module.ModuleCategory;
 import bleach.hack.module.Module;
 import bleach.hack.module.ModuleManager;
 import bleach.hack.util.BleachLogger;
-import com.google.common.eventbus.Subscribe;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.packet.s2c.play.EntityStatusS2CPacket;
 
@@ -17,7 +16,7 @@ public class PopCounter extends Module {
 
     private HashMap<String, Integer> pops = new HashMap<>();
 
-    public boolean impact_toggle_state;
+    public boolean sex;
 
     public PopCounter() {
         super("PopCounter", KEY_UNBOUND, ModuleCategory.CHAT, "Counts totem pops");
@@ -30,7 +29,7 @@ public class PopCounter extends Module {
         pops.clear();
     }
 
-    @Subscribe
+    @BleachSubscribe
     public void
     onReadPacket(EventReadPacket event)
     {
@@ -45,11 +44,11 @@ public class PopCounter extends Module {
         }
     }
 
-    @Subscribe
+    @BleachSubscribe
     public void
     onTick(EventTick tick)
     {
-        impact_toggle_state  = ModuleManager.getModule("UI").isEnabled();
+        sex  = ModuleManager.getModule("UI").isEnabled();
         if(mc.world == null)
             return;
 
@@ -58,7 +57,7 @@ public class PopCounter extends Module {
             {
                 if(pops.containsKey(player.getEntityName()))
                 {
-                    BleachLogger.infoMessage((impact_toggle_state ? "\u00A7f" : "\u00A79") + player.getEntityName() + " \u00A79died after popping " + (impact_toggle_state ? "\u00A7f" : "\u00A79") + pops.get(player.getEntityName()) + " \u00A79totems");
+                    BleachLogger.infoMessage((sex ? "\u00A7f" : "\u00A79") + player.getEntityName() + " \u00A79died after popping " + (sex ? "\u00A7f" : "\u00A79") + pops.get(player.getEntityName()) + " \u00A79totems");
                     pops.remove(player.getEntityName(), pops.get(player.getEntityName()));
                 }
             }
@@ -77,14 +76,14 @@ public class PopCounter extends Module {
         if(pops.get(entity.getEntityName()) == null)
         {
             pops.put(entity.getEntityName(), 1);
-            BleachLogger.infoMessage((impact_toggle_state ? "\u00A7f" : "\u00A79") + entity.getEntityName() + " \u00A79popped "+(impact_toggle_state ? "\u00A7f" : "\u00A79")+"1 \u00A79totem");
+            BleachLogger.infoMessage((sex ? "\u00A7f" : "\u00A79") + entity.getEntityName() + " \u00A79popped "+(sex ? "\u00A7f" : "\u00A79")+"1 \u00A79totem");
         }
         else if(!(pops.get(entity.getEntityName()) == null))
         {
             int popc = pops.get(entity.getEntityName());
             popc += 1;
             pops.put(entity.getEntityName(), popc);
-            BleachLogger.infoMessage((impact_toggle_state ? "\u00A7f" : "\u00A79") + entity.getEntityName() + " \u00A79popped " + (impact_toggle_state ? "\u00A7f" : "\u00A79") + popc + " \u00A79totems");
+            BleachLogger.infoMessage((sex ? "\u00A7f" : "\u00A79") + entity.getEntityName() + " \u00A79popped " + (sex ? "\u00A7f" : "\u00A79") + popc + " \u00A79totems");
         }
     }
 
