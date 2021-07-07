@@ -15,10 +15,10 @@ import bleach.hack.module.Module;
 import bleach.hack.setting.base.SettingMode;
 import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 
-public class Sprint extends Module {
+public class AutoSprint extends Module {
 
-	public Sprint() {
-		super("Sprint", KEY_UNBOUND, ModuleCategory.MOVEMENT, "Makes the you automatically sprint",
+	public AutoSprint() {
+		super("AutoSprint", KEY_UNBOUND, ModuleCategory.MOVEMENT, "Makes the you automatically sprint",
 				new SettingMode("Mode", "Legit", "Rage", "MultiDirect").withDesc("Sprinting mode"));
 	}
 
