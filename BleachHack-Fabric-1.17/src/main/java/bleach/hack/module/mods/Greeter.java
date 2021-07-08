@@ -13,7 +13,9 @@ import bleach.hack.util.io.BleachFileMang;
 import net.minecraft.network.packet.s2c.play.PlayerListS2CPacket;
 
 import java.util.ArrayList;
+import java.util.ArrayDeque;
 import java.util.List;
+import java.util.Queue;
 import java.util.Random;
 
 /**
@@ -27,7 +29,7 @@ public class Greeter extends Module {
     private List<String> lines2 = new ArrayList<>();
     private int lineCount = 0;
     private int lineCount2 = 0;
-    public List<String> message_queue = new ArrayList<>();
+    public Queue<String> messageQueue = new ArrayDeque<>();
     public String player;
     public String message;
 
@@ -44,17 +46,13 @@ public class Greeter extends Module {
     public void onTick(EventTick event)
     {
         assert mc.player != null;
-        if (mc.player.age % (this.getSettings().get(1).asSlider().getValue()*20) == 0 && this.isEnabled())
+        if (mc.player.age % (this.getSettings().get(1).asSlider().getValue() * 20) == 0 && this.isEnabled())
         {
-            if (message_queue.size() > 0 && getSetting(3).asToggle().state) {
-                message = message_queue.get(0);
-                BleachLogger.infoMessage(message);
-                message_queue.remove(0);
+            if (messageQueue.size() > 0 && getSetting(3).asToggle().state) {
+                BleachLogger.infoMessage(message.poll());
             }
-            else if(message_queue.size() > 0) {
-                message = message_queue.get(0);
-                mc.player.sendChatMessage(message);
-                message_queue.remove(0);
+            else if (messageQueue.size() > 0) {
+                mc.player.sendChatMessage(message.poll());
             }
         }
     }
@@ -80,31 +78,33 @@ public class Greeter extends Module {
 
     @BleachSubscribe
     public void onPacketRead(EventReadPacket event) {
-        if ((event.getPacket() instanceof PlayerListS2CPacket) && (((PlayerListS2CPacket) event.getPacket()).getAction().name().equals("ADD_PLAYER"))) {
+        if (event.getPacket() instanceof PlayerListS2CPacket && ((PlayerListS2CPacket) event.getPacket()).getAction().name().equals("ADD_PLAYER")) {
             player = ((PlayerListS2CPacket) event.getPacket()).getEntries().get(0).getProfile().getName();
-            if (lines.isEmpty()) return;
-            if (player == null) return;
-            if (mc.player == null) return;
-            if (player.equals(mc.player.getDisplayName().asString())) return;
+            if (lines.isEmpty()
+                || player == null
+                || mc.player == null
+                || player.equals(mc.player.getDisplayName().asString())) return;
+
             if (getSetting(0).asMode().mode == 0) {
-                message_queue.add(lines.get(lineCount).replace("$p", player));
+                messageQueue.add(lines.get(lineCount).replace("$p", player));
             } else if (getSetting(0).asMode().mode == 1) {
-                message_queue.add(lines.get(rand.nextInt(lines.size())).replace("$p", player));
+                messageQueue.add(lines.get(rand.nextInt(lines.size())).replace("$p", player));
             }
             if (lineCount >= lines.size() - 1) lineCount = 0;
             else lineCount++;
             player = null;
         }
-        if ((event.getPacket() instanceof PlayerListS2CPacket) && (((PlayerListS2CPacket) event.getPacket()).getAction().name().equals("REMOVE_PLAYER")) && getSetting(2).asToggle().state)  {
+        if (event.getPacket() instanceof PlayerListS2CPacket && ((PlayerListS2CPacket) event.getPacket()).getAction().name().equals("REMOVE_PLAYER")) && getSetting(2).asToggle().state)  {
             player = ((PlayerListS2CPacket) event.getPacket()).getEntries().get(0).getProfile().getName();
-            if (lines2.isEmpty()) return;
-            if (player == null) return;
-            if (mc.player == null) return;
-            if (player.equals(mc.player.getDisplayName().asString())) return;
+            if (lines.isEmpty()
+                || player == null
+                || mc.player == null
+                || player.equals(mc.player.getDisplayName().asString())) return;
+
             if (getSetting(0).asMode().mode == 0) {
-                message_queue.add(lines2.get(lineCount2).replace("$p", player));
+                messageQueue.add(lines2.get(lineCount2).replace("$p", player));
             } else if (getSetting(0).asMode().mode == 1) {
-                message_queue.add(lines2.get(rand.nextInt(lines2.size())).replace("$p", player));
+                messageQueue.add(lines2.get(rand.nextInt(lines2.size())).replace("$p", player));
             }
             if (lineCount2 >= lines2.size() - 1) lineCount2 = 0;
             else lineCount2++;
