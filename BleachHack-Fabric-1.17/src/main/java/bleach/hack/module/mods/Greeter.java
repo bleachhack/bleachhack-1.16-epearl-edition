@@ -46,13 +46,12 @@ public class Greeter extends Module {
         assert mc.player != null;
         if (mc.player.age % (this.getSettings().get(1).asSlider().getValue()*20) == 0 && this.isEnabled())
         {
-            if (getSetting(3).asToggle().state == true) {
+            if (message_queue.size() > 0 && getSetting(3).asToggle().state) {
                 message = message_queue.get(0);
                 BleachLogger.infoMessage(message);
                 message_queue.remove(0);
-                return;
             }
-            if(message_queue.size() > 0) {
+            else if(message_queue.size() > 0) {
                 message = message_queue.get(0);
                 mc.player.sendChatMessage(message);
                 message_queue.remove(0);
